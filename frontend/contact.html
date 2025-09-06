@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | SIPE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #f4f7f6;
+            --surface-color: #ffffff;
+            --text-color: #34495e;
+            --success-color: #2E7D32;
+            --error-color: #D0021B;
+            --box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+            --border-radius: 10px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body {
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .contact-container {
+            background-color: var(--surface-color);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 { font-size: 2.2rem; color: var(--primary-color); margin-bottom: 1rem; }
+        p { color: var(--text-color); margin-bottom: 2.5rem; }
+        .hidden { display: none !important; }
+        .btn { display: block; width: 100%; padding: 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: #34495e; }
+        .btn-primary:disabled { background-color: #7f8c8d; cursor: not-allowed; }
+        .contact-form { text-align: left; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+        .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; }
+        textarea.form-control { min-height: 120px; resize: vertical; }
+        .back-link { display: inline-block; margin-top: 1.5rem; color: var(--secondary-color); text-decoration: none; font-weight: 500; }
+        .message-area { text-align: center; margin-bottom: 1.5rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; }
+        .message-area.success { color: var(--success-color); background-color: #e8f5e9; }
+        .message-area.error { color: var(--error-color); background-color: #fdecea; }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <div id="message-area" class="message-area hidden"></div>
+        <div id="role-selection-view">
+            <h1>Contact Us</h1>
+            <p>To help us direct your inquiry, please select who you are.</p>
+            <div class="button-group" style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+                <button class="btn btn-primary" data-form="student-form">I am a Student</button>
+                <button class="btn btn-primary" data-form="institution-form">I am an Institution</button>
+                <button class="btn btn-primary" data-form="mentor-form">I am a Mentor</button>
+            </div>
+        </div>
+
+        <div id="student-form" class="contact-form hidden">
+            <h1>Student Inquiry</h1>
+            <form data-usertype="Student">
+                <div class="form-group"><label for="student-name">Full Name</label><input type="text" id="student-name" class="form-control" required></div>
+                <div class="form-group"><label for="student-email">Email Address</label><input type="email" id="student-email" class="form-control" required></div>
+                <div class="form-group"><label for="student-institution">Your Institution</label><input type="text" id="student-institution" class="form-control" required></div>
+                <div class="form-group"><label for="student-query">Your Query</label><textarea id="student-query" class="form-control" required></textarea></div>
+                <button type="submit" class="btn btn-primary">Submit Inquiry</button>
+                <a href="#" class="back-link">Go Back</a>
+            </form>
+        </div>
+
+        <div id="institution-form" class="contact-form hidden">
+            <h1>Institution Inquiry</h1>
+            <form data-usertype="Institution">
+                <div class="form-group"><label for="inst-name">Institution Name</label><input type="text" id="inst-name" class="form-control" required></div>
+                <div class="form-group"><label for="inst-contact">Contact Person</label><input type="text" id="inst-contact" class="form-control" required></div>
+                <div class="form-group"><label for="inst-email">Official Email</label><input type="email" id="inst-email" class="form-control" required></div>
+                <div class="form-group"><label for="inst-query">Nature of Inquiry</label><textarea id="inst-query" class="form-control" placeholder="e.g., Partnership, Program Details..." required></textarea></div>
+                <button type="submit" class="btn btn-primary">Submit Inquiry</button>
+                <a href="#" class="back-link">Go Back</a>
+            </form>
+        </div>
+
+        <div id="mentor-form" class="contact-form hidden">
+            <h1>Mentor Inquiry</h1>
+            <form data-usertype="Mentor">
+                <div class="form-group"><label for="mentor-name">Full Name</label><input type="text" id="mentor-name" class="form-control" required></div>
+                <div class="form-group"><label for="mentor-email">Email Address</label><input type="email" id="mentor-email" class="form-control" required></div>
+                <div class="form-group"><label for="mentor-expertise">Area of Expertise</label><input type="text" id="mentor-expertise" class="form-control" required></div>
+                <div class="form-group"><label for="mentor-message">Your Message</label><textarea id="mentor-message" class="form-control" required></textarea></div>
+                <button type="submit" class="btn btn-primary">Submit Inquiry</button>
+                <a href="#" class="back-link">Go Back</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_URL = 'http://localhost:3000/api/contact';
+            const roleSelectionView = document.getElementById('role-selection-view');
+            const roleButtons = roleSelectionView.querySelectorAll('button');
+            const contactForms = document.querySelectorAll('.contact-form');
+            const backLinks = document.querySelectorAll('.back-link');
+            const messageArea = document.getElementById('message-area');
+
+            const showMessage = (message, type) => {
+                messageArea.textContent = message;
+                messageArea.className = `message-area ${type}`;
+            };
+
+            const showForm = (formId) => {
+                roleSelectionView.classList.add('hidden');
+                contactForms.forEach(form => form.classList.add('hidden'));
+                document.getElementById(formId).classList.remove('hidden');
+            };
+
+            const showRoleSelection = () => {
+                contactForms.forEach(form => form.classList.add('hidden'));
+                roleSelectionView.classList.remove('hidden');
+                messageArea.className = 'message-area hidden';
+            };
+
+            roleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const formId = button.getAttribute('data-form');
+                    showForm(formId);
+                });
+            });
+
+            backLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showRoleSelection();
+                });
+            });
+
+            contactForms.forEach(formContainer => {
+                const form = formContainer.querySelector('form');
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Submitting...';
+
+                    let formData = {
+                        userType: form.dataset.usertype
+                    };
+
+                    // Gather data based on user type
+                    if (formData.userType === 'Student') {
+                        formData.name = document.getElementById('student-name').value;
+                        formData.email = document.getElementById('student-email').value;
+                        formData.institutionName = document.getElementById('student-institution').value;
+                        formData.message = document.getElementById('student-query').value;
+                    } else if (formData.userType === 'Institution') {
+                        formData.name = document.getElementById('inst-contact').value; // Contact person's name
+                        formData.email = document.getElementById('inst-email').value;
+                        formData.institutionName = document.getElementById('inst-name').value;
+                        formData.message = document.getElementById('inst-query').value;
+                    } else if (formData.userType === 'Mentor') {
+                        formData.name = document.getElementById('mentor-name').value;
+                        formData.email = document.getElementById('mentor-email').value;
+                        formData.expertise = document.getElementById('mentor-expertise').value;
+                        formData.message = document.getElementById('mentor-message').value;
+                    }
+
+                    try {
+                        const response = await fetch(API_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(formData)
+                        });
+                        const data = await response.json();
+                        if (!response.ok) throw new Error(data.message || 'Submission failed.');
+                        
+                        showRoleSelection(); // Go back to the main view
+                        showMessage(data.message, 'success');
+                        form.reset();
+
+                    } catch (error) {
+                        showMessage(error.message, 'error');
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit Inquiry';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

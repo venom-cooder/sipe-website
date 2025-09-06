@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | SIPE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db; /* Student-facing blue */
+            --primary-color-dark: #2980b9;
+            --base-color: #2c3e50; /* Base navy for structure */
+            --background-color: #f4f7f6;
+            --surface-color: #ffffff;
+            --text-color: #34495e;
+            --light-text-color: #7f8c8d;
+            --border-color: #e0e0e0;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+            --border-radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--background-color); color: var(--text-color); display: flex; }
+        .sidebar { width: 260px; background-color: var(--base-color); color: white; min-height: 100vh; display: flex; flex-direction: column; padding: 1.5rem; }
+        .main-content { flex-grow: 1; padding: 2.5rem; overflow-y: auto; height: 100vh; }
+        .sidebar-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-header .logo { font-size: 1.8rem; font-weight: 700; }
+        .sidebar-nav ul { list-style: none; }
+        .sidebar-nav li a { display: flex; align-items: center; gap: 1rem; padding: 1rem; text-decoration: none; color: #bdc3c7; border-radius: 8px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
+        .sidebar-nav li a:hover, .sidebar-nav li a.active { background-color: rgba(255, 255, 255, 0.1); color: white; }
+        .sidebar-nav li a .icon { font-size: 1.5rem; }
+        .sidebar-footer { margin-top: auto; }
+        .sidebar-footer button { width: 100%; text-align: center; padding: 0.8rem; background-color: var(--primary-color); color: white; border-radius: 8px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+        .page-header h1 { font-size: 2.2rem; }
+        .notification-bell { font-size: 1.5rem; cursor: pointer; position: relative; }
+        .notification-dot { width: 8px; height: 8px; background-color: #e74c3c; border-radius: 50%; position: absolute; top: 0; right: 0; }
+        .content-view { display: none; }
+        .content-view.active { display: block; }
+        .card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-top: 1.5rem; }
+        h2 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--base-color); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+        .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; }
+        .btn { padding: 0.9rem 2rem; border: none; background-color: var(--primary-color); color: white; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+        .filter-group { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .filter-btn { padding: 0.6rem 1.2rem; border: 1px solid var(--border-color); background: none; border-radius: 50px; cursor: pointer; font-weight: 500; }
+        .filter-btn.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+        .lecture-grid, .alumni-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .lecture-card, .alumni-card, .event-card { border: 1px solid var(--border-color); border-radius: var(--border-radius); overflow: hidden; background-color: var(--surface-color); }
+        .lecture-card img, .alumni-card img { width: 100%; height: 180px; object-fit: cover; }
+        .lecture-card-content, .alumni-card-content, .event-card-content { padding: 1.5rem; }
+        .lecture-card h3, .alumni-card h3, .event-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .lecture-card p, .alumni-card p, .event-card p { color: var(--light-text-color); font-size: 0.9rem; }
+        .tag { background-color: #ecf0f1; color: var(--light-text-color); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; display: inline-block; margin-top: 1rem; }
+        .profile-details p { font-size: 1.1rem; margin-bottom: 1rem; }
+        .profile-details strong { color: var(--base-color); }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header"><div class="logo">SIPE</div></div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#" class="nav-link active" data-view="dashboard-view"><span class="icon">🏠</span><span>Dashboard</span></a></li>
+                <li><a href="#" class="nav-link" data-view="lectures-view"><span class="icon">🎓</span><span>Lectures</span></a></li>
+                <li><a href="#" class="nav-link" data-view="hub-view"><span class="icon">💡</span><span>Innovation Hub</span></a></li>
+                <li><a href="#" class="nav-link" data-view="alumni-view"><span class="icon">👥</span><span>Alumni Network</span></a></li>
+                <li><a href="#" class="nav-link" data-view="events-view"><span class="icon">📅</span><span>Events</span></a></li>
+                <li><a href="#" class="nav-link" data-view="profile-view"><span class="icon">👤</span><span>My Profile</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer"><button id="logout-btn">Logout</button></div>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <h1 id="page-title">Dashboard</h1>
+            <div class="notification-bell"><span>🔔</span><div class="notification-dot"></div></div>
+        </header>
+
+        <section id="dashboard-view" class="content-view active"><div class="card"><h2 id="welcome-message">Welcome!</h2><p>This is your central hub for lectures, innovation support, and events.</p></div></section>
+
+        <section id="lectures-view" class="content-view"><div class="card"><h2>Browse Lectures</h2><div id="lecture-grid-container"><!-- Lectures will be loaded here --></div></div></section>
+
+        <section id="hub-view" class="content-view"><div class="card"><h2>Innovation Hub</h2><p>Have an idea? Let us know how we can help.</p><form id="hub-form"><div class="form-group"><label for="help-type">What kind of help do you need?</label><select id="help-type" class="form-control"><option>Startup Incubation</option><option>Project Mentorship</option><option>Research Guidance</option><option>Other</option></select></div><div class="form-group"><label for="prototype-file">Upload a Prototype or Proposal (Optional)</label><input type="file" id="prototype-file" class="form-control"></div><div class="form-group"><label for="financial-support">Expected Financial Support (in INR)</label><input type="number" id="financial-support" class="form-control" placeholder="e.g., 50000"></div><div class="form-group"><label for="idea-description">Briefly describe your idea</label><textarea id="idea-description" class="form-control" required></textarea></div><button type="submit" class="btn">Submit for Review</button></form></div></section>
+
+        <section id="alumni-view" class="content-view"><div class="card"><h2>Alumni Network</h2><p>Connect with alumni from your institution.</p><div id="alumni-grid-container" class="alumni-grid" style="margin-top: 1.5rem;"></div></div></section>
+
+        <section id="events-view" class="content-view"><div class="card"><h2>Upcoming Events</h2><p>Events hosted by your institution.</p><div id="event-list-container" style="margin-top: 1.5rem;"></div></div></section>
+
+        <section id="profile-view" class="content-view"><div class="card profile-details"><h2>My Profile</h2><p><strong>Name:</strong> <span id="profile-name"></span></p><p><strong>Email:</strong> <span id="profile-email"></span></p><p><strong>Institution:</strong> <span id="profile-institution"></span></p><p><strong>Primary Target Exam:</strong> <span id="profile-exam"></span></p></div></section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const STUDENT_API_URL = 'http://localhost:3000/api/students';
+            const PUBLIC_API_URL = 'http://localhost:3000/api'; // For public data like sessions
+            const token = localStorage.getItem('sipe-student-token');
+
+            if (!token) {
+                window.location.href = 'loginstudent.html';
+                return;
+            }
+
+            const authHeaders = { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' };
+
+            const pageTitle = document.getElementById('page-title');
+            const welcomeMessage = document.getElementById('welcome-message');
+            
+            const fetchAndDisplayProfile = async () => {
+                try {
+                    const response = await fetch(`${STUDENT_API_URL}/profile`, { headers: authHeaders });
+                    if (!response.ok) throw new Error('Could not fetch profile.');
+                    const student = await response.json();
+
+                    // Populate welcome message and profile page
+                    welcomeMessage.textContent = `Welcome, ${student.name}!`;
+                    document.getElementById('profile-name').textContent = student.name;
+                    document.getElementById('profile-email').textContent = student.email;
+                    document.getElementById('profile-institution').textContent = student.institution;
+                    document.getElementById('profile-exam').textContent = student.exam;
+                    
+                    // After getting the profile, fetch data specific to the institution
+                    fetchAndDisplayAlumni(student.institution);
+                    fetchAndDisplayEvents(student.institution);
+
+                } catch (error) {
+                    console.error(error);
+                    localStorage.removeItem('sipe-student-token');
+                    window.location.href = 'loginstudent.html';
+                }
+            };
+            
+            const fetchAndDisplayAlumni = async (institutionName) => {
+                const container = document.getElementById('alumni-grid-container');
+                try {
+                    const response = await fetch(`${PUBLIC_API_URL}/alumni/${institutionName}`);
+                    const alumni = await response.json();
+                    if (alumni.length === 0) {
+                        container.innerHTML = '<p>No alumni from your institution have been registered yet.</p>';
+                        return;
+                    }
+                    container.innerHTML = alumni.map(alum => `
+                        <div class="alumni-card">
+                            <img src="${alum.picture || 'https://placehold.co/300x180/3498db/ffffff?text=Alumni'}" alt="${alum.name}">
+                            <div class="alumni-card-content">
+                                <h3>${alum.name}</h3>
+                                <p>${alum.company}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } catch (error) {
+                    container.innerHTML = '<p>Could not load alumni data.</p>';
+                }
+            };
+
+            const fetchAndDisplayEvents = async (institutionName) => {
+                const container = document.getElementById('event-list-container');
+                try {
+                    const response = await fetch(`${PUBLIC_API_URL}/events/${institutionName}`);
+                    const events = await response.json();
+                    if (events.length === 0) {
+                        container.innerHTML = '<p>No upcoming events from your institution.</p>';
+                        return;
+                    }
+                    container.innerHTML = events.map(event => `
+                        <div class="event-card" style="margin-bottom: 1rem;">
+                            <div class="event-card-content">
+                                <h3>${event.title}</h3>
+                                <p>${new Date(event.date).toLocaleDateString()} at ${event.time}</p>
+                                <p>${event.description}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } catch (error) {
+                    container.innerHTML = '<p>Could not load event data.</p>';
+                }
+            };
+            
+            // Initial data load
+            fetchAndDisplayProfile();
+
+            // View switching logic
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentViews = document.querySelectorAll('.content-view');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    link.classList.add('active');
+                    pageTitle.textContent = link.querySelector('span:last-child').textContent;
+                    const targetViewId = link.getAttribute('data-view');
+                    contentViews.forEach(view => {
+                        view.classList.toggle('active', view.id === targetViewId);
+                    });
+                });
+            });
+
+            // Logout
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                localStorage.removeItem('sipe-student-token');
+                window.location.href = 'loginstudent.html';
+            });
+        });
+    </script>
+</body>
+</html>

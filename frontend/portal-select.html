@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Portal | SIPE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #ecf0f1;
+            --surface-color: #ffffff;
+            --text-color: #34495e;
+            --box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+            --border-radius: 10px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body {
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .selection-container {
+            background-color: var(--surface-color);
+            padding: 3rem 4rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 500px;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 2.5rem;
+            font-weight: 500;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .btn-institution {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-institution:hover {
+            background-color: #34495e;
+            transform: translateY(-3px);
+        }
+        .btn-student {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .btn-student:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="selection-container">
+        <div class="logo">SIPE</div>
+        <h1>Please select your portal to continue.</h1>
+        <div class="button-group">
+            <a href="logininstitution.html" class="btn btn-institution">I am an Institution</a>
+            <a href="loginstudent.html" class="btn btn-student">I am a Student</a>
+        </div>
+    </div>
+</body>
+</html>

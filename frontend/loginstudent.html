@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal | SIPE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2; --primary-color-dark: #357ABD; --background-color: #f4f7f6;
+            --surface-color: #ffffff; --text-color: #333333; --light-text-color: #777777;
+            --error-color: #D0021B; --success-color: #2E7D32; --box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--background-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; }
+        .auth-container { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); width: 100%; max-width: 450px; overflow: hidden; }
+        .auth-header { text-align: center; margin-bottom: 2rem; }
+        .auth-header h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.5rem; }
+        .auth-header .logo { font-weight: 800; color: var(--primary-color); }
+        .auth-header p { color: var(--light-text-color); }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-color); }
+        .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-control:disabled { background-color: #f0f0f0; cursor: not-allowed; }
+        .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); }
+        .btn-submit { width: 100%; padding: 0.9rem; border: none; background-color: var(--primary-color); color: white; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s, transform 0.2s; }
+        .btn-submit:hover { background-color: var(--primary-color-dark); transform: translateY(-2px); }
+        .btn-submit:disabled { background-color: #a0c3e8; cursor: not-allowed; }
+        .toggle-auth { text-align: center; margin-top: 1.5rem; color: var(--light-text-color); }
+        .toggle-auth a { color: var(--primary-color); font-weight: 600; text-decoration: none; cursor: pointer; }
+        .toggle-auth a:hover { text-decoration: underline; }
+        .hidden { display: none; }
+        .message-area { text-align: center; margin-bottom: 1rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; }
+        .message-area.success { color: var(--success-color); background-color: #e8f5e9; }
+        .message-area.error { color: var(--error-color); background-color: #fdecea; }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div id="message-area" class="message-area hidden"></div>
+        <div id="login-form-container">
+            <div class="auth-header">
+                <h1>Welcome Back, Student!</h1>
+                <p>Log in to access your <span class="logo">SIPE</span> dashboard.</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn-submit">Log In</button>
+            </form>
+            <p class="toggle-auth">
+                Don't have an account? <a id="show-signup">Sign Up Here</a>
+            </p>
+        </div>
+
+        <div id="signup-form-container" class="hidden">
+            <div class="auth-header">
+                <h1>Create Your Student Account</h1>
+                <p>Join <span class="logo">SIPE</span> and start your journey.</p>
+            </div>
+            <form id="signup-form">
+                <div id="signup-step-1">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-institution">Institution Name</label>
+                        <select id="signup-institution" class="form-control" required>
+                            <option value="" disabled selected>Loading institutions...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-exam">Primary Target Exam</label>
+                        <select id="signup-exam" class="form-control" required>
+                            <option value="" disabled selected>Select your target exam</option>
+                            <option value="GATE">GATE</option>
+                            <option value="UPSC">UPSC (CSE)</option>
+                            <option value="CDS">CDS</option>
+                            <option value="CAT">CAT</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <button type="button" id="send-otp-btn" class="btn-submit">Send Verification OTP</button>
+                </div>
+                <div id="signup-step-2" class="hidden">
+                    <div class="form-group">
+                        <label for="signup-otp">Verification OTP</label>
+                        <input type="text" id="signup-otp" class="form-control" placeholder="Check your email for the OTP" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Create Password</label>
+                        <input type="password" id="signup-password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Create Account</button>
+                </div>
+            </form>
+            <p class="toggle-auth">
+                Already have an account? <a id="show-login">Log In Here</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const STUDENT_API_URL = 'http://localhost:3000/api/students';
+            const PUBLIC_API_URL = 'http://localhost:3000/api';
+
+            const loginContainer = document.getElementById('login-form-container');
+            const signupContainer = document.getElementById('signup-form-container');
+            const showSignupLink = document.getElementById('show-signup');
+            const showLoginLink = document.getElementById('show-login');
+            const messageArea = document.getElementById('message-area');
+            const signupForm = document.getElementById('signup-form');
+            const sendOtpBtn = document.getElementById('send-otp-btn');
+            const signupStep1 = document.getElementById('signup-step-1');
+            const signupStep2 = document.getElementById('signup-step-2');
+            const signupEmailInput = document.getElementById('signup-email');
+            const loginForm = document.getElementById('login-form');
+            const institutionSelect = document.getElementById('signup-institution');
+
+            const showMessage = (message, type) => {
+                messageArea.textContent = message;
+                messageArea.className = `message-area ${type}`;
+            };
+            
+            const loadInstitutions = async () => {
+                try {
+                    const response = await fetch(`${PUBLIC_API_URL}/institutions`);
+                    if (!response.ok) throw new Error('Could not load institutions.');
+                    const institutions = await response.json();
+                    institutionSelect.innerHTML = '<option value="" disabled selected>Select your institution</option>';
+                    if (institutions.length > 0) {
+                        institutions.forEach(inst => {
+                            const option = document.createElement('option');
+                            option.value = inst.name;
+                            option.textContent = inst.name;
+                            institutionSelect.appendChild(option);
+                        });
+                    } else {
+                        institutionSelect.innerHTML = '<option value="" disabled>No partner institutions found</option>';
+                    }
+                } catch (error) {
+                    console.error(error);
+                    institutionSelect.innerHTML = '<option value="" disabled>Error loading institutions</option>';
+                    showMessage('Could not connect to server to load institutions. Please ensure the backend is running.', 'error');
+                }
+            };
+            
+            await loadInstitutions();
+
+            showSignupLink.addEventListener('click', () => {
+                loginContainer.classList.add('hidden');
+                signupContainer.classList.remove('hidden');
+                messageArea.className = 'message-area hidden';
+            });
+            showLoginLink.addEventListener('click', () => {
+                signupContainer.classList.add('hidden');
+                loginContainer.classList.remove('hidden');
+                messageArea.className = 'message-area hidden';
+            });
+
+            sendOtpBtn.addEventListener('click', async () => {
+                const email = signupEmailInput.value;
+                if (!email) {
+                    showMessage('Please enter your email address.', 'error');
+                    return;
+                }
+                sendOtpBtn.disabled = true;
+                sendOtpBtn.textContent = 'Sending...';
+                try {
+                    const response = await fetch(`${STUDENT_API_URL}/send-otp`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Failed to send OTP.');
+                    showMessage(data.message, 'success');
+                    signupStep1.querySelectorAll('input, select').forEach(el => el.disabled = true);
+                    signupStep1.classList.add('hidden');
+                    signupStep2.classList.remove('hidden');
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                    sendOtpBtn.disabled = false;
+                    sendOtpBtn.textContent = 'Send Verification OTP';
+                }
+            });
+
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = {
+                    name: document.getElementById('signup-name').value,
+                    email: document.getElementById('signup-email').value,
+                    institution: institutionSelect.value,
+                    exam: document.getElementById('signup-exam').value,
+                    otp: document.getElementById('signup-otp').value,
+                    password: document.getElementById('signup-password').value,
+                };
+                try {
+                    const response = await fetch(`${STUDENT_API_URL}/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Signup failed.');
+                    showMessage('Account created successfully! Please log in.', 'success');
+                    signupContainer.classList.add('hidden');
+                    loginContainer.classList.remove('hidden');
+                    signupForm.reset();
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            });
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = {
+                    email: document.getElementById('login-email').value,
+                    password: document.getElementById('login-password').value
+                };
+                try {
+                    const response = await fetch(`${STUDENT_API_URL}/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Login failed.');
+                    
+                    showMessage('Login successful! Redirecting...', 'success');
+                    
+                    // Save the token to localStorage for the dashboard
+                    localStorage.setItem('sipe-student-token', data.token);
+
+                    // Redirect to the student dashboard
+                    setTimeout(() => {
+                        window.location.href = 'studentdashboard.html';
+                    }, 1500); // 1.5 second delay
+                    
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institution Portal | SIPE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50; --primary-color-dark: #34495e; --background-color: #f4f7f6;
+            --surface-color: #ffffff; --text-color: #333333; --light-text-color: #777777;
+            --error-color: #D0021B; --success-color: #2E7D32; --box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--background-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; }
+        .auth-container { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); width: 100%; max-width: 480px; overflow: hidden; }
+        .auth-header { text-align: center; margin-bottom: 2rem; }
+        .auth-header h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.5rem; }
+        .auth-header .logo { font-weight: 800; color: var(--primary-color); }
+        .auth-header p { color: var(--light-text-color); }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-color); }
+        .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-control:disabled { background-color: #f0f0f0; cursor: not-allowed; }
+        .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.2); }
+        .btn-submit { width: 100%; padding: 0.9rem; border: none; background-color: var(--primary-color); color: white; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s, transform 0.2s; }
+        .btn-submit:hover { background-color: var(--primary-color-dark); transform: translateY(-2px); }
+        .btn-submit:disabled { background-color: #7f8c8d; cursor: not-allowed; }
+        .toggle-auth { text-align: center; margin-top: 1.5rem; color: var(--light-text-color); }
+        .toggle-auth a { color: var(--primary-color); font-weight: 600; text-decoration: none; cursor: pointer; }
+        .toggle-auth a:hover { text-decoration: underline; }
+        .hidden { display: none; }
+        .message-area { text-align: center; margin-bottom: 1rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; }
+        .message-area.success { color: var(--success-color); background-color: #e8f5e9; }
+        .message-area.error { color: var(--error-color); background-color: #fdecea; }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div id="message-area" class="message-area hidden"></div>
+        <div id="login-form-container">
+            <div class="auth-header">
+                <h1>Institution Portal</h1>
+                <p>Log in to your <span class="logo">SIPE</span> dashboard.</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Official Institution Email</label>
+                    <input type="email" id="login-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn-submit">Log In</button>
+            </form>
+            <p class="toggle-auth">
+                Want to partner with us? <a id="show-signup">Register Here</a>
+            </p>
+        </div>
+
+        <div id="signup-form-container" class="hidden">
+            <div class="auth-header">
+                <h1>Partner with SIPE</h1>
+                <p>Register your institution to join our network.</p>
+            </div>
+            <form id="signup-form">
+                <div id="signup-step-1">
+                    <div class="form-group">
+                        <label for="signup-name">Institution Name</label>
+                        <input type="text" id="signup-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Official Email Address</label>
+                        <input type="email" id="signup-email" class="form-control" required>
+                    </div>
+                    <button type="button" id="send-otp-btn" class="btn-submit">Send Verification OTP</button>
+                </div>
+                <div id="signup-step-2" class="hidden">
+                    <div class="form-group">
+                        <label for="signup-otp">Verification OTP</label>
+                        <input type="text" id="signup-otp" class="form-control" placeholder="Check your email for the OTP" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-type">Institution Type</label>
+                        <select id="signup-type" class="form-control" required>
+                            <option value="" disabled selected>Select type</option>
+                            <option value="University">University</option>
+                            <option value="College">College</option>
+                            <option value="Technical Institute">Technical Institute</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-state">State</label>
+                        <select id="signup-state" class="form-control" required>
+                            <option value="" disabled selected>Select state</option>
+                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Delhi">Delhi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-city">City</label>
+                        <select id="signup-city" class="form-control" required disabled>
+                            <option value="" disabled selected>Select state first</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-contact">Contact Person</label>
+                        <input type="text" id="signup-contact" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-website">Institution Website</label>
+                        <input type="url" id="signup-website" class="form-control" placeholder="https://www.example.edu" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Create Password</label>
+                        <input type="password" id="signup-password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Submit for Review</button>
+                </div>
+            </form>
+            <p class="toggle-auth">
+                Already a partner? <a id="show-login">Log In Here</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_URL = 'http://localhost:3000/api/institutions';
+            
+            const loginContainer = document.getElementById('login-form-container');
+            const signupContainer = document.getElementById('signup-form-container');
+            const showSignupLink = document.getElementById('show-signup');
+            const showLoginLink = document.getElementById('show-login');
+            const messageArea = document.getElementById('message-area');
+            const signupForm = document.getElementById('signup-form');
+            const loginForm = document.getElementById('login-form');
+            const sendOtpBtn = document.getElementById('send-otp-btn');
+            const signupStep1 = document.getElementById('signup-step-1');
+            const signupStep2 = document.getElementById('signup-step-2');
+            const signupEmailInput = document.getElementById('signup-email');
+
+            const showMessage = (message, type) => {
+                messageArea.textContent = message;
+                messageArea.className = `message-area ${type}`;
+            };
+
+            showSignupLink.addEventListener('click', () => {
+                loginContainer.classList.add('hidden');
+                signupContainer.classList.remove('hidden');
+                messageArea.className = 'message-area hidden';
+            });
+            showLoginLink.addEventListener('click', () => {
+                signupContainer.classList.add('hidden');
+                loginContainer.classList.remove('hidden');
+                messageArea.className = 'message-area hidden';
+            });
+
+            const stateSelect = document.getElementById('signup-state');
+            const citySelect = document.getElementById('signup-city');
+            const citiesByState = {
+                "Uttar Pradesh": ["Lucknow", "Kanpur", "Ghaziabad", "Noida"],
+                "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
+                "Karnataka": ["Bengaluru", "Mysuru", "Hubballi"],
+                "Delhi": ["New Delhi"]
+            };
+            stateSelect.addEventListener('change', () => {
+                const selectedState = stateSelect.value;
+                citySelect.innerHTML = '<option value="" disabled selected>Select city</option>';
+                if (selectedState && citiesByState[selectedState]) {
+                    citySelect.disabled = false;
+                    citiesByState[selectedState].forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city;
+                        option.textContent = city;
+                        citySelect.appendChild(option);
+                    });
+                } else {
+                    citySelect.innerHTML = '<option value="" disabled selected>Select state first</option>';
+                    citySelect.disabled = true;
+                }
+            });
+
+            sendOtpBtn.addEventListener('click', async () => {
+                const email = signupEmailInput.value;
+                if (!email) {
+                    showMessage('Please enter the official email address.', 'error');
+                    return;
+                }
+                sendOtpBtn.disabled = true;
+                sendOtpBtn.textContent = 'Sending...';
+                try {
+                    const response = await fetch(`${API_URL}/send-otp`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Failed to send OTP.');
+                    
+                    showMessage(data.message, 'success');
+                    signupStep1.querySelectorAll('input').forEach(el => el.disabled = true);
+                    signupStep1.classList.add('hidden');
+                    signupStep2.classList.remove('hidden');
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                    sendOtpBtn.disabled = false;
+                    sendOtpBtn.textContent = 'Send Verification OTP';
+                }
+            });
+
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = {
+                    name: document.getElementById('signup-name').value,
+                    email: signupEmailInput.value,
+                    otp: document.getElementById('signup-otp').value,
+                    type: document.getElementById('signup-type').value,
+                    state: stateSelect.value,
+                    city: citySelect.value,
+                    contactPerson: document.getElementById('signup-contact').value,
+                    website: document.getElementById('signup-website').value,
+                    password: document.getElementById('signup-password').value,
+                };
+
+                try {
+                    const response = await fetch(`${API_URL}/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Signup failed.');
+                    
+                    showMessage(data.message, 'success');
+                    signupForm.reset();
+                    signupStep2.classList.add('hidden');
+                    signupStep1.classList.remove('hidden');
+                    signupStep1.querySelectorAll('input').forEach(el => el.disabled = false);
+                    sendOtpBtn.disabled = false;
+                    sendOtpBtn.textContent = 'Send Verification OTP';
+                    citySelect.innerHTML = '<option value="" disabled selected>Select state first</option>';
+                    citySelect.disabled = true;
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            });
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = {
+                    email: document.getElementById('login-email').value,
+                    password: document.getElementById('login-password').value
+                };
+                try {
+                    const response = await fetch(`${API_URL}/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Login failed.');
+                    
+                    showMessage('Login successful! Redirecting...', 'success');
+                    
+                    // Save the token to localStorage
+                    localStorage.setItem('sipe-token', data.token);
+
+                    setTimeout(() => {
+                        window.location.href = 'institutiondashboard.html';
+                    }, 1500);
+
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

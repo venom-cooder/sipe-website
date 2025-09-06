@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Society of Innovation and Professional Excellence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50; /* Professional Navy Blue */
+            --secondary-color: #3498db; /* Bright, Innovative Blue */
+            --background-color: #f4f7f6;
+            --surface-color: #ffffff;
+            --text-color: #34495e;
+            --light-text-color: #7f8c8d;
+            --box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+            --border-radius: 10px;
+            --border-color: #e0e0e0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 600; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        .section { padding: 6rem 0; }
+        .section-title { font-size: 2.5rem; text-align: center; margin-bottom: 1rem; color: var(--primary-color); }
+        .section-subtitle { text-align: center; max-width: 700px; margin: 0 auto 4rem auto; color: var(--light-text-color); font-size: 1.1rem; }
+        
+        .btn { display: inline-block; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; font-family: 'Poppins', sans-serif;}
+        .btn-primary { background-color: var(--secondary-color); color: white; }
+        .btn-primary:hover { background-color: #2980b9; transform: translateY(-3px); }
+
+        /* --- Header --- */
+        .header { background-color: var(--surface-color); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2.5rem; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; }
+        .nav-links a:hover { color: var(--secondary-color); }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2232&auto=format&fit=crop') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 7rem 0;
+        }
+        .hero-content h1 { font-size: 3rem; line-height: 1.2; margin-bottom: 1rem; }
+        .hero-content .description { max-width: 700px; margin: 0 auto 2.5rem auto; font-size: 1.1rem; opacity: 0.9; }
+
+        /* --- Programs & Offerings Section --- */
+        .programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .program-card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); transition: transform 0.3s ease; }
+        .program-card:hover { transform: translateY(-5px); }
+        .program-card h3 { font-size: 1.3rem; margin-bottom: 1rem; color: var(--primary-color); }
+        .program-card ul { list-style: none; padding-left: 1.2rem; }
+        .program-card li { margin-bottom: 0.5rem; position: relative; }
+        .program-card li::before { content: '✓'; color: var(--secondary-color); position: absolute; left: -1.2rem; font-weight: 600; }
+
+        /* --- SIPE Model Section --- */
+        .model-section { background-color: #e8eced; }
+        .model-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .model-card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: center; }
+        .model-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .model-card h3 { font-size: 1.3rem; color: var(--primary-color); margin-bottom: 0.5rem; }
+        .model-card p { color: var(--light-text-color); }
+
+        /* --- FAQ Section --- */
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { background-color: var(--surface-color); margin-bottom: 1rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); border: 1px solid var(--border-color); }
+        .faq-item summary { font-size: 1.1rem; font-weight: 600; padding: 1.5rem; cursor: pointer; position: relative; list-style: none; /* Hide default marker */ }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after { content: '+'; position: absolute; right: 1.5rem; font-size: 1.5rem; color: var(--secondary-color); transition: transform 0.2s; }
+        .faq-item[open] summary::after { transform: rotate(45deg); }
+        .faq-answer { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--light-text-color); border-top: 1px solid var(--border-color); }
+
+        /* --- Contact Section --- */
+        .contact-section { text-align: center; }
+        .contact-section .btn { margin-top: 1rem; }
+
+        /* --- Footer --- */
+        .footer { background-color: var(--primary-color); color: #bdc3c7; text-align: center; padding: 3rem 0; }
+        .footer p { margin: 0; }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .logo { font-size: 1rem; }
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navbar container">
+            <a href="#" class="logo">Society of Innovation and Professional Excellence</a>
+            <ul class="nav-links">
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#model">Our Model</a></li>
+                <li><a href="#faq">FAQs</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+            <a href="portal-select.html" class="btn btn-primary">Login / Register</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content container">
+                <h1>Empowering Student Innovation Across Indian Colleges</h1>
+                <p class="description">A student-driven, mentor-supported startup creating standardized innovation frameworks for educational institutions nationwide.</p>
+                <a href="portal-select.html" class="btn btn-primary">Get Started</a>
+            </div>
+        </section>
+
+        <section id="programs" class="programs-section container section">
+            <h2 class="section-title">Programs & Offerings</h2>
+            <p class="section-subtitle">Comprehensive initiatives to foster innovation and excellence from the classroom to the marketplace.</p>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <h3>Standardized Guest Lecture Series</h3>
+                    <ul>
+                        <li>Industry expectations and synergy</li>
+                        <li>Research impact analysis</li>
+                        <li>IP commercialization challenges</li>
+                        <li>Startup journey insights</li>
+                    </ul>
+                </div>
+                <div class="program-card">
+                    <h3>Innovation Index for Colleges</h3>
+                    <ul>
+                        <li>R&D activity measurement</li>
+                        <li>IP filing tracking</li>
+                        <li>Startup ecosystem assessment</li>
+                        <li>Institutional ranking & recognition</li>
+                    </ul>
+                </div>
+                <div class="program-card">
+                    <h3>Mentor Connect Platform</h3>
+                    <ul>
+                        <li>Industry mentor matching</li>
+                        <li>Investor connections</li>
+                        <li>Expert advisory services</li>
+                        <li>Cross-institutional network</li>
+                    </ul>
+                </div>
+                <div class="program-card">
+                    <h3>IP to Impact Bootcamps</h3>
+                    <ul>
+                        <li>Patent commercialization</li>
+                        <li>Business model development</li>
+                        <li>Market validation</li>
+                        <li>Venture planning</li>
+                    </ul>
+                </div>
+                <div class="program-card">
+                    <h3>Startup Clinics</h3>
+                    <ul>
+                        <li>Incubator partnerships</li>
+                        <li>Investor matchmaking</li>
+                        <li>Corporate accelerators</li>
+                        <li>Funding assistance</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="model" class="model-section section">
+            <div class="container">
+                <h2 class="section-title">The SIPE Model</h2>
+                <p class="section-subtitle">Our ecosystem is powered by six specialized committees, driving innovation and excellence at every level.</p>
+                <div class="model-grid">
+                    <div class="model-card">
+                        <div class="model-icon">👥</div>
+                        <h3>SIPE Mentors Circle</h3>
+                        <p>Industry & research professionals guiding projects with expertise and real-world insights.</p>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">⭐</div>
+                        <h3>Core Group</h3>
+                        <p>Faculty and student leaders curating events, lectures, and collaborations for maximum impact.</p>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">💰</div>
+                        <h3>Fundraising Cell</h3>
+                        <p>Securing local CSR, sponsorships, and project funding to support innovation initiatives.</p>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">🌐</div>
+                        <h3>Outreach Cell</h3>
+                        <p>Managing membership drives, alumni connections, and inter-college relations.</p>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">🎯</div>
+                        <h3>Event Cell</h3>
+                        <p>Organizing hackathons, research conclaves, and industrial visits to create engagement.</p>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">📱</div>
+                        <h3>Media & E-Publishing</h3>
+                        <p>Amplifying impact through newsletters, podcasts, and innovation showcases.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq-section container section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <details class="faq-item">
+                    <summary>What is the primary goal of SIPE?</summary>
+                    <div class="faq-answer">
+                        <p>SIPE's main goal is to create a standardized, nationwide framework for fostering innovation and entrepreneurship within educational institutions. We aim to bridge the gap between academia and industry, helping students turn their ideas into impactful ventures.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Who is eligible to join the SIPE network?</summary>
+                    <div class="faq-answer">
+                        <p>Our program is designed for educational institutions (universities, colleges, technical institutes) across India. Once an institution becomes a partner, all of its students are eligible to participate in our programs and access our network.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>How does the mentorship program work?</summary>
+                    <div class="faq-answer">
+                        <p>We provide a cross-college Mentor Connect Platform that links students with experienced industry professionals, researchers, and successful entrepreneurs. Mentorship is provided through one-on-one guidance, group sessions, and specialized bootcamps.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>How can our institution partner with SIPE?</summary>
+                    <div class="faq-answer">
+                        <p>We are always looking for new institutional partners. Please visit our registration portal and sign up as an institution. Our outreach team will review your application and get in touch to discuss the partnership process.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section container section">
+            <h2 class="section-title">Have More Questions?</h2>
+            <p class="section-subtitle">Our team is ready to help. Reach out to us for partnership inquiries, program details, or any other questions you may have.</p>
+            <a href="contact.html" class="btn btn-primary">Contact Our Team</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Society of Innovation and Professional Excellence. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

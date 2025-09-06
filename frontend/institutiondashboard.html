@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institution Dashboard | SIPE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50; --secondary-color: #3498db; --background-color: #f4f7f6;
+            --surface-color: #ffffff; --text-color: #34495e; --light-text-color: #7f8c8d;
+            --border-color: #e0e0e0; --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07); --border-radius: 12px;
+            --success-color: #2E7D32; --error-color: #D0021B;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--background-color); color: var(--text-color); display: flex; }
+        .sidebar { width: 260px; background-color: var(--primary-color); color: white; min-height: 100vh; display: flex; flex-direction: column; padding: 1.5rem; }
+        .main-content { flex-grow: 1; padding: 2.5rem; overflow-y: auto; height: 100vh; }
+        .sidebar-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-header .logo { font-size: 1.8rem; font-weight: 700; }
+        .sidebar-nav ul { list-style: none; }
+        .sidebar-nav li a { display: flex; align-items: center; gap: 1rem; padding: 1rem; text-decoration: none; color: #bdc3c7; border-radius: 8px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
+        .sidebar-nav li a:hover, .sidebar-nav li a.active { background-color: rgba(255, 255, 255, 0.1); color: white; }
+        .sidebar-nav li a .icon { font-size: 1.5rem; }
+        .sidebar-footer { margin-top: auto; }
+        .sidebar-footer button { width: 100%; text-align: center; padding: 0.8rem; background-color: var(--secondary-color); color: white; border-radius: 8px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; }
+        .page-header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .page-header p { color: var(--light-text-color); font-size: 1.1rem; }
+        .content-view { display: none; }
+        .content-view.active { display: block; }
+        .card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-top: 2.5rem; }
+        h2 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--primary-color); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+        .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; }
+        .btn-submit { padding: 0.9rem 2rem; border: none; background-color: var(--secondary-color); color: white; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+        .btn-submit:disabled { background-color: #a9d6f5; cursor: not-allowed; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .stat-card { background-color: var(--surface-color); padding: 1.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); }
+        .stat-card h3 { font-size: 1rem; color: var(--light-text-color); font-weight: 500; margin-bottom: 0.5rem; }
+        .stat-card .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--primary-color); }
+        .file-upload-wrapper { display: flex; align-items: center; gap: 1.5rem; }
+        .profile-pic-preview { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border-color); }
+        .file-input { display: none; }
+        .file-upload-label { display: inline-block; padding: 0.7rem 1.4rem; background-color: var(--surface-color); color: var(--primary-color); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-weight: 500; transition: background-color 0.2s; }
+        .file-upload-label:hover { background-color: #f8f9f9; }
+        .message-area { text-align: center; margin-top: 1.5rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; display: none; }
+        .message-area.success { color: var(--success-color); background-color: #e8f5e9; }
+        .message-area.error { color: var(--error-color); background-color: #fdecea; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header"><div class="logo">SIPE</div></div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#" class="nav-link active" data-view="dashboard-view"><span class="icon">📊</span><span>Dashboard</span></a></li>
+                <li><a href="#" class="nav-link" data-view="sessions-view"><span class="icon">✨</span><span>Create Session</span></a></li>
+                <li><a href="#" class="nav-link" data-view="events-view"><span class="icon">📅</span><span>Manage Events</span></a></li>
+                <li><a href="#" class="nav-link" data-view="alumni-view"><span class="icon">👥</span><span>Alumni Network</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer"><button id="logout-btn">Logout</button></div>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <h1 id="institution-name">Welcome, Loading...</h1>
+            <p>SIPE Platform Management</p>
+        </header>
+
+        <!-- View: Dashboard -->
+        <section id="dashboard-view" class="content-view active">
+            <div class="stats-grid">
+                <div class="stat-card"><h3>Total Registered Students</h3><p class="stat-number" id="student-count">--</p></div>
+                <div class="stat-card"><h3>Active Sessions</h3><p class="stat-number" id="session-count">--</p></div>
+                <div class="stat-card"><h3>Upcoming Events</h3><p class="stat-number" id="event-count">--</p></div>
+                <div class="stat-card"><h3>Registered Alumni</h3><p class="stat-number" id="alumni-count">--</p></div>
+            </div>
+        </section>
+
+        <!-- View: Create Session -->
+        <section id="sessions-view" class="content-view">
+            <div class="card">
+                <h2>Create a New Session</h2>
+                <form id="create-session-form">
+                    <!-- Session form fields from previous version -->
+                </form>
+            </div>
+        </section>
+
+        <!-- View: Manage Events -->
+        <section id="events-view" class="content-view">
+            <div class="card">
+                <h2>Add an Upcoming Event</h2>
+                <form id="create-event-form">
+                    <div class="form-group"><label for="event-title">Event Title</label><input type="text" id="event-title" class="form-control" required></div>
+                    <div class="form-group"><label for="event-date">Event Date</label><input type="date" id="event-date" class="form-control" required></div>
+                    <div class="form-group"><label for="event-time">Event Time</label><input type="time" id="event-time" class="form-control" required></div>
+                    <div class="form-group"><label for="event-description">Description</label><textarea id="event-description" class="form-control" required></textarea></div>
+                    <button type="submit" class="btn-submit">Add Event</button>
+                    <div class="message-area" id="event-message-area"></div>
+                </form>
+            </div>
+            <div class="card">
+                <h2>Your Upcoming Events</h2>
+                <p>No upcoming events scheduled.</p>
+            </div>
+        </section>
+
+        <!-- View: Alumni Network -->
+        <section id="alumni-view" class="content-view">
+            <div class="card">
+                <h2>Register an Alumnus</h2>
+                <form id="register-alumni-form">
+                    <div class="form-group"><label for="alumni-name">Alumnus Full Name</label><input type="text" id="alumni-name" class="form-control" required></div>
+                    <div class="form-group"><label for="alumni-email">Email Address</label><input type="email" id="alumni-email" class="form-control" required></div>
+                    <div class="form-group"><label for="alumni-company">Current Company / Role</label><input type="text" id="alumni-company" class="form-control" placeholder="e.g., Software Engineer at Google" required></div>
+                    <div class="form-group"><label for="alumni-linkedin">LinkedIn Profile URL</label><input type="url" id="alumni-linkedin" class="form-control" placeholder="https://linkedin.com/in/username"></div>
+                    <div class="form-group">
+                        <label for="alumni-pic">Alumnus Profile Picture</label>
+                        <div class="file-upload-wrapper">
+                            <img id="alumni-pic-preview" class="profile-pic-preview" src="https://placehold.co/100x100/e0e0e0/7f8c8d?text=Upload" alt="Alumnus profile picture preview">
+                            <div>
+                                <input type="file" id="alumni-pic" class="file-input" accept="image/png, image/jpeg">
+                                <label for="alumni-pic" class="file-upload-label">Choose Image</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Register Alumnus</button>
+                    <div class="message-area" id="alumni-message-area"></div>
+                </form>
+            </div>
+             <div class="card">
+                <h2>Registered Alumni</h2>
+                <p>No alumni have been registered yet.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_URL = 'http://localhost:3000/api/institutions';
+            const token = localStorage.getItem('sipe-token');
+            if (!token) {
+                window.location.href = 'logininstitution.html';
+                return;
+            }
+            const authHeaders = { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' };
+
+            // DOM Elements
+            const institutionNameEl = document.getElementById('institution-name');
+            const studentCountEl = document.getElementById('student-count');
+            const sessionCountEl = document.getElementById('session-count');
+            const eventCountEl = document.getElementById('event-count');
+            const alumniCountEl = document.getElementById('alumni-count');
+            const logoutBtn = document.getElementById('logout-btn');
+            const eventForm = document.getElementById('create-event-form');
+            const alumniForm = document.getElementById('register-alumni-form');
+            const alumniPicInput = document.getElementById('alumni-pic');
+            const alumniPicPreview = document.getElementById('alumni-pic-preview');
+
+            // Helper function to show messages
+            const showMessage = (area, message, type) => {
+                area.textContent = message;
+                area.className = `message-area ${type}`;
+                area.style.display = 'block';
+            };
+
+            // Generic data fetching function
+            const fetchData = async (endpoint, element, key) => {
+                try {
+                    const response = await fetch(`${API_URL}/${endpoint}`, { headers: authHeaders });
+                    if (response.status === 401) {
+                        localStorage.removeItem('sipe-token');
+                        window.location.href = 'logininstitution.html';
+                        return;
+                    }
+                    if (!response.ok) throw new Error(`Failed to fetch ${endpoint}`);
+                    const data = await response.json();
+                    element.textContent = data[key] || '0';
+                } catch (error) {
+                    console.error(error);
+                    element.textContent = 'Error';
+                }
+            };
+
+            // Initial data load for the dashboard
+            fetchData('profile', institutionNameEl, 'name').then(() => {
+                institutionNameEl.textContent = `Welcome, ${institutionNameEl.textContent}`;
+            });
+            fetchData('student-count', studentCountEl, 'count');
+            fetchData('session-count', sessionCountEl, 'count');
+            fetchData('event-count', eventCountEl, 'count');
+            fetchData('alumni-count', alumniCountEl, 'count');
+
+            // Logout
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('sipe-token');
+                window.location.href = 'logininstitution.html';
+            });
+
+            // Event form submission
+            eventForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const messageArea = document.getElementById('event-message-area');
+                const eventData = {
+                    title: document.getElementById('event-title').value,
+                    date: document.getElementById('event-date').value,
+                    time: document.getElementById('event-time').value,
+                    description: document.getElementById('event-description').value,
+                };
+                try {
+                    const response = await fetch(`${API_URL}/events`, { method: 'POST', headers: authHeaders, body: JSON.stringify(eventData) });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Failed to create event.');
+                    showMessage(messageArea, 'Event created successfully!', 'success');
+                    eventForm.reset();
+                    fetchData('event-count', eventCountEl, 'count'); // Refresh count
+                } catch (error) {
+                    showMessage(messageArea, error.message, 'error');
+                }
+            });
+
+            // Alumni form submission
+            alumniForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const messageArea = document.getElementById('alumni-message-area');
+                const file = alumniPicInput.files[0];
+                let pictureBase64 = null;
+                if (file) {
+                    pictureBase64 = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = error => reject(error);
+                    });
+                }
+                const alumniData = {
+                    name: document.getElementById('alumni-name').value,
+                    email: document.getElementById('alumni-email').value,
+                    company: document.getElementById('alumni-company').value,
+                    linkedin: document.getElementById('alumni-linkedin').value,
+                    picture: pictureBase64,
+                };
+                try {
+                    const response = await fetch(`${API_URL}/alumni`, { method: 'POST', headers: authHeaders, body: JSON.stringify(alumniData) });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Failed to register alumnus.');
+                    showMessage(messageArea, 'Alumnus registered successfully!', 'success');
+                    alumniForm.reset();
+                    alumniPicPreview.src = 'https://placehold.co/100x100/e0e0e0/7f8c8d?text=Upload';
+                    fetchData('alumni-count', alumniCountEl, 'count'); // Refresh count
+                } catch (error) {
+                    showMessage(messageArea, error.message, 'error');
+                }
+            });
+            
+            alumniPicInput.addEventListener('change', () => {
+                const file = alumniPicInput.files[0];
+                if (file) alumniPicPreview.src = URL.createObjectURL(file);
+            });
+
+            // View switching logic
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentViews = document.querySelectorAll('.content-view');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetViewId = link.getAttribute('data-view');
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    link.classList.add('active');
+                    contentViews.forEach(view => {
+                        view.classList.toggle('active', view.id === targetViewId);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
