@@ -33,15 +33,20 @@
         .toggle-auth a { color: var(--primary-color); font-weight: 600; text-decoration: none; cursor: pointer; }
         .toggle-auth a:hover { text-decoration: underline; }
         .hidden { display: none; }
-        .message-area { text-align: center; margin-bottom: 1rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; }
-        .message-area.success { color: var(--success-color); background-color: #e8f5e9; }
-        .message-area.error { color: var(--error-color); background-color: #fdecea; }
+        .message-area { text-align: center; margin-bottom: 1rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; display: none; }
+        .message-area.success { display: block; color: var(--success-color); background-color: #e8f5e9; }
+        .message-area.error { display: block; color: var(--error-color); background-color: #fdecea; }
+        .institution-other-wrapper { margin-top: 0.5rem; font-size: 0.9rem; }
+        .institution-other-wrapper label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+        #institution-other-input { margin-top: 0.75rem; }
     </style>
 </head>
 <body>
 
     <div class="auth-container">
-        <div id="message-area" class="message-area hidden"></div>
+        <div id="message-area" class="message-area"></div>
+
+        <!-- Login Form -->
         <div id="login-form-container">
             <div class="auth-header">
                 <h1>Welcome Back, Student!</h1>
@@ -63,12 +68,14 @@
             </p>
         </div>
 
+        <!-- Signup Form -->
         <div id="signup-form-container" class="hidden">
             <div class="auth-header">
                 <h1>Create Your Student Account</h1>
                 <p>Join <span class="logo">SIPE</span> and start your journey.</p>
             </div>
             <form id="signup-form">
+                <!-- Step 1: User Details -->
                 <div id="signup-step-1">
                     <div class="form-group">
                         <label for="signup-name">Full Name</label>
@@ -81,8 +88,12 @@
                     <div class="form-group">
                         <label for="signup-institution">Institution Name</label>
                         <select id="signup-institution" class="form-control" required>
-                            <option value="" disabled selected>Loading institutions...</option>
+                            <option value="" disabled selected>Loading partners...</option>
                         </select>
+                        <div class="institution-other-wrapper">
+                            <label><input type="checkbox" id="institution-other-checkbox"> My institution is not listed</label>
+                        </div>
+                        <input type="text" id="institution-other-input" class="form-control hidden" placeholder="Enter your institution name">
                     </div>
                     <div class="form-group">
                         <label for="signup-exam">Primary Target Exam</label>
@@ -97,6 +108,7 @@
                     </div>
                     <button type="button" id="send-otp-btn" class="btn-submit">Send Verification OTP</button>
                 </div>
+                <!-- Step 2: OTP and Password -->
                 <div id="signup-step-2" class="hidden">
                     <div class="form-group">
                         <label for="signup-otp">Verification OTP</label>
@@ -116,34 +128,46 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const STUDENT_API_URL = 'https://sipe-backend.onrender.com/api/students';
             const PUBLIC_API_URL = 'https://sipe-backend.onrender.com/api';
 
+            // Form containers
             const loginContainer = document.getElementById('login-form-container');
             const signupContainer = document.getElementById('signup-form-container');
+            
+            // Toggle links
             const showSignupLink = document.getElementById('show-signup');
             const showLoginLink = document.getElementById('show-login');
+            
+            // Message area
             const messageArea = document.getElementById('message-area');
+
+            // Forms and steps
+            const loginForm = document.getElementById('login-form');
             const signupForm = document.getElementById('signup-form');
-            const sendOtpBtn = document.getElementById('send-otp-btn');
             const signupStep1 = document.getElementById('signup-step-1');
             const signupStep2 = document.getElementById('signup-step-2');
-            const signupEmailInput = document.getElementById('signup-email');
-            const loginForm = document.getElementById('login-form');
+            
+            // Buttons and inputs
+            const sendOtpBtn = document.getElementById('send-otp-btn');
             const institutionSelect = document.getElementById('signup-institution');
+            const institutionOtherCheckbox = document.getElementById('institution-other-checkbox');
+            const institutionOtherInput = document.getElementById('institution-other-input');
 
             const showMessage = (message, type) => {
                 messageArea.textContent = message;
                 messageArea.className = `message-area ${type}`;
             };
-            
+
             const loadInstitutions = async () => {
                 try {
                     const response = await fetch(`${PUBLIC_API_URL}/institutions`);
-                    if (!response.ok) throw new Error('Could not load institutions.');
+                    if (!response.ok) throw new Error('Network response was not ok.');
+                    
                     const institutions = await response.json();
-                    institutionSelect.innerHTML = '<option value="" disabled selected>Select your institution</option>';
+                    institutionSelect.innerHTML = '<option value="" disabled selected>Select a partner institution</option>';
+                    
                     if (institutions.length > 0) {
                         institutions.forEach(inst => {
                             const option = document.createElement('option');
@@ -155,27 +179,41 @@
                         institutionSelect.innerHTML = '<option value="" disabled>No partner institutions found</option>';
                     }
                 } catch (error) {
-                    console.error(error);
-                    institutionSelect.innerHTML = '<option value="" disabled>Error loading institutions</option>';
-                    showMessage('Could not connect to server to load institutions. Please ensure the backend is running.', 'error');
+                    console.error('Error loading institutions:', error);
+                    institutionSelect.innerHTML = '<option value="" disabled>Could not load partners</option>';
+                    showMessage('Could not load institution list. Please ensure the backend is running.', 'error');
                 }
             };
             
-            await loadInstitutions();
+            loadInstitutions();
 
             showSignupLink.addEventListener('click', () => {
                 loginContainer.classList.add('hidden');
                 signupContainer.classList.remove('hidden');
-                messageArea.className = 'message-area hidden';
+                messageArea.className = 'message-area';
             });
+
             showLoginLink.addEventListener('click', () => {
                 signupContainer.classList.add('hidden');
                 loginContainer.classList.remove('hidden');
-                messageArea.className = 'message-area hidden';
+                messageArea.className = 'message-area';
+            });
+
+            institutionOtherCheckbox.addEventListener('change', () => {
+                const isChecked = institutionOtherCheckbox.checked;
+                institutionSelect.classList.toggle('hidden', isChecked);
+                institutionOtherInput.classList.toggle('hidden', !isChecked);
+                if (isChecked) {
+                    institutionSelect.removeAttribute('required');
+                    institutionOtherInput.setAttribute('required', 'required');
+                } else {
+                    institutionOtherInput.removeAttribute('required');
+                    institutionSelect.setAttribute('required', 'required');
+                }
             });
 
             sendOtpBtn.addEventListener('click', async () => {
-                const email = signupEmailInput.value;
+                const email = document.getElementById('signup-email').value;
                 if (!email) {
                     showMessage('Please enter your email address.', 'error');
                     return;
@@ -190,12 +228,13 @@
                     });
                     const data = await response.json();
                     if (!response.ok) throw new Error(data.message || 'Failed to send OTP.');
+                    
                     showMessage(data.message, 'success');
-                    signupStep1.querySelectorAll('input, select').forEach(el => el.disabled = true);
                     signupStep1.classList.add('hidden');
                     signupStep2.classList.remove('hidden');
                 } catch (error) {
                     showMessage(error.message, 'error');
+                } finally {
                     sendOtpBtn.disabled = false;
                     sendOtpBtn.textContent = 'Send Verification OTP';
                 }
@@ -203,14 +242,30 @@
 
             signupForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const createAccountBtn = signupStep2.querySelector('.btn-submit');
+                createAccountBtn.disabled = true;
+                createAccountBtn.textContent = 'Creating Account...';
+
+                let institutionName = institutionOtherCheckbox.checked 
+                    ? institutionOtherInput.value 
+                    : institutionSelect.value;
+                
+                if (!institutionName) {
+                    showMessage('Please select or enter an institution name.', 'error');
+                    createAccountBtn.disabled = false;
+                    createAccountBtn.textContent = 'Create Account';
+                    return;
+                }
+
                 const formData = {
                     name: document.getElementById('signup-name').value,
                     email: document.getElementById('signup-email').value,
-                    institution: institutionSelect.value,
+                    institution: institutionName,
                     exam: document.getElementById('signup-exam').value,
                     otp: document.getElementById('signup-otp').value,
                     password: document.getElementById('signup-password').value,
                 };
+
                 try {
                     const response = await fetch(`${STUDENT_API_URL}/signup`, {
                         method: 'POST',
@@ -219,21 +274,31 @@
                     });
                     const data = await response.json();
                     if (!response.ok) throw new Error(data.message || 'Signup failed.');
+                    
                     showMessage('Account created successfully! Please log in.', 'success');
-                    signupContainer.classList.add('hidden');
-                    loginContainer.classList.remove('hidden');
                     signupForm.reset();
+                    signupStep2.classList.add('hidden');
+                    signupStep1.classList.remove('hidden');
+                    showLoginLink.click();
                 } catch (error) {
                     showMessage(error.message, 'error');
+                } finally {
+                    createAccountBtn.disabled = false;
+                    createAccountBtn.textContent = 'Create Account';
                 }
             });
 
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const loginBtn = loginForm.querySelector('.btn-submit');
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Logging In...';
+
                 const formData = {
                     email: document.getElementById('login-email').value,
                     password: document.getElementById('login-password').value
                 };
+
                 try {
                     const response = await fetch(`${STUDENT_API_URL}/login`, {
                         method: 'POST',
@@ -244,17 +309,14 @@
                     if (!response.ok) throw new Error(data.message || 'Login failed.');
                     
                     showMessage('Login successful! Redirecting...', 'success');
-                    
-                    // Save the token to localStorage for the dashboard
                     localStorage.setItem('sipe-student-token', data.token);
-
-                    // Redirect to the student dashboard
                     setTimeout(() => {
                         window.location.href = 'studentdashboard.html';
-                    }, 1500); // 1.5 second delay
-                    
+                    }, 1500);
                 } catch (error) {
                     showMessage(error.message, 'error');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Log In';
                 }
             });
         });
