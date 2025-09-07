@@ -33,15 +33,17 @@
         .toggle-auth a { color: var(--primary-color); font-weight: 600; text-decoration: none; cursor: pointer; }
         .toggle-auth a:hover { text-decoration: underline; }
         .hidden { display: none; }
-        .message-area { text-align: center; margin-bottom: 1rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; }
-        .message-area.success { color: var(--success-color); background-color: #e8f5e9; }
-        .message-area.error { color: var(--error-color); background-color: #fdecea; }
+        .message-area { text-align: center; margin-bottom: 1rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; display: none; }
+        .message-area.success { display: block; color: var(--success-color); background-color: #e8f5e9; }
+        .message-area.error { display: block; color: var(--error-color); background-color: #fdecea; }
     </style>
 </head>
 <body>
 
     <div class="auth-container">
-        <div id="message-area" class="message-area hidden"></div>
+        <div id="message-area" class="message-area"></div>
+        
+        <!-- Login Form -->
         <div id="login-form-container">
             <div class="auth-header">
                 <h1>Institution Portal</h1>
@@ -63,12 +65,14 @@
             </p>
         </div>
 
+        <!-- Signup Form -->
         <div id="signup-form-container" class="hidden">
             <div class="auth-header">
                 <h1>Partner with SIPE</h1>
                 <p>Register your institution to join our network.</p>
             </div>
             <form id="signup-form">
+                <!-- Step 1: Institution Details -->
                 <div id="signup-step-1">
                     <div class="form-group">
                         <label for="signup-name">Institution Name</label>
@@ -80,6 +84,7 @@
                     </div>
                     <button type="button" id="send-otp-btn" class="btn-submit">Send Verification OTP</button>
                 </div>
+                <!-- Step 2: Full Registration -->
                 <div id="signup-step-2" class="hidden">
                     <div class="form-group">
                         <label for="signup-otp">Verification OTP</label>
@@ -99,7 +104,6 @@
                         <label for="signup-state">State</label>
                         <select id="signup-state" class="form-control" required>
                             <option value="" disabled selected>Select state</option>
-                            <!-- States will be populated by JavaScript -->
                         </select>
                     </div>
                     <div class="form-group">
@@ -114,7 +118,7 @@
                     </div>
                     <div class="form-group">
                         <label for="signup-website">Institution Website</label>
-                        <input type="url" id="signup-website" class="form-control" placeholder="https://www.example.edu" required>
+                        <input type="url" id="signup-website" class="form-control" placeholder="https://www.example.edu">
                     </div>
                     <div class="form-group">
                         <label for="signup-password">Create Password</label>
@@ -133,74 +137,48 @@
         document.addEventListener('DOMContentLoaded', () => {
             const API_URL = 'https://sipe-backend.onrender.com/api/institutions';
             
+            // Form containers and toggles
             const loginContainer = document.getElementById('login-form-container');
             const signupContainer = document.getElementById('signup-form-container');
             const showSignupLink = document.getElementById('show-signup');
             const showLoginLink = document.getElementById('show-login');
+            
+            // Message area and forms
             const messageArea = document.getElementById('message-area');
-            const signupForm = document.getElementById('signup-form');
             const loginForm = document.getElementById('login-form');
-            const sendOtpBtn = document.getElementById('send-otp-btn');
+            const signupForm = document.getElementById('signup-form');
+            
+            // Signup steps and elements
             const signupStep1 = document.getElementById('signup-step-1');
             const signupStep2 = document.getElementById('signup-step-2');
+            const sendOtpBtn = document.getElementById('send-otp-btn');
             const signupEmailInput = document.getElementById('signup-email');
+            const stateSelect = document.getElementById('signup-state');
+            const citySelect = document.getElementById('signup-city');
 
             const showMessage = (message, type) => {
                 messageArea.textContent = message;
                 messageArea.className = `message-area ${type}`;
-                messageArea.classList.remove('hidden');
             };
 
             showSignupLink.addEventListener('click', () => {
                 loginContainer.classList.add('hidden');
                 signupContainer.classList.remove('hidden');
-                messageArea.classList.add('hidden');
+                messageArea.className = 'message-area';
             });
+
             showLoginLink.addEventListener('click', () => {
                 signupContainer.classList.add('hidden');
                 loginContainer.classList.remove('hidden');
-                messageArea.classList.add('hidden');
+                messageArea.className = 'message-area';
             });
 
-            // --- NEW: Comprehensive State and City Data ---
-            const stateSelect = document.getElementById('signup-state');
-            const citySelect = document.getElementById('signup-city');
+            // --- State and City Data ---
             const citiesByState = {
-                "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool"],
-                "Arunachal Pradesh": ["Itanagar", "Naharlagun"],
-                "Assam": ["Guwahati", "Dibrugarh", "Silchar", "Jorhat"],
-                "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur"],
-                "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur", "Korba"],
-                "Goa": ["Panaji", "Margao", "Vasco da Gama"],
-                "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot"],
-                "Haryana": ["Faridabad", "Gurugram", "Panipat", "Ambala"],
-                "Himachal Pradesh": ["Shimla", "Dharamshala", "Solan", "Mandi"],
-                "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad", "Bokaro"],
-                "Karnataka": ["Bengaluru", "Mysuru", "Hubballi", "Mangaluru"],
-                "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur"],
-                "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur", "Gwalior"],
-                "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik"],
-                "Manipur": ["Imphal"], "Meghalaya": ["Shillong"], "Mizoram": ["Aizawl"],
-                "Nagaland": ["Kohima", "Dimapur"],
-                "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela", "Puri"],
-                "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala"],
-                "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur", "Kota"],
-                "Sikkim": ["Gangtok"],
-                "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli"],
-                "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar"],
-                "Tripura": ["Agartala"],
-                "Uttar Pradesh": ["Lucknow", "Kanpur", "Ghaziabad", "Agra", "Varanasi", "Noida"],
-                "Uttarakhand": ["Dehradun", "Haridwar", "Roorkee", "Haldwani"],
-                "West Bengal": ["Kolkata", "Asansol", "Siliguri", "Durgapur"],
-                "Andaman and Nicobar Islands": ["Port Blair"], "Chandigarh": ["Chandigarh"],
-                "Dadra and Nagar Haveli and Daman and Diu": ["Daman", "Silvassa"],
-                "Delhi": ["New Delhi", "Delhi"], "Ladakh": ["Leh", "Kargil"],
-                "Lakshadweep": ["Kavaratti"], "Jammu and Kashmir": ["Srinagar", "Jammu"],
-                "Puducherry": ["Puducherry"]
+                "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur"], "Arunachal Pradesh": ["Itanagar"], "Assam": ["Guwahati", "Dibrugarh", "Silchar"], "Bihar": ["Patna", "Gaya", "Bhagalpur"], "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur"], "Goa": ["Panaji", "Margao"], "Gujarat": ["Ahmedabad", "Surat", "Vadodara"], "Haryana": ["Faridabad", "Gurugram", "Panipat"], "Himachal Pradesh": ["Shimla", "Dharamshala", "Solan"], "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad"], "Karnataka": ["Bengaluru", "Mysuru", "Hubballi"], "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode"], "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur"], "Maharashtra": ["Mumbai", "Pune", "Nagpur"], "Manipur": ["Imphal"], "Meghalaya": ["Shillong"], "Mizoram": ["Aizawl"], "Nagaland": ["Kohima", "Dimapur"], "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela"], "Punjab": ["Ludhiana", "Amritsar", "Jalandhar"], "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur"], "Sikkim": ["Gangtok"], "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"], "Telangana": ["Hyderabad", "Warangal", "Nizamabad"], "Tripura": ["Agartala"], "Uttar Pradesh": ["Lucknow", "Kanpur", "Ghaziabad", "Noida"], "Uttarakhand": ["Dehradun", "Haridwar", "Roorkee"], "West Bengal": ["Kolkata", "Asansol", "Siliguri"], "Andaman and Nicobar Islands": ["Port Blair"], "Chandigarh": ["Chandigarh"], "Dadra and Nagar Haveli and Daman and Diu": ["Daman", "Silvassa"], "Delhi": ["New Delhi"], "Ladakh": ["Leh"], "Lakshadweep": ["Kavaratti"], "Jammu and Kashmir": ["Srinagar", "Jammu"], "Puducherry": ["Puducherry"]
             };
 
-            // Populate states dropdown
-            Object.keys(citiesByState).forEach(state => {
+            Object.keys(citiesByState).sort().forEach(state => {
                 const option = document.createElement('option');
                 option.value = state;
                 option.textContent = state;
@@ -219,21 +197,111 @@
                         citySelect.appendChild(option);
                     });
                 } else {
-                    citySelect.innerHTML = '<option value="" disabled selected>Select state first</option>';
                     citySelect.disabled = true;
                 }
             });
 
+            // --- Corrected OTP Logic ---
             sendOtpBtn.addEventListener('click', async () => {
-                // ... (rest of the OTP logic is unchanged)
+                const email = signupEmailInput.value;
+                if (!email) {
+                    showMessage('Please enter the official email address.', 'error');
+                    return;
+                }
+                sendOtpBtn.disabled = true;
+                sendOtpBtn.textContent = 'Sending...';
+                try {
+                    const response = await fetch(`${API_URL}/send-otp`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Failed to send OTP.');
+                    
+                    showMessage(data.message, 'success');
+                    signupStep1.classList.add('hidden');
+                    signupStep2.classList.remove('hidden');
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                } finally {
+                    sendOtpBtn.disabled = false;
+                    sendOtpBtn.textContent = 'Send Verification OTP';
+                }
             });
 
+            // --- Corrected Signup Logic ---
             signupForm.addEventListener('submit', async (e) => {
-                // ... (rest of the signup logic is unchanged)
+                e.preventDefault();
+                const signupBtn = signupStep2.querySelector('.btn-submit');
+                signupBtn.disabled = true;
+                signupBtn.textContent = 'Submitting...';
+
+                const formData = {
+                    name: document.getElementById('signup-name').value,
+                    email: signupEmailInput.value,
+                    otp: document.getElementById('signup-otp').value,
+                    type: document.getElementById('signup-type').value,
+                    state: stateSelect.value,
+                    city: citySelect.value,
+                    contactPerson: document.getElementById('signup-contact').value,
+                    website: document.getElementById('signup-website').value,
+                    password: document.getElementById('signup-password').value,
+                };
+
+                try {
+                    const response = await fetch(`${API_URL}/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Signup failed.');
+                    
+                    showMessage('Registration submitted successfully! You can now log in.', 'success');
+                    signupForm.reset();
+                    citySelect.disabled = true;
+                    signupStep2.classList.add('hidden');
+                    signupStep1.classList.remove('hidden');
+                    showLoginLink.click();
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                } finally {
+                    signupBtn.disabled = false;
+                    signupBtn.textContent = 'Submit for Review';
+                }
             });
 
+            // --- Corrected Login Logic ---
             loginForm.addEventListener('submit', async (e) => {
-                // ... (rest of the login logic is unchanged)
+                e.preventDefault();
+                const loginBtn = loginForm.querySelector('.btn-submit');
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Logging In...';
+
+                const formData = {
+                    email: document.getElementById('login-email').value,
+                    password: document.getElementById('login-password').value
+                };
+                try {
+                    const response = await fetch(`${API_URL}/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Login failed.');
+                    
+                    showMessage('Login successful! Redirecting...', 'success');
+                    localStorage.setItem('sipe-token', data.token);
+                    setTimeout(() => {
+                        window.location.href = 'institutiondashboard.html';
+                    }, 1500);
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Log In';
+                }
             });
         });
     </script>
