@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Chapter | SIPE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --premium-color: #f39c12; /* A strong gold for premium feel */
+            --premium-dark-color: #e67e22;
+            --background-color: #f4f7f6;
+            --surface-color: #ffffff;
+            --text-color: #34495e;
+            --light-text-color: #7f8c8d;
+            --box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .header .tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background-color: #fef9e7;
+            color: var(--premium-color);
+            border: 1px solid var(--premium-color);
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            font-size: 1.1rem;
+            color: var(--light-text-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .mentors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+        .mentor-card {
+            background-color: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        .mentor-card h3 {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 0.25rem;
+        }
+        .mentor-card p {
+            font-size: 0.9rem;
+            color: var(--light-text-color);
+        }
+        .cta-section {
+            background-color: var(--surface-color);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+         .cta-section h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .cta-section p {
+             color: var(--light-text-color);
+             margin-bottom: 2rem;
+             font-size: 1.1rem;
+        }
+        .btn-premium {
+            display: inline-block;
+            padding: 1rem 3rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            background-color: var(--premium-color);
+            color: var(--surface-color);
+            transition: all 0.3s ease;
+        }
+        .btn-premium:hover {
+            background-color: var(--premium-dark-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <span class="tag">Paid Membership</span>
+            <h1>SIPE Master Chapter</h1>
+            <p>Unlock your full potential with exclusive access to our nationwide network of elite mentors, workshops, and premium resources.</p>
+        </header>
+
+        <section class="mentors-section">
+            <h2 class="section-title">Your Elite Mentor Network</h2>
+            <div class="mentors-grid">
+                <div class="mentor-card">
+                    <h3>Mr. Sanjeev K Shola</h3>
+                    <p>(Chief General Manager, MRA), Ministry of Defence</p>
+                </div>
+                <div class="mentor-card">
+                    <h3>Mr. E R Sheikh</h3>
+                    <p>(Ex. IOFS), Ordnance Factory Board</p>
+                </div>
+                <div class="mentor-card">
+                    <h3>Mr. Atul Singh (IPS)</h3>
+                    <p>(DIG), Jabalpur Range</p>
+                </div>
+                <div class="mentor-card">
+                    <h3>Dr. Rajeev Chandak</h3>
+                    <p>(Principal), JEC Jabalpur</p>
+                </div>
+                <div class="mentor-card">
+                    <h3>Dr. Sudhir Mishra</h3>
+                    <p>(Ex. DG D.R.D.O), (CEO & MD BrahMos)</p>
+                </div>
+                 <div class="mentor-card">
+                    <h3>Prof. Bhartendu K Singh</h3>
+                    <p>(Director), IIITDM Jabalpur</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Ready to Join?</h2>
+            <p>Become a member today to start your journey with the best minds in the country.</p>
+            <a href="https://rzp.io/rzp/C5D4REc" target="_blank" class="btn-premium">Become a Member</a>
+        </section>
+    </div>
+</body>
+</html>

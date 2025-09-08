@@ -39,6 +39,7 @@
         .institution-other-wrapper { margin-top: 0.5rem; font-size: 0.9rem; }
         .institution-other-wrapper label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
         #institution-other-input { margin-top: 0.75rem; }
+        .password-requirements { font-size: 0.8rem; color: var(--light-text-color); margin-top: 0.5rem; }
     </style>
 </head>
 <body>
@@ -117,6 +118,11 @@
                     <div class="form-group">
                         <label for="signup-password">Create Password</label>
                         <input type="password" id="signup-password" class="form-control" required>
+                        <p class="password-requirements">Must be at least 8 characters and include a number.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm-password">Confirm Password</label>
+                        <input type="password" id="signup-confirm-password" class="form-control" required>
                     </div>
                     <button type="submit" class="btn-submit">Create Account</button>
                 </div>
@@ -132,28 +138,22 @@
             const STUDENT_API_URL = 'https://sipe-backend.onrender.com/api/students';
             const PUBLIC_API_URL = 'https://sipe-backend.onrender.com/api';
 
-            // Form containers
+            // DOM elements
             const loginContainer = document.getElementById('login-form-container');
             const signupContainer = document.getElementById('signup-form-container');
-            
-            // Toggle links
             const showSignupLink = document.getElementById('show-signup');
             const showLoginLink = document.getElementById('show-login');
-            
-            // Message area
             const messageArea = document.getElementById('message-area');
-
-            // Forms and steps
             const loginForm = document.getElementById('login-form');
             const signupForm = document.getElementById('signup-form');
             const signupStep1 = document.getElementById('signup-step-1');
             const signupStep2 = document.getElementById('signup-step-2');
-            
-            // Buttons and inputs
             const sendOtpBtn = document.getElementById('send-otp-btn');
             const institutionSelect = document.getElementById('signup-institution');
             const institutionOtherCheckbox = document.getElementById('institution-other-checkbox');
             const institutionOtherInput = document.getElementById('institution-other-input');
+            const passwordInput = document.getElementById('signup-password');
+            const confirmPasswordInput = document.getElementById('signup-confirm-password');
 
             const showMessage = (message, type) => {
                 messageArea.textContent = message;
@@ -164,10 +164,8 @@
                 try {
                     const response = await fetch(`${PUBLIC_API_URL}/institutions`);
                     if (!response.ok) throw new Error('Network response was not ok.');
-                    
                     const institutions = await response.json();
                     institutionSelect.innerHTML = '<option value="" disabled selected>Select a partner institution</option>';
-                    
                     if (institutions.length > 0) {
                         institutions.forEach(inst => {
                             const option = document.createElement('option');
@@ -228,7 +226,6 @@
                     });
                     const data = await response.json();
                     if (!response.ok) throw new Error(data.message || 'Failed to send OTP.');
-                    
                     showMessage(data.message, 'success');
                     signupStep1.classList.add('hidden');
                     signupStep2.classList.remove('hidden');
@@ -243,6 +240,23 @@
             signupForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const createAccountBtn = signupStep2.querySelector('.btn-submit');
+                
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                if (password.length < 8) {
+                    showMessage('Password must be at least 8 characters long.', 'error');
+                    return;
+                }
+                if (!/\d/.test(password)) {
+                    showMessage('Password must contain at least one number.', 'error');
+                    return;
+                }
+                if (password !== confirmPassword) {
+                    showMessage('Passwords do not match.', 'error');
+                    return;
+                }
+
                 createAccountBtn.disabled = true;
                 createAccountBtn.textContent = 'Creating Account...';
 
@@ -263,7 +277,7 @@
                     institution: institutionName,
                     exam: document.getElementById('signup-exam').value,
                     otp: document.getElementById('signup-otp').value,
-                    password: document.getElementById('signup-password').value,
+                    password: password,
                 };
 
                 try {
@@ -311,7 +325,7 @@
                     showMessage('Login successful! Redirecting...', 'success');
                     localStorage.setItem('sipe-student-token', data.token);
                     setTimeout(() => {
-                        window.location.href = 'studentdashboard.html';
+                        window.location.href = 'chapter-select.html'; // UPDATED REDIRECT
                     }, 1500);
                 } catch (error) {
                     showMessage(error.message, 'error');
