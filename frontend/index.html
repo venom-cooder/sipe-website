@@ -36,19 +36,21 @@
         
         .btn { display: inline-block; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; font-family: 'Poppins', sans-serif;}
         .btn-primary { background-color: var(--secondary-color); color: white; }
-        .btn-primary:hover { background-color: #2980b9; transform: translateY(-3px); }
+        .btn-primary:hover { background-color: #2980b9; transform: translateY(-3px); box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4); }
 
         /* --- Header --- */
         .header { background-color: var(--surface-color); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000; }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
         .logo { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
         .nav-links { display: flex; list-style: none; gap: 2.5rem; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; }
-        .nav-links a:hover { color: var(--secondary-color); }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; position: relative; padding-bottom: 5px; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--secondary-color); transition: width 0.3s ease-in-out; }
+        .nav-links a:hover::after { width: 100%; }
 
         /* --- Hero Section --- */
         .hero {
             background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2232&auto=format&fit=crop') center/cover no-repeat;
+            background-attachment: fixed; /* Simple parallax effect */
             color: white;
             text-align: center;
             padding: 7rem 0;
@@ -56,27 +58,73 @@
         .hero-content h1 { font-size: 3rem; line-height: 1.2; margin-bottom: 1rem; }
         .hero-content .description { max-width: 700px; margin: 0 auto 2.5rem auto; font-size: 1.1rem; opacity: 0.9; }
 
-        /* --- Programs & Offerings Section --- */
+        /* --- Perks Section --- */
+        .perks-section { background-color: #e8eced; }
+        .perks-container {
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        .perks-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* --- Mentors Section (ENHANCED UI) --- */
+        .mentor-card {
+            background-color: var(--surface-color); padding: 2.5rem 2rem; border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .mentor-card::before {
+            content: '“';
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 6rem;
+            color: var(--secondary-color);
+            opacity: 0.1;
+            line-height: 1;
+        }
+        .mentor-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .mentor-card h3 { font-size: 1.4rem; color: var(--primary-color); margin-bottom: 0.5rem; }
+        .mentor-card p { color: var(--light-text-color); font-size: 1rem; }
+        .mentors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+
+        /* --- Programs & Offerings Section (ENHANCED UI) --- */
         .programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
-        .program-card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); transition: transform 0.3s ease; }
-        .program-card:hover { transform: translateY(-5px); }
-        .program-card h3 { font-size: 1.3rem; margin-bottom: 1rem; color: var(--primary-color); }
-        .program-card ul { list-style: none; padding-left: 1.2rem; }
-        .program-card li { margin-bottom: 0.5rem; position: relative; }
-        .program-card li::before { content: '✓'; color: var(--secondary-color); position: absolute; left: -1.2rem; font-weight: 600; }
+        .program-card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .program-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .program-card h3 { font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--primary-color); border-left: 4px solid var(--secondary-color); padding-left: 1rem;}
+        .program-card ul { list-style: none; padding: 0; }
+        .program-card li { margin-bottom: 0.75rem; position: relative; padding-left: 1.8rem; }
+        .program-card li::before { 
+            content: ''; 
+            position: absolute; 
+            left: 0;
+            top: 5px;
+            width: 1rem;
+            height: 1rem;
+            background-color: var(--secondary-color);
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
 
         /* --- SIPE Model Section --- */
         .model-section { background-color: #e8eced; }
         .model-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
         .model-card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: center; }
-        .model-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .model-icon { font-size: 2.5rem; margin-bottom: 1rem; color: var(--secondary-color); }
         .model-card h3 { font-size: 1.3rem; color: var(--primary-color); margin-bottom: 0.5rem; }
         .model-card p { color: var(--light-text-color); }
 
         /* --- FAQ Section --- */
         .faq-container { max-width: 800px; margin: 0 auto; }
         .faq-item { background-color: var(--surface-color); margin-bottom: 1rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); border: 1px solid var(--border-color); }
-        .faq-item summary { font-size: 1.1rem; font-weight: 600; padding: 1.5rem; cursor: pointer; position: relative; list-style: none; /* Hide default marker */ }
+        .faq-item summary { font-size: 1.1rem; font-weight: 600; padding: 1.5rem; cursor: pointer; position: relative; list-style: none; }
         .faq-item summary::-webkit-details-marker { display: none; }
         .faq-item summary::after { content: '+'; position: absolute; right: 1.5rem; font-size: 1.5rem; color: var(--secondary-color); transition: transform 0.2s; }
         .faq-item[open] summary::after { transform: rotate(45deg); }
@@ -96,6 +144,18 @@
             .nav-links { display: none; }
             .hero-content h1 { font-size: 2.2rem; }
         }
+
+        /* --- Scroll Animation --- */
+        .hidden-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+        .show-section {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -104,6 +164,8 @@
         <nav class="navbar container">
             <a href="#" class="logo">Society of Innovation and Professional Excellence</a>
             <ul class="nav-links">
+                <li><a href="#perks">Perks</a></li>
+                <li><a href="#mentors">Mentors</a></li>
                 <li><a href="#programs">Programs</a></li>
                 <li><a href="#model">Our Model</a></li>
                 <li><a href="#faq">FAQs</a></li>
@@ -115,135 +177,92 @@
 
     <main>
         <section class="hero">
-            <div class="hero-content container">
+            <div class="hero-content container hidden-section">
                 <h1>Empowering Student Innovation Across Indian Colleges</h1>
                 <p class="description">A student-driven, mentor-supported startup creating standardized innovation frameworks for educational institutions nationwide.</p>
                 <a href="portal-select.html" class="btn btn-primary">Get Started</a>
             </div>
         </section>
-
-        <section id="programs" class="programs-section container section">
-            <h2 class="section-title">Programs & Offerings</h2>
-            <p class="section-subtitle">Comprehensive initiatives to foster innovation and excellence from the classroom to the marketplace.</p>
-            <div class="programs-grid">
-                <div class="program-card">
-                    <h3>Standardized Guest Lecture Series</h3>
-                    <ul>
-                        <li>Industry expectations and synergy</li>
-                        <li>Research impact analysis</li>
-                        <li>IP commercialization challenges</li>
-                        <li>Startup journey insights</li>
-                    </ul>
+        
+        <section id="perks" class="perks-section section hidden-section">
+            <div class="container">
+                <h2 class="section-title">Membership Perks</h2>
+                <p class="section-subtitle">Enroll for an annual membership to get exclusive access to grants, mentorship, and a network of innovators.</p>
+                <div class="perks-container">
+                    <img src="poster.jpg" alt="SIPE Membership Perks Poster">
                 </div>
-                <div class="program-card">
-                    <h3>Innovation Index for Colleges</h3>
-                    <ul>
-                        <li>R&D activity measurement</li>
-                        <li>IP filing tracking</li>
-                        <li>Startup ecosystem assessment</li>
-                        <li>Institutional ranking & recognition</li>
-                    </ul>
+            </div>
+        </section>
+        
+        <section id="mentors" class="mentors-section container section hidden-section">
+            <h2 class="section-title">Our Esteemed Mentors</h2>
+            <p class="section-subtitle">Learn from leaders and visionaries from various domains who are dedicated to nurturing the next generation of innovators.</p>
+            <div class="mentors-grid">
+                <div class="mentor-card">
+                    <h3>Mr. Sanjeev K Shola</h3>
+                    <p>(Chief General Manager, MRA), Ministry of Defence</p>
                 </div>
-                <div class="program-card">
-                    <h3>Mentor Connect Platform</h3>
-                    <ul>
-                        <li>Industry mentor matching</li>
-                        <li>Investor connections</li>
-                        <li>Expert advisory services</li>
-                        <li>Cross-institutional network</li>
-                    </ul>
+                <div class="mentor-card">
+                    <h3>Mr. E R Sheikh</h3>
+                    <p>(Ex. IOFS), Ordnance Factory Board</p>
                 </div>
-                <div class="program-card">
-                    <h3>IP to Impact Bootcamps</h3>
-                    <ul>
-                        <li>Patent commercialization</li>
-                        <li>Business model development</li>
-                        <li>Market validation</li>
-                        <li>Venture planning</li>
-                    </ul>
+                <div class="mentor-card">
+                    <h3>Mr. Atul Singh (IPS)</h3>
+                    <p>(DIG), Jabalpur Range</p>
                 </div>
-                <div class="program-card">
-                    <h3>Startup Clinics</h3>
-                    <ul>
-                        <li>Incubator partnerships</li>
-                        <li>Investor matchmaking</li>
-                        <li>Corporate accelerators</li>
-                        <li>Funding assistance</li>
-                    </ul>
+                <div class="mentor-card">
+                    <h3>Dr. Rajeev Chandak</h3>
+                    <p>(Principal), JEC Jabalpur</p>
+                </div>
+                <div class="mentor-card">
+                    <h3>Dr. Sudhir Mishra</h3>
+                    <p>(Ex. DG D.R.D.O), (CEO & MD BrahMos)</p>
+                </div>
+                 <div class="mentor-card">
+                    <h3>Prof. Bhartendu K Singh</h3>
+                    <p>(Director), IIITDM Jabalpur</p>
                 </div>
             </div>
         </section>
 
-        <section id="model" class="model-section section">
+        <section id="programs" class="programs-section container section hidden-section">
+            <h2 class="section-title">Programs & Offerings</h2>
+            <p class="section-subtitle">Comprehensive initiatives to foster innovation and excellence from the classroom to the marketplace.</p>
+            <div class="programs-grid">
+                <div class="program-card"><h3>Standardized Guest Lecture Series</h3><ul><li>Industry expectations and synergy</li><li>Research impact analysis</li><li>IP commercialization challenges</li><li>Startup journey insights</li></ul></div>
+                <div class="program-card"><h3>Innovation Index for Colleges</h3><ul><li>R&D activity measurement</li><li>IP filing tracking</li><li>Startup ecosystem assessment</li><li>Institutional ranking & recognition</li></ul></div>
+                <div class="program-card"><h3>Mentor Connect Platform</h3><ul><li>Industry mentor matching</li><li>Investor connections</li><li>Expert advisory services</li><li>Cross-institutional network</li></ul></div>
+                <div class="program-card"><h3>IP to Impact Bootcamps</h3><ul><li>Patent commercialization</li><li>Business model development</li><li>Market validation</li><li>Venture planning</li></ul></div>
+                <div class="program-card"><h3>Startup Clinics</h3><ul><li>Incubator partnerships</li><li>Investor matchmaking</li><li>Corporate accelerators</li><li>Funding assistance</li></ul></div>
+            </div>
+        </section>
+
+        <section id="model" class="model-section section hidden-section">
             <div class="container">
                 <h2 class="section-title">The SIPE Model</h2>
                 <p class="section-subtitle">Our ecosystem is powered by six specialized committees, driving innovation and excellence at every level.</p>
                 <div class="model-grid">
-                    <div class="model-card">
-                        <div class="model-icon">👥</div>
-                        <h3>SIPE Mentors Circle</h3>
-                        <p>Industry & research professionals guiding projects with expertise and real-world insights.</p>
-                    </div>
-                    <div class="model-card">
-                        <div class="model-icon">⭐</div>
-                        <h3>Core Group</h3>
-                        <p>Faculty and student leaders curating events, lectures, and collaborations for maximum impact.</p>
-                    </div>
-                    <div class="model-card">
-                        <div class="model-icon">💰</div>
-                        <h3>Fundraising Cell</h3>
-                        <p>Securing local CSR, sponsorships, and project funding to support innovation initiatives.</p>
-                    </div>
-                    <div class="model-card">
-                        <div class="model-icon">🌐</div>
-                        <h3>Outreach Cell</h3>
-                        <p>Managing membership drives, alumni connections, and inter-college relations.</p>
-                    </div>
-                    <div class="model-card">
-                        <div class="model-icon">🎯</div>
-                        <h3>Event Cell</h3>
-                        <p>Organizing hackathons, research conclaves, and industrial visits to create engagement.</p>
-                    </div>
-                    <div class="model-card">
-                        <div class="model-icon">📱</div>
-                        <h3>Media & E-Publishing</h3>
-                        <p>Amplifying impact through newsletters, podcasts, and innovation showcases.</p>
-                    </div>
+                    <div class="model-card"><div class="model-icon">👥</div><h3>SIPE Mentors Circle</h3><p>Industry & research professionals guiding projects with expertise and real-world insights.</p></div>
+                    <div class="model-card"><div class="model-icon">⭐</div><h3>Core Group</h3><p>Faculty and student leaders curating events, lectures, and collaborations for maximum impact.</p></div>
+                    <div class="model-card"><div class="model-icon">💰</div><h3>Fundraising Cell</h3><p>Securing local CSR, sponsorships, and project funding to support innovation initiatives.</p></div>
+                    <div class="model-card"><div class="model-icon">🌐</div><h3>Outreach Cell</h3><p>Managing membership drives, alumni connections, and inter-college relations.</p></div>
+                    <div class="model-card"><div class="model-icon">🎯</div><h3>Event Cell</h3><p>Organizing hackathons, research conclaves, and industrial visits to create engagement.</p></div>
+                    <div class="model-card"><div class="model-icon">📱</div><h3>Media & E-Publishing</h3><p>Amplifying impact through newsletters, podcasts, and innovation showcases.</p></div>
                 </div>
             </div>
         </section>
 
-        <section id="faq" class="faq-section container section">
+        <section id="faq" class="faq-section container section hidden-section">
             <h2 class="section-title">Frequently Asked Questions</h2>
             <div class="faq-container">
-                <details class="faq-item">
-                    <summary>What is the primary goal of SIPE?</summary>
-                    <div class="faq-answer">
-                        <p>SIPE's main goal is to create a standardized, nationwide framework for fostering innovation and entrepreneurship within educational institutions. We aim to bridge the gap between academia and industry, helping students turn their ideas into impactful ventures.</p>
-                    </div>
-                </details>
-                <details class="faq-item">
-                    <summary>Who is eligible to join the SIPE network?</summary>
-                    <div class="faq-answer">
-                        <p>Our program is designed for educational institutions (universities, colleges, technical institutes) across India. Once an institution becomes a partner, all of its students are eligible to participate in our programs and access our network.</p>
-                    </div>
-                </details>
-                <details class="faq-item">
-                    <summary>How does the mentorship program work?</summary>
-                    <div class="faq-answer">
-                        <p>We provide a cross-college Mentor Connect Platform that links students with experienced industry professionals, researchers, and successful entrepreneurs. Mentorship is provided through one-on-one guidance, group sessions, and specialized bootcamps.</p>
-                    </div>
-                </details>
-                <details class="faq-item">
-                    <summary>How can our institution partner with SIPE?</summary>
-                    <div class="faq-answer">
-                        <p>We are always looking for new institutional partners. Please visit our registration portal and sign up as an institution. Our outreach team will review your application and get in touch to discuss the partnership process.</p>
-                    </div>
-                </details>
+                <details class="faq-item"><summary>What is the primary goal of SIPE?</summary><div class="faq-answer"><p>SIPE's main goal is to create a standardized, nationwide framework for fostering innovation and entrepreneurship within educational institutions...</p></div></details>
+                <details class="faq-item"><summary>Who is eligible to join the SIPE network?</summary><div class="faq-answer"><p>Our program is designed for educational institutions... Once a partner, all students are eligible.</p></div></details>
+                <details class="faq-item"><summary>How does the mentorship program work?</summary><div class="faq-answer"><p>We provide a cross-college Mentor Connect Platform that links students with experienced industry professionals...</p></div></details>
+                <details class="faq-item"><summary>How can our institution partner with SIPE?</summary><div class="faq-answer"><p>Please visit our registration portal and sign up as an institution. Our outreach team will get in touch.</p></div></details>
             </div>
         </section>
 
-        <section id="contact" class="contact-section container section">
+        <section id="contact" class="contact-section container section hidden-section">
             <h2 class="section-title">Have More Questions?</h2>
             <p class="section-subtitle">Our team is ready to help. Reach out to us for partnership inquiries, program details, or any other questions you may have.</p>
             <a href="contact.html" class="btn btn-primary">Contact Our Team</a>
@@ -256,5 +275,22 @@
         </div>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- SCROLL ANIMATION ---
+            const sections = document.querySelectorAll('.hidden-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show-section');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
 </body>
 </html>
