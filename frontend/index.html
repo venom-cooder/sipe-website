@@ -9,18 +9,18 @@
     :root {
       --primary-blue: #0066FF;
       --sky-blue: #6dd5ed;
-      --light-blue: #E3F2FD;
+      --light-blue: #f0f7ff;
       --dark-blue: #1E3A8A;
       --white: #ffffff;
       --gray-50: #f7f9fc;
       --gray-100: #f1f5f9;
-      --gray-600: #64748b;
-      --gray-900: #0f172a;
+      --gray-600: #4b5563;
+      --gray-900: #111827;
       --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
       --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
       --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
       --radius: 16px;
-      --gradient: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
+      --gradient: linear-gradient(120deg, var(--primary-blue), var(--sky-blue));
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,8 +29,8 @@
       font-family: 'Inter', sans-serif;
       background-color: var(--white);
       color: var(--gray-900);
-      line-height: 1.6;
-      font-size: 18px;
+      line-height: 1.7;
+      font-size: 17px;
     }
     h1, h2, h3 { text-wrap: balance; font-weight: 700; letter-spacing: -0.02em; }
     .section-divider {
@@ -65,7 +65,7 @@
       transition: transform 0.3s ease; text-decoration: none;
     }
     .logo:hover { transform: scale(1.05) rotate(-2deg); }
-    .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+    .nav-links { display: flex; gap: 2.5rem; align-items: center; list-style: none; }
     .nav-links a {
       color: var(--gray-600); text-decoration: none; font-weight: 500; font-size: 1rem;
       padding: 0.5rem 0; transition: color 0.3s ease; position: relative;
@@ -197,7 +197,7 @@
     .premium .cta-button:hover { transform: translateY(-3px) scale(1.02); box-shadow: var(--shadow-xl); }
 
     /* General Cards */
-    .cards { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .cards-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
     .card {
       background: var(--white); padding: 2.5rem; border-radius: var(--radius);
       box-shadow: var(--shadow-lg); text-align: center; position: relative; overflow: hidden;
@@ -222,6 +222,13 @@
     .person-card:hover img { transform: scale(1.1); box-shadow: var(--shadow-lg); }
     .person-card h4 { font-size: 1.25rem; margin-bottom: 0.25rem; }
 
+    /* About Section */
+    #about {
+        display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;
+    }
+    @media (min-width: 768px) { #about { grid-template-columns: 1fr 1fr; } }
+    #about img { border-radius: var(--radius); box-shadow: var(--shadow-xl); }
+
     /* FAQ */
     .faq { max-width: 800px; margin: 0 auto; }
     .faq-item { background: var(--white); margin-bottom: 1rem; border-radius: var(--radius); box-shadow: var(--shadow-md); border: 1px solid var(--gray-100); }
@@ -245,8 +252,8 @@
     .social-links svg { width: 28px; height: 28px; }
     
     @media (max-width: 991px) { .premium { transform: scale(1); } .premium:hover { transform: scale(1.03) translateY(-5px); } }
-    @media (max-width: 968px) { .nav-links { display: none; } .hamburger { display: flex; } .join-btn { order: 2; margin-left: 0; margin-right: 1rem; } }
-    @media (max-width: 768px) { .section { padding: 4rem 1rem; } .cards { grid-template-columns: 1fr; } }
+    @media (max-width: 968px) { .nav-links { display: none; } .hamburger { display: flex; } .join-btn { display: none; } }
+    @media (max-width: 768px) { .section { padding: 4rem 1rem; } .cards-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -254,24 +261,28 @@
   <header class="header">
     <div class="header-content">
       <a href="#" class="logo">SIPE</a>
-      <nav class="nav-links">
-        <a href="#membership">Membership</a>
-        <a href="#programs">Programs</a>
-        <a href="#model">Our Model</a>
-        <a href="#mentors">Mentors</a>
-        <a href="#faq">FAQs</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#membership">Membership</a></li>
+          <li><a href="#mentors">Mentors</a></li>
+          <li><a href="#faq">FAQs</a></li>
+        </ul>
       </nav>
       <a href="portal-select.html" class="join-btn">Join Now</a>
       <div class="hamburger"><span></span><span></span><span></span></div>
-      <div class="mobile-menu">
-        <a href="#membership">Membership</a> <a href="#programs">Programs</a>
-        <a href="#model">Our Model</a> <a href="#mentors">Mentors</a> <a href="#faq">FAQs</a>
-      </div>
+    </div>
+    <div class="mobile-menu">
+      <a href="#home">Home</a> <a href="#about">About</a> <a href="#programs">Programs</a>
+      <a href="#membership">Membership</a> <a href="#mentors">Mentors</a> <a href="#faq">FAQs</a>
+      <a href="portal-select.html" class="join-btn" style="margin-top: 1rem; text-align: center;">Join Now</a>
     </div>
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero" id="home">
       <div class="hero-slideshow">
         <div class="slide"></div> <div class="slide"></div> <div class="slide"></div>
       </div>
@@ -301,8 +312,21 @@
         </div>
       </div>
     </section>
+
+    <section id="about" class="section">
+        <div class="section-content container">
+            <div id="about">
+                <div>
+                    <h2 class="section-title" style="text-align: left;">Bridging Academia and Industry</h2>
+                    <p class="section-subtitle" style="text-align: left; margin-left: 0;">SIPE's primary goal is to create a standardized, nationwide framework for fostering innovation and entrepreneurship within educational institutions. We connect students with industry mentors, resources, and real-world projects to transform groundbreaking ideas into impactful ventures.</p>
+                    <a href="#membership" class="join-btn">View Membership Plans</a>
+                </div>
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="Team collaborating">
+            </div>
+        </div>
+    </section>
     
-    <section id="membership" class="section">
+    <section id="membership" class="section bg-light">
       <div class="section-content">
         <h2 class="section-title">Choose Your Path to Innovation</h2>
         <p class="section-subtitle">We offer flexible plans to kickstart your journey. Select the one that's right for you.</p>
@@ -337,18 +361,12 @@
         </div>
       </div>
     </section>
-
-    <div class="section-divider" style="transform: rotate(180deg);">
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-        </svg>
-    </div>
     
     <section id="programs" class="section">
       <div class="section-content">
         <h2 class="section-title">Programs & Offerings</h2>
         <p class="section-subtitle">Comprehensive initiatives to foster innovation from the classroom to the marketplace.</p>
-        <div class="cards">
+        <div class="cards-grid">
             <div class="card"><h3>Guest Lecture Series</h3><p>Gain insights on industry expectations, research impact, and startup journeys from experts.</p></div>
             <div class="card"><h3>Innovation Index</h3><p>We measure and track R&D activity and IP filings to rank and recognize institutions.</p></div>
             <div class="card"><h3>Mentor Connect</h3><p>Get matched with industry mentors and investors through our cross-institutional network.</p></div>
@@ -359,11 +377,11 @@
       </div>
     </section>
   
-    <section id="model" class="section" style="background-color: var(--gray-50);">
+    <section id="model" class="section bg-light">
       <div class="section-content">
         <h2 class="section-title">The SIPE Model</h2>
         <p class="section-subtitle">Our ecosystem is powered by six specialized committees, driving innovation at every level.</p>
-        <div class="cards">
+        <div class="cards-grid">
             <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'%3E%3C/path%3E%3Ccircle cx='9' cy='7' r='4'%3E%3C/circle%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'%3E%3C/path%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'%3E%3C/path%3E%3C/svg%3E" alt="Mentors Icon"><h3>Mentors Circle</h3><p>Industry & research professionals guiding projects with real-world expertise.</p></div>
             <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E" alt="Core Group Icon"><h3>Core Group</h3><p>Faculty and student leaders curating events, lectures, and collaborations.</p></div>
             <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='1' x2='12' y2='23'%3E%3C/line%3E%3Cpath d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'%3E%3C/path%3E%3C/svg%3E" alt="Fundraising Icon"><h3>Fundraising Cell</h3><p>Securing local CSR, sponsorships, and project funding to support initiatives.</p></div>
@@ -378,7 +396,7 @@
       <div class="section-content">
         <h2 class="section-title">Our Esteemed Mentors</h2>
         <p class="section-subtitle">Learn from leaders and visionaries dedicated to nurturing the next generation of innovators.</p>
-        <div class="cards">
+        <div class="cards-grid">
             <div class="card person-card"><img src="https://via.placeholder.com/140x140/0066FF/ffffff?text=SB" alt="Mr. Sanjeev K Bhola"/><h4>Mr. Sanjeev K Bhola</h4><p>Chief General Manager, AVNL<br/>Ministry of Defence</p></div>
             <div class="card person-card"><img src="https://via.placeholder.com/140x140/6dd5ed/0f172a?text=ES" alt="Mr. E R Sheikh"/><h4>Mr. E R Sheikh</h4><p>Ex. CEO<br/>Ordinance Factory Board</p></div>
             <div class="card person-card"><img src="https://via.placeholder.com/140x140/0066FF/ffffff?text=AS" alt="Mr. Atul Singh (IPS)"/><h4>Mr. Atul Singh (IPS)</h4><p>DIG<br/>Jabalpur Range</p></div>
@@ -389,7 +407,7 @@
       </div>
     </section>
 
-    <section id="faq" class="section" style="background-color: var(--gray-50);">
+    <section id="faq" class="section bg-light">
       <div class="section-content">
         <h2 class="section-title">Frequently Asked Questions</h2>
         <p class="section-subtitle">Everything you need to know about SIPE</p>
