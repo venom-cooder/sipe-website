@@ -8,20 +8,19 @@
   <style>
     :root {
       --primary-blue: #0066FF;
-      --sky-blue: #87CEEB;
+      --sky-blue: #6dd5ed;
       --light-blue: #E3F2FD;
       --dark-blue: #1E3A8A;
       --white: #ffffff;
-      --gray-50: #f8fafc;
+      --gray-50: #f7f9fc;
       --gray-100: #f1f5f9;
       --gray-600: #64748b;
       --gray-900: #0f172a;
-      --shadow: 0 4px_20px rgba(0, 102, 255, 0.08);
+      --shadow: 0 4px 20px rgba(0, 102, 255, 0.08);
       --shadow-lg: 0 10px 40px rgba(0, 102, 255, 0.12);
       --shadow-xl: 0 20px 60px rgba(0, 102, 255, 0.15);
       --radius: 16px;
-      --gradient: linear-gradient(135deg, #0066FF, #87CEEB);
-      --gradient-hover: linear-gradient(135deg, #87CEEB, #0066FF);
+      --gradient: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
     }
 
     * {
@@ -36,16 +35,19 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: var(--gray-50);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23e0e7ff' fill-opacity='0.4'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9z'/%3E%3Cpath d='M6 5V0h1v5h4v1h-4v9H6v-9H0V5h6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background-color: var(--white);
       color: var(--gray-900);
       line-height: 1.6;
       font-size: 18px;
     }
+    
+    h1, h2, h3 {
+        text-wrap: balance;
+    }
 
     /* Enhanced Header */
     .header {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       position: sticky;
@@ -65,9 +67,6 @@
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
       font-size: 1.8rem;
       font-weight: 700;
       background: var(--gradient);
@@ -84,7 +83,7 @@
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       align-items: center;
     }
 
@@ -93,31 +92,41 @@
       text-decoration: none;
       font-weight: 500;
       font-size: 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      transition: all 0.3s ease;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
       position: relative;
+    }
+
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--gradient);
+        transition: width 0.3s ease;
     }
 
     .nav-links a:hover {
       color: var(--primary-blue);
-      background-color: var(--light-blue);
     }
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
 
     .join-btn {
       background: var(--gradient);
       color: var(--white);
-      padding: 0.875rem 2rem;
+      padding: 0.8rem 2rem;
       border: none;
-      border-radius: 12px;
-      font-size: 1rem;
+      border-radius: 50px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      margin-left: 1rem;
+      transition: all 0.3s ease;
       box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
       text-decoration: none;
       display: inline-block;
     }
@@ -143,18 +152,9 @@
       border-radius: 2px;
       transition: all 0.3s ease;
     }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -6px);
-    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
 
     .mobile-menu {
       display: none;
@@ -167,21 +167,28 @@
       box-shadow: var(--shadow-lg);
       padding: 1rem;
     }
-
-    .mobile-menu.active {
+    .mobile-menu.active { display: block; }
+    .mobile-menu a {
       display: block;
+      padding: 1rem;
+      color: var(--gray-900);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
     }
+    .mobile-menu a:hover { background: var(--light-blue); color: var(--primary-blue); }
 
     /* Enhanced Hero */
     .hero {
       position: relative;
-      height: 80vh;
-      min-height: 650px;
+      height: 90vh;
+      min-height: 700px;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--white);
+      background-color: var(--dark-blue);
     }
 
     .hero-slideshow {
@@ -190,7 +197,6 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 1;
     }
 
     .slide {
@@ -202,67 +208,73 @@
       opacity: 0;
       background-size: cover;
       background-position: center;
-      animation: smoothSlideShow 18s infinite ease-in-out;
+      animation-duration: 18s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
     }
     
     .slide::after {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(0, 80, 255, 0.7), rgba(10, 30, 110, 0.5));
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(135deg, rgba(0, 50, 180, 0.7), rgba(10, 20, 80, 0.6));
     }
+    
+    /* Particle Overlay */
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: radial-gradient(circle at center, rgba(255,255,255,0.1) 1px, transparent 1px);
+        background-size: 20px 20px;
+        animation: particle-move 20s linear infinite;
+        z-index: 2;
+    }
+    @keyframes particle-move { from { background-position: 0 0; } to { background-position: -200px -200px; } }
 
-    .slide:nth-child(1) {  
-      animation-delay: 0s;  
-      background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=800&fit=crop&crop=center');
-    }
-    .slide:nth-child(2) {  
-      animation-delay: 6s;  
-      background-image: url('https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=1200&h=800&fit=crop&crop=center');
-    }
-    .slide:nth-child(3) {  
-      animation-delay: 12s;  
-      background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=800&fit=crop&crop=center');
-    }
-
-    @keyframes smoothSlideShow {
-      0%, 28% { opacity: 1; transform: scale(1.05); }
-      33%, 100% { opacity: 0; transform: scale(1.1); }
-    }
+    .slide:nth-child(1) { animation-name: kenburns-1; animation-delay: 0s; background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=800&fit=crop&crop=center');}
+    .slide:nth-child(2) { animation-name: kenburns-2; animation-delay: 6s; background-image: url('https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=1200&h=800&fit=crop&crop=center');}
+    .slide:nth-child(3) { animation-name: kenburns-3; animation-delay: 12s; background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=800&fit=crop&crop=center');}
+    
+    @keyframes kenburns-1 { 0%, 100% { opacity: 0; } 5%, 33% { opacity: 1; transform: scale(1.05) translate(-2%, -2%); } 38% { opacity: 0; transform: scale(1.1); } }
+    @keyframes kenburns-2 { 0%, 100% { opacity: 0; } 5%, 33% { opacity: 1; transform: scale(1.05) translate(2%, 2%); } 38% { opacity: 0; transform: scale(1.1); } }
+    @keyframes kenburns-3 { 0%, 100% { opacity: 0; } 5%, 33% { opacity: 1; transform: scale(1.05) translate(0%, 2%); } 38% { opacity: 0; transform: scale(1.1); } }
 
     .hero-content {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       text-align: center;
       max-width: 800px;
       padding: 3rem;
-      background: rgba(0, 102, 255, 0.1);
-      backdrop-filter: blur(25px);
-      border-radius: var(--radius);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: var(--shadow-xl);
-      animation: heroContentFloat 6s ease-in-out infinite;
-    }
-
-    @keyframes heroContentFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
     }
 
     .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
       margin-bottom: 1rem;
       font-weight: 700;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      text-shadow: 0 4px 30px rgba(0,0,0,0.5);
     }
+    
+    .hero h1 .word {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fade-in-word 0.5s forwards ease-out;
+    }
+    
+    @keyframes fade-in-word { to { opacity: 1; transform: translateY(0); } }
 
     .hero p {
       font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       opacity: 0.9;
+      animation: fade-in-word 0.8s forwards ease-out 0.5s;
+      opacity: 0;
+    }
+
+    .hero .join-btn {
+        animation: fade-in-word 0.8s forwards ease-out 0.8s;
+        opacity: 0;
     }
 
     /* Sections */
@@ -304,278 +316,96 @@
       background: var(--white);
       padding: 2.5rem;
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow: 0 10px 30px rgba(0, 102, 255, 0.05);
       text-align: center;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
       border: 1px solid var(--gray-100);
       opacity: 0;
       transform: translateY(40px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
     }
     
-    .card.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: var(--shadow-xl);
-    }
+    .card.is-visible { opacity: 1; transform: translateY(0); }
+    .card:hover { transform: translateY(-10px); box-shadow: var(--shadow-xl); }
     
-    /* Card Shine Effect */
     .card::before {
       content: '';
-      position: absolute;
-      top: 0;
-      left: -150%;
-      width: 75%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.6s ease;
-      transform: skewX(-25deg);
+      position: absolute; top: 0; left: -150%; width: 75%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.7s ease; transform: skewX(-25deg);
     }
-    
-    .card:hover::before {
-        left: 150%;
-    }
+    .card:hover::before { left: 150%; }
 
-    .card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--primary-blue);
-      font-weight: 600;
-    }
-    
-    .card .icon {
-        height: 50px;
-        margin-bottom: 1rem;
-    }
-
-    .card p {
-      color: var(--gray-600);
-      margin-bottom: 1.5rem;
-    }
-
-    .card ul {
-      list-style: none;
-      text-align: left;
-    }
-
-    .card li {
-      padding: 0.75rem 0;
-      color: var(--gray-600);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-    }
-
-    .card li:before {
-      content: "✓";
-      color: var(--primary-blue);
-      font-weight: bold;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
+    .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary-blue); font-weight: 600; }
+    .card .icon { height: 50px; margin-bottom: 1rem; }
+    .card p { color: var(--gray-600); margin-bottom: 1.5rem; }
+    .card ul { list-style: none; text-align: left; }
+    .card li { padding: 0.75rem 0; color: var(--gray-600); display: flex; align-items: flex-start; gap: 0.75rem; }
+    .card li::before { content: "✓"; color: var(--primary-blue); font-weight: bold; flex-shrink: 0; margin-top: 2px; }
     
     /* Pricing Card */
-    .pricing-card.featured {
-      transform: scale(1.05);
-      border: 2px solid var(--primary-blue);
-    }
-    .pricing-card.featured:hover {
-      transform: scale(1.1) translateY(-10px);
-    }
-
-    .price {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary-blue);
-      margin-bottom: 0.5rem;
-    }
-
-    .original-price {
-      text-decoration: line-through;
-      color: var(--gray-600);
-      opacity: 0.7;
-    }
+    .pricing-card { position: relative; }
+    .pricing-card.featured { transform: scale(1.05); border: 2px solid var(--primary-blue); }
+    .pricing-card.featured:hover { transform: scale(1.1) translateY(-10px); }
     
-    /* Conference Section */
-    .countdown {
-      background: linear-gradient(135deg, var(--light-blue), var(--white));
-      text-align: center;
-      padding: 4rem 2rem;
-      border-radius: var(--radius);
-      margin: 2rem 0;
-      box-shadow: var(--shadow-lg);
-      position: relative;
-      overflow: hidden;
+    .badge {
+        position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+        background: var(--gradient); color: var(--white); padding: 0.5rem 1.5rem;
+        border-radius: 50px; font-size: 0.9rem; font-weight: 600;
     }
 
-    .conference-poster {
-      width: 100%;
-      max-width: 300px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
-      transition: all 0.4s ease;
-    }
-    
-    .conference-poster:hover {
-      transform: scale(1.05);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .timer {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .timer-box {
-      background: var(--white);
-      padding: 1.5rem;
-      border-radius: var(--radius);
-      min-width: 100px;
-      box-shadow: var(--shadow);
-    }
-
-    .timer-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary-blue);
-    }
+    .price { font-size: 2.5rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 0.5rem; }
+    .original-price { text-decoration: line-through; color: var(--gray-600); opacity: 0.7; }
     
     /* Person Cards (Mentors/Team) */
     .person-card img {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      margin-bottom: 1rem;
-      object-fit: cover;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      transition: all 0.4s ease;
-      box-shadow: var(--shadow);
-      border: 4px solid var(--white);
+      width: 140px; height: 140px; border-radius: 50%; margin-bottom: 1rem;
+      object-fit: cover; margin-left: auto; margin-right: auto;
+      transition: all 0.4s ease; box-shadow: var(--shadow); border: 4px solid var(--white);
     }
-
-    .person-card:hover img {
-      transform: scale(1.1);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .person-card h4 {
-      font-size: 1.25rem;
-      margin-bottom: 0.25rem;
-      color: var(--gray-900);
-      font-weight: 600;
-    }
+    .person-card:hover img { transform: scale(1.1); box-shadow: var(--shadow-xl); }
+    .person-card h4 { font-size: 1.25rem; margin-bottom: 0.25rem; color: var(--gray-900); font-weight: 600; }
     
+    /* Team Section Specifics */
+    #team .person-card { background: var(--gray-50); }
+    .team-social-link { margin-top: 1rem; display: inline-block; }
+    .team-social-link svg { width: 24px; height: 24px; color: var(--gray-600); transition: all 0.3s ease; }
+    .team-social-link:hover svg { color: var(--primary-blue); transform: scale(1.2); }
+
     /* FAQ Section */
     .faq-item {
-      background: var(--white);
-      margin-bottom: 1rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--gray-100);
-      transition: all 0.4s ease;
+        background: var(--white); margin-bottom: 1rem; border-radius: var(--radius);
+        box-shadow: var(--shadow); border: 1px solid var(--gray-100); transition: all 0.4s ease;
     }
-
     .faq-question {
-      background: transparent;
-      padding: 1.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--gray-900);
-      cursor: pointer;
-      border: none;
-      width: 100%;
-      text-align: left;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+        background: transparent; padding: 1.5rem; font-size: 1.1rem; font-weight: 600;
+        color: var(--gray-900); cursor: pointer; border: none; width: 100%; text-align: left;
+        display: flex; justify-content: space-between; align-items: center;
     }
-
-    .faq-question::after {
-      content: "+";
-      font-size: 1.5rem;
-      color: var(--primary-blue);
-      transition: transform 0.3s ease;
-    }
-
-    .faq-question.active::after {
-      transform: rotate(45deg);
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease, padding 0.5s ease;
-      color: var(--gray-600);
-    }
-    
-    .faq-answer p {
-        padding: 0 1.5rem 1.5rem 1.5rem;
-        border-top: 1px solid var(--gray-100);
-        padding-top: 1.5rem;
-    }
-
-    .faq-answer.show {
-      max-height: 200px;
-    }
+    .faq-question::after { content: "+"; font-size: 1.5rem; color: var(--primary-blue); transition: transform 0.3s ease; }
+    .faq-question.active::after { transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; color: var(--gray-600); }
+    .faq-answer p { padding: 0 1.5rem 1.5rem 1.5rem; border-top: 1px solid var(--gray-100); padding-top: 1.5rem; }
+    .faq-answer.show { max-height: 200px; }
     
     /* Footer */
     .footer {
-      background: var(--dark-blue);
-      color: var(--gray-100);
-      text-align: center;
-      padding: 4rem 2rem;
-      margin-top: 4rem;
+      background: var(--dark-blue); color: var(--gray-100); text-align: center;
+      padding: 4rem 2rem; margin-top: 4rem;
     }
-    .footer-content {
-        max-width: 1280px;
-        margin: auto;
-    }
-    .footer-logo {
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        color: var(--white);
-    }
-    .social-links {
-        margin-top: 1.5rem;
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-    }
-    .social-links a {
-        color: var(--white);
-        text-decoration: none;
-        transition: transform 0.3s ease;
-    }
-    .social-links a:hover {
-        transform: scale(1.2);
-        color: var(--sky-blue);
-    }
-    .social-links svg {
-        width: 28px;
-        height: 28px;
-    }
+    .footer-content { max-width: 1280px; margin: auto; }
+    .footer-logo { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: var(--white); }
+    .social-links { margin: 1.5rem 0; display: flex; justify-content: center; gap: 2rem; }
+    .social-links a { color: var(--white); text-decoration: none; transition: all 0.3s ease; }
+    .social-links a:hover { transform: scale(1.2); color: var(--sky-blue); }
+    .social-links svg { width: 28px; height: 28px; }
     
     /* Responsive */
     @media (max-width: 968px) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
-      .join-btn {
-        order: 2;
-        margin-left: 0;
-        margin-right: 1rem;
-      }
+      .join-btn { order: 2; margin-left: 0; margin-right: 1rem; }
     }
     @media (max-width: 768px) {
       .section { padding: 4rem 1rem; }
@@ -595,6 +425,7 @@
         <a href="#programs">Programs</a>
         <a href="#model">Our Model</a>
         <a href="#mentors">Mentors</a>
+        <a href="#team">Team</a>
         <a href="#faq">FAQs</a>
       </nav>
       <a href="portal-select.html" class="join-btn">Join Now</a>
@@ -608,6 +439,7 @@
         <a href="#programs">Programs</a>
         <a href="#model">Our Model</a>
         <a href="#mentors">Mentors</a>
+        <a href="#team">Team</a>
         <a href="#faq">FAQs</a>
       </div>
     </div>
@@ -621,21 +453,9 @@
         <div class="slide"></div>
       </div>
       <div class="hero-content">
-        <h1>Empowering Student Innovation Across Indian Colleges</h1>
+        <h1 id="hero-headline">Empowering Student Innovation Across Indian Colleges</h1>
         <p>A student-driven, mentor-supported startup creating standardized innovation frameworks for educational institutions nationwide.</p>
         <a href="portal-select.html" class="join-btn">Get Started</a>
-      </div>
-    </section>
-
-    <section id="conference" class="section">
-      <div class="countdown card">
-          <h2 class="section-title">Upcoming Event</h2>
-          <p class="section-subtitle" style="margin-bottom: 2rem;">Join us for the Research & Patent Impact Conference!</p>
-          <p><strong>Innovate. Patent. Prosper.</strong><br/>
-            📅 24 September 2025, 11:00 AM<br/>
-            📍 Jashan Auditorium, Jabalpur Engineering College</p>
-          <div class="timer" id="timer"></div>
-          <p><strong>🎉 Free for SIPE members!</strong> Non-members: ₹500</p>
       </div>
     </section>
 
@@ -645,55 +465,56 @@
       <div class="cards" style="align-items: center;">
         <div class="card">
           <h3>Basic Membership</h3>
-          <div class="price">₹0<span style="font-size: 1rem; color: var(--gray-600);">/year</span></div>
+          <div class="price">FREE</div>
           <ul>
-            <li>Mentorship for competitive exams*</li>
+            <li>Mentorship for competitive exams</li>
             <li>Career counselling sessions</li>
             <li>Basic CV maker access</li>
             <li>Monthly group mentor interaction</li>
           </ul>
         </div>
         <div class="card pricing-card featured">
+          <div class="badge">Most Popular</div>
           <h3>Premium Membership</h3>
           <div class="original-price">₹499/year</div>
           <div class="price">₹213<span style="font-size: 1rem; color: var(--gray-600);">/year</span></div>
           <ul>
-            <li>All perks in Basic Membership</li>
-            <li>Grants for Research Publications (up to ₹20,000)*</li>
-            <li>Grants for IPR Filing (up to ₹25,000)*</li>
-            <li>Exclusive industrial visits</li>
-            <li>Opportunity to work on live industry projects</li>
-            <li>Internship and apprenticeship assistance</li>
-            <li>Professional CV Maker (Pro)</li>
-            <li>3 personal mentor interactions monthly</li>
+            <li>All Basic Membership benefits</li>
+            <li><strong>Grants for Research & IPR (up to ₹25,000)*</strong></li>
+            <li><strong>Exclusive Workshops with Industry Leaders</strong></li>
+            <li><strong>One-on-One Pitch Coaching & Deck Review</strong></li>
+            <li>Live industry projects & Internship assistance</li>
+            <li>Access to Startup Resource Toolkit</li>
+            <li>Priority access to all SIPE events</li>
+            <li>Certificate of Excellence upon completion</li>
           </ul>
         </div>
       </div>
     </section>
 
     <section id="programs" class="section">
-      <h2 class="section-title">Programs & Offerings</h2>
-      <p class="section-subtitle">Comprehensive initiatives to foster innovation from the classroom to the marketplace.</p>
-      <div class="cards">
-        <div class="card"><h3>Guest Lecture Series</h3><p>Gain insights on industry expectations, research impact, and startup journeys from experts.</p></div>
-        <div class="card"><h3>Innovation Index</h3><p>We measure and track R&D activity and IP filings to rank and recognize institutions.</p></div>
-        <div class="card"><h3>Mentor Connect</h3><p>Get matched with industry mentors and investors through our cross-institutional network.</p></div>
-        <div class="card"><h3>IP to Impact Bootcamps</h3><p>Learn patent commercialization, business model development, and market validation.</p></div>
-        <div class="card"><h3>Startup Clinics</h3><p>Receive assistance with incubator partnerships, investor matchmaking, and funding.</p></div>
-        <div class="card"><h3>Job Placement</h3><p>We leverage our network to help you find meaningful employment after graduation.</p></div>
-      </div>
+        <h2 class="section-title">Programs & Offerings</h2>
+        <p class="section-subtitle">Comprehensive initiatives to foster innovation from the classroom to the marketplace.</p>
+        <div class="cards">
+            <div class="card"><h3>Guest Lecture Series</h3><p>Gain insights on industry expectations, research impact, and startup journeys from experts.</p></div>
+            <div class="card"><h3>Innovation Index</h3><p>We measure and track R&D activity and IP filings to rank and recognize institutions.</p></div>
+            <div class="card"><h3>Mentor Connect</h3><p>Get matched with industry mentors and investors through our cross-institutional network.</p></div>
+            <div class="card"><h3>IP to Impact Bootcamps</h3><p>Learn patent commercialization, business model development, and market validation.</p></div>
+            <div class="card"><h3>Startup Clinics</h3><p>Receive assistance with incubator partnerships, investor matchmaking, and funding.</p></div>
+            <div class="card"><h3>Job Placement</h3><p>We leverage our network to help you find meaningful employment after graduation.</p></div>
+        </div>
     </section>
   
     <section id="model" class="section">
         <h2 class="section-title">The SIPE Model</h2>
         <p class="section-subtitle">Our ecosystem is powered by six specialized committees, driving innovation at every level.</p>
         <div class="cards">
-            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-users'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'%3E%3C/path%3E%3Ccircle cx='9' cy='7' r='4'%3E%3C/circle%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'%3E%3C/path%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'%3E%3C/path%3E%3C/svg%3E" alt="Mentors Icon"><h3>Mentors Circle</h3><p>Industry & research professionals guiding projects with real-world expertise.</p></div>
-            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-star'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E" alt="Core Group Icon"><h3>Core Group</h3><p>Faculty and student leaders curating events, lectures, and collaborations.</p></div>
-            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-dollar-sign'%3E%3Cline x1='12' y1='1' x2='12' y2='23'%3E%3C/line%3E%3Cpath d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'%3E%3C/path%3E%3C/svg%3E" alt="Fundraising Icon"><h3>Fundraising Cell</h3><p>Securing local CSR, sponsorships, and project funding to support initiatives.</p></div>
-            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-globe'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='2' y1='12' x2='22' y2='12'%3E%3C/line%3E%3Cpath d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'%3E%3C/path%3E%3C/svg%3E" alt="Outreach Icon"><h3>Outreach Cell</h3><p>Managing membership drives, alumni connections, and inter-college relations.</p></div>
-            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-target'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='6'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='2'%3E%3C/circle%3E%3C/svg%3E" alt="Event Icon"><h3>Event Cell</h3><p>Organizing hackathons, research conclaves, and industrial visits.</p></div>
-            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-cast'%3E%3Cpath d='M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6'%3E%3C/path%3E%3Cline x1='2' y1='20' x2='2.01' y2='20'%3E%3C/line%3E%3C/svg%3E" alt="Media Icon"><h3>Media & E-Publishing</h3><p>Amplifying impact through newsletters, podcasts, and innovation showcases.</p></div>
+            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'%3E%3C/path%3E%3Ccircle cx='9' cy='7' r='4'%3E%3C/circle%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'%3E%3C/path%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'%3E%3C/path%3E%3C/svg%3E" alt="Mentors Icon"><h3>Mentors Circle</h3><p>Industry & research professionals guiding projects with real-world expertise.</p></div>
+            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'%3E%3C/polygon%3E%3C/svg%3E" alt="Core Group Icon"><h3>Core Group</h3><p>Faculty and student leaders curating events, lectures, and collaborations.</p></div>
+            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='1' x2='12' y2='23'%3E%3C/line%3E%3Cpath d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'%3E%3C/path%3E%3C/svg%3E" alt="Fundraising Icon"><h3>Fundraising Cell</h3><p>Securing local CSR, sponsorships, and project funding to support initiatives.</p></div>
+            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='2' y1='12' x2='22' y2='12'%3E%3C/line%3E%3Cpath d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'%3E%3C/path%3E%3C/svg%3E" alt="Outreach Icon"><h3>Outreach Cell</h3><p>Managing membership drives, alumni connections, and inter-college relations.</p></div>
+            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='6'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='2'%3E%3C/circle%3E%3C/svg%3E" alt="Event Icon"><h3>Event Cell</h3><p>Organizing hackathons, research conclaves, and industrial visits.</p></div>
+            <div class="card"><img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6'%3E%3C/path%3E%3Cline x1='2' y1='20' x2='2.01' y2='20'%3E%3C/line%3E%3C/svg%3E" alt="Media Icon"><h3>Media & Publishing</h3><p>Amplifying impact through newsletters, podcasts, and innovation showcases.</p></div>
         </div>
     </section>
 
@@ -701,12 +522,43 @@
       <h2 class="section-title">Our Esteemed Mentors</h2>
       <p class="section-subtitle">Learn from leaders and visionaries dedicated to nurturing the next generation of innovators.</p>
       <div class="cards">
-        <div class="card person-card"><img src="https://via.placeholder.com/140x140/0066FF/ffffff?text=SB" alt="Mr. Sanjeev K Bhola"/><h4>Mr. Sanjeev K Bhola</h4><p>(Chief General Manager) AVNL<br/>Ministry of Defence</p></div>
-        <div class="card person-card"><img src="https://via.placeholder.com/140x140/87CEEB/0f172a?text=ES" alt="Mr. E R Sheikh"/><h4>Mr. E R Sheikh</h4><p>(Ex. CEO)<br/>Ordinance Factory Board</p></div>
-        <div class="card person-card"><img src="https://via.placeholder.com/140x140/0066FF/ffffff?text=AS" alt="Mr. Atul Singh (IPS)"/><h4>Mr. Atul Singh (IPS)</h4><p>(DIG)<br/>Jabalpur Range</p></div>
-        <div class="card person-card"><img src="https://via.placeholder.com/140x140/87CEEB/0f172a?text=RC" alt="Dr. Rajeev Chandak"/><h4>Dr. Rajeev Chandak</h4><p>(Principal)<br/>JEC Jabalpur</p></div>
-        <div class="card person-card"><img src="https://via.placeholder.com/140x140/0066FF/ffffff?text=SM" alt="Dr. Sudhir Mishra"/><h4>Dr. Sudhir Mishra</h4><p>(Ex. DG DRDO)<br/>CEO & MD BrahMos</p></div>
-        <div class="card person-card"><img src="https://via.placeholder.com/140x140/87CEEB/0f172a?text=BS" alt="Prof. Bhartendu K Singh"/><h4>Prof. Bhartendu K Singh</h4><p>(Director)<br/>IIITDM Jabalpur</p></div>
+        <div class="card person-card"><img src="https://via.placeholder.com/140x140/0066FF/ffffff?text=SB" alt="Mr. Sanjeev K Bhola"/><h4>Mr. Sanjeev K Bhola</h4><p>Chief General Manager, AVNL<br/>Ministry of Defence</p></div>
+        <div class="card person-card"><img src="https://via.placeholder.com/140x140/6dd5ed/0f172a?text=ES" alt="Mr. E R Sheikh"/><h4>Mr. E R Sheikh</h4><p>Ex. CEO<br/>Ordinance Factory Board</p></div>
+        <div class="card person-card"><img src="https://via.placeholder.com/140x140/0066FF/ffffff?text=AS" alt="Mr. Atul Singh (IPS)"/><h4>Mr. Atul Singh (IPS)</h4><p>DIG<br/>Jabalpur Range</p></div>
+        <div class="card person-card"><img src="https://via.placeholder.com/140x140/6dd5ed/0f172a?text=RC" alt="Dr. Rajeev Chandak"/><h4>Dr. Rajeev Chandak</h4><p>Principal<br/>JEC Jabalpur</p></div>
+        <div class="card person-card"><img src="https://via.placeholder.com/140x140/0066FF/ffffff?text=SM" alt="Dr. Sudhir Mishra"/><h4>Dr. Sudhir Mishra</h4><p>Ex. DG DRDO, CEO & MD<br/>BrahMos</p></div>
+        <div class="card person-card"><img src="https://via.placeholder.com/140x140/6dd5ed/0f172a?text=BS" alt="Prof. Bhartendu K Singh"/><h4>Prof. Bhartendu K Singh</h4><p>Director<br/>IIITDM Jabalpur</p></div>
+      </div>
+    </section>
+
+    <section id="team" class="section team-section">
+      <h2 class="section-title">Our Core Team</h2>
+      <p class="section-subtitle">The dedicated student leaders behind SIPE. Please update with real team members and links.</p>
+      <div class="cards">
+        <div class="card person-card">
+          <img src="https://via.placeholder.com/140x140/0066FF/ffffff?text=RV" alt="Rohan Verma"/>
+          <h4>Rohan Verma</h4>
+          <p>President & Founder</p>
+          <a href="#" class="team-social-link" aria-label="LinkedIn Profile"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+        </div>
+        <div class="card person-card">
+          <img src="https://via.placeholder.com/140x140/6dd5ed/0f172a?text=AP" alt="Anika Patel"/>
+          <h4>Anika Patel</h4>
+          <p>Operations Head</p>
+          <a href="#" class="team-social-link" aria-label="LinkedIn Profile"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+        </div>
+        <div class="card person-card">
+          <img src="https://via.placeholder.com/140x140/0066FF/ffffff?text=VS" alt="Vikram Singh"/>
+          <h4>Vikram Singh</h4>
+          <p>Outreach Director</p>
+          <a href="#" class="team-social-link" aria-label="LinkedIn Profile"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+        </div>
+        <div class="card person-card">
+          <img src="https://via.placeholder.com/140x140/6dd5ed/0f172a?text=MI" alt="Meera Iyer"/>
+          <h4>Meera Iyer</h4>
+          <p>Mentorship Lead</p>
+          <a href="#" class="team-social-link" aria-label="LinkedIn Profile"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+        </div>
       </div>
     </section>
 
@@ -714,22 +566,10 @@
       <h2 class="section-title">Frequently Asked Questions</h2>
       <p class="section-subtitle">Everything you need to know about SIPE</p>
       <div class="faq">
-        <div class="faq-item">
-          <button class="faq-question">What is the primary goal of SIPE?</button>
-          <div class="faq-answer"><p>SIPE's main goal is to create a standardized, nationwide framework for fostering innovation and entrepreneurship within educational institutions by connecting students with industry mentors, resources, and real-world projects.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">Who is eligible to join the SIPE network?</button>
-          <div class="faq-answer"><p>Our program is designed for educational institutions across India. Once an institution partners with us, all of its students become eligible to join and access our complete range of programs and benefits.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">How does the mentorship program work?</button>
-          <div class="faq-answer"><p>We provide a cross-college Mentor Connect Platform that links students with experienced industry professionals, researchers, and entrepreneurs based on their field of interest and project requirements for personalized guidance.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">How can our institution partner with SIPE?</button>
-          <div class="faq-answer"><p>To partner with us, please use the "Join Now" button to navigate to our registration portal and sign up as an institution. Our outreach team will then get in touch with you to finalize the partnership process.</p></div>
-        </div>
+        <div class="faq-item"><button class="faq-question">What is the primary goal of SIPE?</button><div class="faq-answer"><p>SIPE's main goal is to create a standardized, nationwide framework for fostering innovation and entrepreneurship within educational institutions by connecting students with industry mentors, resources, and real-world projects.</p></div></div>
+        <div class="faq-item"><button class="faq-question">Who is eligible to join the SIPE network?</button><div class="faq-answer"><p>Our program is designed for educational institutions across India. Once an institution partners with us, all of its students become eligible to join and access our complete range of programs and benefits.</p></div></div>
+        <div class="faq-item"><button class="faq-question">How does the mentorship program work?</button><div class="faq-answer"><p>We provide a cross-college Mentor Connect Platform that links students with experienced industry professionals, researchers, and entrepreneurs based on their field of interest and project requirements for personalized guidance.</p></div></div>
+        <div class="faq-item"><button class="faq-question">How can our institution partner with SIPE?</button><div class="faq-answer"><p>To partner with us, please use the "Join Now" button to navigate to our registration portal and sign up as an institution. Our outreach team will then get in touch with you to finalize the partnership process.</p></div></div>
       </div>
     </section>
   </main>
@@ -739,9 +579,8 @@
         <div class="footer-logo">SIPE</div>
         <p>Helping students build the future through innovation and excellence.</p>
         <div class="social-links">
-            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-            <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616v.064c0 2.296 1.634 4.208 3.803 4.649-.6.164-1.244.206-1.895.071.609 1.928 2.349 3.246 4.323 3.282-1.766 1.382-3.987 2.135-6.23 2.023-.485-.027-.965-.084-1.437-.154 2.189 1.456 4.908 2.308 7.828 2.308 9.321 0 14.38-7.663 14.075-14.755.974-.699 1.815-1.58 2.483-2.578z"/></svg></a>
-            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.85s.012-3.584.07-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/></svg></a>
+            <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+            <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.85s.012-3.584.07-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/></svg></a>
         </div>
         <p style="margin-top: 2rem; opacity: 0.7;">&copy; 2025 Society of Innovation and Professional Excellence. All Rights Reserved.</p>
     </div>
@@ -752,11 +591,12 @@
         // Mobile Menu
         const hamburger = document.querySelector('.hamburger');
         const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelectorAll('.mobile-menu a');
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             mobileMenu.classList.toggle('active');
         });
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
+        navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 mobileMenu.classList.remove('active');
@@ -764,12 +604,11 @@
         });
 
         // FAQ Accordion
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(button => {
+        document.querySelectorAll('.faq-question').forEach(button => {
             button.addEventListener('click', () => {
                 const answer = button.nextElementSibling;
                 const wasActive = button.classList.contains('active');
-                faqQuestions.forEach(q => {
+                document.querySelectorAll('.faq-question').forEach(q => {
                     q.classList.remove('active');
                     q.nextElementSibling.classList.remove('show');
                 });
@@ -780,44 +619,22 @@
             });
         });
 
-        // Countdown Timer
-        const timerElement = document.getElementById('timer');
-        if (timerElement) {
-            const targetDate = new Date('2025-09-24T11:00:00').getTime();
-            const updateTimer = () => {
-                const now = new Date().getTime();
-                const distance = targetDate - now;
-                if (distance < 0) {
-                    timerElement.innerHTML = 'Event has started!';
-                    return;
-                }
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                timerElement.innerHTML = `
-                    <div class="timer-box"><div class="timer-number">${days}</div><div>Days</div></div>
-                    <div class="timer-box"><div class="timer-number">${hours}</div><div>Hours</div></div>
-                    <div class="timer-box"><div class="timer-number">${minutes}</div><div>Minutes</div></div>`;
-            };
-            updateTimer();
-            setInterval(updateTimer, 60000);
-        }
+        // Hero Headline Animation
+        const headline = document.getElementById('hero-headline');
+        const words = headline.innerText.split(' ');
+        headline.innerHTML = words.map((word, i) => `<span class="word" style="animation-delay: ${i * 0.1}s">${word}</span>`).join(' ');
 
         // Dynamic scroll animations
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
+            entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('is-visible');
-                    }, index * 100);
+                    entry.target.classList.add('is-visible');
                     observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.card, .faq-item').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.card, .faq-item').forEach(el => observer.observe(el));
     });
   </script>
 </body>
