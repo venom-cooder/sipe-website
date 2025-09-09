@@ -1,296 +1,920 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Society of Innovation and Professional Excellence</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SIPE - Student Innovation Society</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary-blue: #0066FF;
+      --sky-blue: #87CEEB;
+      --light-blue: #E3F2FD;
+      --dark-blue: #1E3A8A;
+      --white: #ffffff;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-600: #64748b;
+      --gray-900: #0f172a;
+      --shadow: 0 4px 20px rgba(0, 102, 255, 0.08);
+      --shadow-lg: 0 10px 40px rgba(0, 102, 255, 0.12);
+      --shadow-xl: 0 20px 60px rgba(0, 102, 255, 0.15);
+      --radius: 16px;
+      --gradient: linear-gradient(135deg, #0066FF, #87CEEB);
+      --gradient-hover: linear-gradient(135deg, #87CEEB, #0066FF);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-900);
+      line-height: 1.6;
+      font-size: 18px;
+    }
+
+    /* Enhanced Header */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--gray-600);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--light-blue);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .nav-links a:hover::before {
+      left: 0;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .join-btn {
+      background: var(--gradient);
+      color: var(--white);
+      padding: 0.875rem 2rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-left: 1rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+     text-decoration: none;
+    }
+
+    .join-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .join-btn:hover {
+      background: var(--gradient-hover);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .join-btn:hover::before {
+      left: 100%;
+    }
+
+    .join-btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* Mobile Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+      order: 3;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: var(--primary-blue);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-lg);
+      padding: 1rem;
+      transform: translateY(-10px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu.active {
+      display: block;
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 1rem;
+      color: var(--gray-600);
+      text-decoration: none;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu a:hover {
+      background: var(--light-blue);
+      color: var(--primary-blue);
+      transform: translateX(10px);
+    }
+
+    /* Enhanced Hero with Smooth Slideshow */
+    .hero {
+      position: relative;
+      height: 75vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-slideshow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
+      background-size: cover;
+      background-position: center;
+      animation: smoothSlideShow 15s infinite ease-in-out;
+    }
+
+    .slide:nth-child(1) { 
+      animation-delay: 0s; 
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.8), rgba(30, 58, 138, 0.6)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=800&fit=crop&crop=center');
+    }
+    .slide:nth-child(2) { 
+      animation-delay: 5s; 
+      background: linear-gradient(135deg, rgba(135, 206, 235, 0.8), rgba(0, 102, 255, 0.6)), url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&h=800&fit=crop&crop=center');
+    }
+    .slide:nth-child(3) { 
+      animation-delay: 10s; 
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.8), rgba(135, 206, 235, 0.6)), url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=800&fit=crop&crop=center');
+    }
+
+    @keyframes smoothSlideShow {
+      0%, 30% { opacity: 1; transform: scale(1); }
+      35%, 100% { opacity: 0; transform: scale(1.05); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--white);
+      max-width: 800px;
+      padding: 3rem;
+      background: rgba(0, 102, 255, 0.15);
+      backdrop-filter: blur(25px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-xl);
+      animation: heroContentFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes heroContentFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+      font-weight: 700;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      from { text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+      to { text-shadow: 0 4px 30px rgba(255,255,255,0.3); }
+    }
+
+    .hero p {
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      margin-bottom: 2rem;
+      opacity: 0.95;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .hero .join-btn {
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+      background: var(--white);
+      color: var(--primary-blue);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero .join-btn:hover {
+      background: var(--gray-100);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    /* Enhanced Sections */
+    .section {
+      padding: 5rem 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      text-align: center;
+      color: var(--gray-600);
+      margin-bottom: 3rem;
+       max-width: 800px;
+       margin-left: auto;
+       margin-right: auto;
+    }
+
+    /* Enhanced Cards with Smooth Premium Hover */
+    .cards {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+
+    .card {
+      background: var(--white);
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+      transform: scaleX(0);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card:hover {
+      transform: translateY(-10px) rotateX(5deg);
+      box-shadow: var(--shadow-xl);
+    }
     
-    <style>
-        :root {
-            --primary-color: #2c3e50; /* Professional Navy Blue */
-            --secondary-color: #3498db; /* Bright, Innovative Blue */
-            --background-color: #f4f7f6;
-            --surface-color: #ffffff;
-            --text-color: #34495e;
-            --light-text-color: #7f8c8d;
-            --box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
-            --border-radius: 10px;
-            --border-color: #e0e0e0;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.7;
-        }
-        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 600; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-        .section { padding: 6rem 0; }
-        .section-title { font-size: 2.5rem; text-align: center; margin-bottom: 1rem; color: var(--primary-color); }
-        .section-subtitle { text-align: center; max-width: 700px; margin: 0 auto 4rem auto; color: var(--light-text-color); font-size: 1.1rem; }
-        
-        .btn { display: inline-block; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; font-family: 'Poppins', sans-serif;}
-        .btn-primary { background-color: var(--secondary-color); color: white; }
-        .btn-primary:hover { background-color: #2980b9; transform: translateY(-3px); box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4); }
+     .card:hover::before {
+      transform: scaleX(1);
+    }
 
-        /* --- Header --- */
-        .header { background-color: var(--surface-color); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000; }
-        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
-        .logo { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
-        .nav-links { display: flex; list-style: none; gap: 2.5rem; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; position: relative; padding-bottom: 5px; }
-        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--secondary-color); transition: width 0.3s ease-in-out; }
-        .nav-links a:hover::after { width: 100%; }
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+    
+    .card p {
+      color: var(--gray-600);
+      margin-bottom: 1.5rem;
+    }
+    
+     .card ul {
+      list-style: none;
+      text-align: left;
+    }
 
-        /* --- Hero Section --- */
-        .hero {
-            background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2232&auto=format&fit=crop') center/cover no-repeat;
-            background-attachment: fixed; /* Simple parallax effect */
-            color: white;
-            text-align: center;
-            padding: 7rem 0;
-        }
-        .hero-content h1 { font-size: 3rem; line-height: 1.2; margin-bottom: 1rem; }
-        .hero-content .description { max-width: 700px; margin: 0 auto 2.5rem auto; font-size: 1.1rem; opacity: 0.9; }
+    .card li {
+      padding: 0.75rem 0;
+      color: var(--gray-600);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
 
-        /* --- Perks Section --- */
-        .perks-section { background-color: #e8eced; }
-        .perks-container {
-            background-color: var(--surface-color);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            text-align: center;
-        }
-        .perks-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        /* --- Mentors Section (ENHANCED UI) --- */
-        .mentor-card {
-            background-color: var(--surface-color); padding: 2.5rem 2rem; border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative; overflow: hidden;
-        }
-        .mentor-card::before {
-            content: '“';
-            position: absolute;
-            top: -20px;
-            left: 10px;
-            font-size: 6rem;
-            color: var(--secondary-color);
-            opacity: 0.1;
-            line-height: 1;
-        }
-        .mentor-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .mentor-card h3 { font-size: 1.4rem; color: var(--primary-color); margin-bottom: 0.5rem; }
-        .mentor-card p { color: var(--light-text-color); font-size: 1rem; }
-        .mentors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .card li:before {
+      content: "✓";
+      color: var(--primary-blue);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
 
-        /* --- Programs & Offerings Section (ENHANCED UI) --- */
-        .programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
-        .program-card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .program-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .program-card h3 { font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--primary-color); border-left: 4px solid var(--secondary-color); padding-left: 1rem;}
-        .program-card ul { list-style: none; padding: 0; }
-        .program-card li { margin-bottom: 0.75rem; position: relative; padding-left: 1.8rem; }
-        .program-card li::before { 
-            content: ''; 
-            position: absolute; 
-            left: 0;
-            top: 5px;
-            width: 1rem;
-            height: 1rem;
-            background-color: var(--secondary-color);
-            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-        }
+    /* Membership Card Styles */
+    .pricing-card.featured {
+      background: linear-gradient(135deg, rgba(227, 242, 253, 0.3), var(--white));
+      position: relative;
+      transform: scale(1.02);
+    }
 
-        /* --- SIPE Model Section --- */
-        .model-section { background-color: #e8eced; }
-        .model-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .model-card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: center; }
-        .model-icon { font-size: 2.5rem; margin-bottom: 1rem; color: var(--secondary-color); }
-        .model-card h3 { font-size: 1.3rem; color: var(--primary-color); margin-bottom: 0.5rem; }
-        .model-card p { color: var(--light-text-color); }
+    .pricing-card.featured::after {
+      content: "Early Bird!";
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      background: var(--gradient);
+      color: var(--white);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      animation: badgePulse 2s ease-in-out infinite;
+    }
 
-        /* --- FAQ Section --- */
-        .faq-container { max-width: 800px; margin: 0 auto; }
-        .faq-item { background-color: var(--surface-color); margin-bottom: 1rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); border: 1px solid var(--border-color); }
-        .faq-item summary { font-size: 1.1rem; font-weight: 600; padding: 1.5rem; cursor: pointer; position: relative; list-style: none; }
-        .faq-item summary::-webkit-details-marker { display: none; }
-        .faq-item summary::after { content: '+'; position: absolute; right: 1.5rem; font-size: 1.5rem; color: var(--secondary-color); transition: transform 0.2s; }
-        .faq-item[open] summary::after { transform: rotate(45deg); }
-        .faq-answer { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--light-text-color); border-top: 1px solid var(--border-color); }
+    @keyframes badgePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
 
-        /* --- Contact Section --- */
-        .contact-section { text-align: center; }
-        .contact-section .btn { margin-top: 1rem; }
+    .pricing-card.featured:hover {
+      transform: translateY(-10px) rotateX(5deg) scale(1.02);
+    }
 
-        /* --- Footer --- */
-        .footer { background-color: var(--primary-color); color: #bdc3c7; text-align: center; padding: 3rem 0; }
-        .footer p { margin: 0; }
+    .price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      margin-bottom: 0.5rem;
+    }
 
-        /* --- Responsive --- */
-        @media (max-width: 768px) {
-            .logo { font-size: 1rem; }
-            .nav-links { display: none; }
-            .hero-content h1 { font-size: 2.2rem; }
-        }
+    .original-price {
+      font-size: 1.2rem;
+      text-decoration: line-through;
+      color: var(--gray-600);
+      opacity: 0.7;
+    }
 
-        /* --- Scroll Animation --- */
-        .hidden-section {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            will-change: opacity, transform;
-        }
-        .show-section {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    .offer-badge {
+      background: var(--gradient);
+      color: var(--white);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
+    }
+
+    /* Conference Section */
+    .countdown {
+      background: linear-gradient(135deg, var(--light-blue), var(--white));
+      text-align: center;
+      padding: 4rem 2rem;
+      border-radius: var(--radius);
+      margin: 2rem 0;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .countdown::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(0, 102, 255, 0.05) 50%, transparent 70%);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .conference-content {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2rem;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .conference-info h2 {
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+      color: var(--primary-blue);
+      text-align: left;
+    }
+
+    .conference-info p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--gray-600);
+      text-align: left;
+    }
+
+    .conference-poster {
+      width: 100%;
+      max-width: 300px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      transition: all 0.4s ease;
+    }
+
+    .conference-poster:hover {
+      transform: scale(1.05) rotateY(5deg);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .timer {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .timer-box {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      min-width: 100px;
+      box-shadow: var(--shadow);
+    }
+
+    .timer-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+
+    .timer-label {
+      font-size: 1rem;
+      color: var(--gray-600);
+      font-weight: 500;
+    }
+
+    /* Person Cards */
+    .person-card { text-align: center; }
+    .person-card img {
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      object-fit: cover;
+      display: block;
+      margin-left: auto; margin-right: auto;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow);
+    }
+    .person-card:hover img {
+      transform: scale(1.1) rotateY(5deg);
+      box-shadow: var(--shadow-xl);
+    }
+    .person-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .person-card p {
+      font-size: 1rem;
+      color: var(--gray-600);
+    }
+
+    /* FAQ */
+    .faq { max-width: 800px; margin: 0 auto; }
+    .faq-item {
+      background: var(--white);
+      margin-bottom: 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .faq-question {
+      background: var(--light-blue);
+      padding: 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+      cursor: pointer; border: none; width: 100%;
+      text-align: left; display: flex;
+      justify-content: space-between; align-items: center;
+    }
+    .faq-question::after {
+      content: "+"; font-size: 1.5rem;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .faq-question.active::after { transform: rotate(45deg); }
+    .faq-answer { padding: 1.5rem; display: none; color: var(--gray-600); animation: fadeInDown 0.4s ease; }
+    .faq-answer.show { display: block; }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--gradient);
+      color: var(--white);
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 3rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .header-content { justify-content: space-between; }
+      .join-btn { order: 2; margin-left: 0; margin-right: 1rem; }
+      .conference-content { grid-template-columns: 1fr; text-align: center; }
+      .conference-info h2, .conference-info p { text-align: center; }
+    }
+
+    @media (max-width: 768px) {
+      .section { padding: 3rem 1rem; }
+      .cards { grid-template-columns: 1fr; gap: 1.5rem; }
+      .timer { gap: 1rem; }
+      .timer-box { min-width: 80px; padding: 1rem; }
+      .timer-number { font-size: 2rem; }
+      .hero-content { padding: 2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .header-content { padding: 1rem; }
+      .hero { height: 60vh; min-height: 500px; }
+      .join-btn { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+      .person-card img { width: 100px; height: 100px; }
+    }
+  </style>
 </head>
 <body>
+    <header class="header">
+    <div class="header-content">
+      <a href="#" class="logo">SIPE</a>
+      <nav class="nav-links">
+        <a href="#membership">Membership</a>
+        <a href="#programs">Programs</a>
+        <a href="#mentors">Mentors</a>
+        <a href="#faq">FAQs</a>
+      </nav>
+      <a href="portal-select.html" class="join-btn">Login / Register</a>
+      <div class="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+            <nav class="mobile-menu" id="mobileMenu">
+        <a href="#membership" onclick="closeMobileMenu()">Membership</a>
+        <a href="#programs" onclick="closeMobileMenu()">Programs</a>
+        <a href="#mentors" onclick="closeMobileMenu()">Mentors</a>
+        <a href="#faq" onclick="closeMobileMenu()">FAQs</a>
+      </nav>
+    </div>
+  </header>
 
-    <header class="header">
-        <nav class="navbar container">
-            <a href="#" class="logo">Society of Innovation and Professional Excellence</a>
-            <ul class="nav-links">
-                <li><a href="#perks">Perks</a></li>
-                <li><a href="#mentors">Mentors</a></li>
-                <li><a href="#programs">Programs</a></li>
-                <li><a href="#model">Our Model</a></li>
-                <li><a href="#faq">FAQs</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-            </ul>
-            <a href="portal-select.html" class="btn btn-primary">Login / Register</a>
-        </nav>
-    </header>
+  <main>
+    <section class="hero">
+    <div class="hero-slideshow">
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+    </div>
+    <div class="hero-content">
+      <h1>Empowering Student Innovation Across Indian Colleges</h1>
+      <p>A student-driven, mentor-supported startup creating standardized innovation frameworks for educational institutions nationwide.</p>
+      <a href="portal-select.html" class="join-btn">Get Started</a>
+    </div>
+  </section>
+  
+    <section id="conference" class="section">
+    <div class="countdown">
+      <div class="conference-content">
+        <div class="conference-info">
+          <h2>Big Conference Coming Soon!</h2>
+          <p><strong>Research & Patent Impact Conference</strong><br/>
+          📅 24 September 2025, 11:00 AM<br/>
+          📍 Jashan Auditorium, Jabalpur Engineering College</p>
+          <div class="timer" id="timer"></div>
+          <p><strong>🎉 Free for SIPE members!</strong> Non-members: ₹500</p>
+        </div>
+        <div>
+          <img src="https://via.placeholder.com/300x400/0066FF/ffffff?text=Conference+Poster" alt="Conference Poster" class="conference-poster"/>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content container hidden-section">
-                <h1>Empowering Student Innovation Across Indian Colleges</h1>
-                <p class="description">A student-driven, mentor-supported startup creating standardized innovation frameworks for educational institutions nationwide.</p>
-                <a href="portal-select.html" class="btn btn-primary">Get Started</a>
-            </div>
-        </section>
-        
-        <section id="perks" class="perks-section section hidden-section">
-            <div class="container">
-                <h2 class="section-title">Membership Perks</h2>
-                <p class="section-subtitle">Enroll for an annual membership to get exclusive access to grants, mentorship, and a network of innovators.</p>
-                <div class="perks-container">
-                    <img src="poster.jpg" alt="SIPE Membership Perks Poster">
-                </div>
-            </div>
-        </section>
-        
-        <section id="mentors" class="mentors-section container section hidden-section">
-            <h2 class="section-title">Our Esteemed Mentors</h2>
-            <p class="section-subtitle">Learn from leaders and visionaries from various domains who are dedicated to nurturing the next generation of innovators.</p>
-            <div class="mentors-grid">
-                <div class="mentor-card">
-                    <h3>Mr. Sanjeev K Bhola</h3>
-                    <p>(Chief General Manager)AVNL, Ministry of Defence</p>
-                </div>
-                <div class="mentor-card">
-                    <h3>Mr. E R Sheikh</h3>
-                    <p>(Ex. CEO), Ordinance Factory Board</p>
-                </div>
-                <div class="mentor-card">
-                    <h3>Mr. Atul Singh (IPS)</h3>
-                    <p>(DIG), Jabalpur Range</p>
-                </div>
-                <div class="mentor-card">
-                    <h3>Dr. Rajeev Chandak</h3>
-                    <p>(Principal), JEC Jabalpur</p>
-                </div>
-                <div class="mentor-card">
-                    <h3>Dr. Sudhir Mishra</h3>
-                    <p>(Ex. DG D.R.D.O), (CEO & MD BrahMos)</p>
-                </div>
-                 <div class="mentor-card">
-                    <h3>Prof. Bhartendu K Singh</h3>
-                    <p>(Director), IIITDM Jabalpur</p>
-                </div>
-            </div>
-        </section>
+    <section id="membership" class="section">
+    <h2 class="section-title">Membership Perks</h2>
+    <p class="section-subtitle">Enroll for an annual membership to get exclusive access to grants, mentorship, and a network of innovators.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>Basic Membership</h3>
+        <div class="price">₹0<span style="font-size: 1rem; color: var(--gray-600);">/year</span></div>
+        <ul>
+          <li>Mentorship and guidance</li>
+          <li>Career counselling</li>
+          <li>CV maker (Basic)</li>
+          <li>Monthly mentor interaction</li>
+        </ul>
+      </div>
+      <div class="card pricing-card featured">
+        <h3>Premium Membership</h3>
+        <div class="original-price">₹499/year</div>
+        <div class="price">₹213<span style="font-size: 1rem; color: var(--gray-600);">/year</span></div>
+        <div class="offer-badge">Early Bird till 15th Sept</div>
+        <ul>
+          <li>All perks in basic</li>
+          <li>Grants for Research publications upto ₹20,000*</li>
+          <li>Grants for IPR filling upto ₹25,000*</li>
+          <li>Industrial visits for real industry exposure</li>
+          <li>Internship and apprenticeship opportunity</li>
+          <li>CV Maker (Pro)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-        <section id="programs" class="programs-section container section hidden-section">
-            <h2 class="section-title">Programs & Offerings</h2>
-            <p class="section-subtitle">Comprehensive initiatives to foster innovation and excellence from the classroom to the marketplace.</p>
-            <div class="programs-grid">
-                <div class="program-card"><h3>Standardized Guest Lecture Series</h3><ul><li>Industry expectations and synergy</li><li>Research impact analysis</li><li>IP commercialization challenges</li><li>Startup journey insights</li></ul></div>
-                <div class="program-card"><h3>Innovation Index for Colleges</h3><ul><li>R&D activity measurement</li><li>IP filing tracking</li><li>Startup ecosystem assessment</li><li>Institutional ranking & recognition</li></ul></div>
-                <div class="program-card"><h3>Mentor Connect Platform</h3><ul><li>Industry mentor matching</li><li>Investor connections</li><li>Expert advisory services</li><li>Cross-institutional network</li></ul></div>
-                <div class="program-card"><h3>IP to Impact Bootcamps</h3><ul><li>Patent commercialization</li><li>Business model development</li><li>Market validation</li><li>Venture planning</li></ul></div>
-                <div class="program-card"><h3>Startup Clinics</h3><ul><li>Incubator partnerships</li><li>Investor matchmaking</li><li>Corporate accelerators</li><li>Funding assistance</li></ul></div>
-            </div>
-        </section>
+    <section id="programs" class="section">
+    <h2 class="section-title">Programs & Offerings</h2>
+    <p class="section-subtitle">Comprehensive initiatives to foster innovation and excellence from the classroom to the marketplace.</p>
+    <div class="cards">
+      <div class="card"><h3>Guest Lecture Series</h3><p>Covering industry expectations, research impact, IP commercialization, and startup journeys.</p></div>
+      <div class="card"><h3>Innovation Index</h3><p>Measuring R&D activity, tracking IP filings, and assessing the startup ecosystem for institutional ranking.</p></div>
+      <div class="card"><h3>Mentor Connect</h3><p>Access to industry mentor matching, investor connections, and expert advisory services.</p></div>
+      <div class="card"><h3>IP to Impact Bootcamps</h3><p>Focusing on patent commercialization, business model development, and venture planning.</p></div>
+      <div class="card"><h3>Startup Clinics</h3><p>Partnerships with incubators, investor matchmaking, and corporate accelerator access.</p></div>
+      <div class="card"><h3>Specialized Committees</h3><p>Driving innovation through dedicated cells for Mentorship, Fundraising, Outreach, and Events.</p></div>
+    </div>
+  </section>
 
-        <section id="model" class="model-section section hidden-section">
-            <div class="container">
-                <h2 class="section-title">The SIPE Model</h2>
-                <p class="section-subtitle">Our ecosystem is powered by six specialized committees, driving innovation and excellence at every level.</p>
-                <div class="model-grid">
-                    <div class="model-card"><div class="model-icon">👥</div><h3>SIPE Mentors Circle</h3><p>Industry & research professionals guiding projects with expertise and real-world insights.</p></div>
-                    <div class="model-card"><div class="model-icon">⭐</div><h3>Core Group</h3><p>Faculty and student leaders curating events, lectures, and collaborations for maximum impact.</p></div>
-                    <div class="model-card"><div class="model-icon">💰</div><h3>Fundraising Cell</h3><p>Securing local CSR, sponsorships, and project funding to support innovation initiatives.</p></div>
-                    <div class="model-card"><div class="model-icon">🌐</div><h3>Outreach Cell</h3><p>Managing membership drives, alumni connections, and inter-college relations.</p></div>
-                    <div class="model-card"><div class="model-icon">🎯</div><h3>Event Cell</h3><p>Organizing hackathons, research conclaves, and industrial visits to create engagement.</p></div>
-                    <div class="model-card"><div class="model-icon">📱</div><h3>Media & E-Publishing</h3><p>Amplifying impact through newsletters, podcasts, and innovation showcases.</p></div>
-                </div>
-            </div>
-        </section>
+    <section id="mentors" class="section">
+    <h2 class="section-title">Our Esteemed Mentors</h2>
+    <p class="section-subtitle">Learn from leaders and visionaries from various domains who are dedicated to nurturing the next generation of innovators.</p>
+    <div class="cards">
+      <div class="card person-card">
+        <img src="https://via.placeholder.com/130x130/0066FF/ffffff?text=SB" alt="Mr. Sanjeev K Bhola"/>
+        <h4>Mr. Sanjeev K Bhola</h4>
+        <p>CGM, AVNL<br/>Ministry of Defence</p>
+      </div>
+      <div class="card person-card">
+        <img src="https://via.placeholder.com/130x130/87CEEB/ffffff?text=ES" alt="Mr. E R Sheikh"/>
+        <h4>Mr. E R Sheikh</h4>
+        <p>Ex. CEO<br/>Ordinance Factory Board</p>
+      </div>
+      <div class="card person-card">
+        <img src="https://via.placeholder.com/130x130/0066FF/ffffff?text=AS" alt="Mr. Atul Singh (IPS)"/>
+        <h4>Mr. Atul Singh (IPS)</h4>
+        <p>DIG<br/>Jabalpur Range</p>
+      </div>
+      <div class="card person-card">
+        <img src="https://via.placeholder.com/130x130/87CEEB/ffffff?text=RC" alt="Dr. Rajeev Chandak"/>
+        <h4>Dr. Rajeev Chandak</h4>
+        <p>Principal<br/>JEC Jabalpur</p>
+      </div>
+      <div class="card person-card">
+        <img src="https://via.placeholder.com/130x130/0066FF/ffffff?text=SM" alt="Dr. Sudhir Mishra"/>
+        <h4>Dr. Sudhir Mishra</h4>
+        <p>Ex. DG D.R.D.O<br/>CEO & MD BrahMos</p>
+      </div>
+      <div class="card person-card">
+        <img src="https://via.placeholder.com/130x130/87CEEB/ffffff?text=BS" alt="Prof. Bhartendu K Singh"/>
+        <h4>Prof. Bhartendu K Singh</h4>
+        <p>Director<br/>IIITDM Jabalpur</p>
+      </div>
+    </div>
+  </section>
 
-        <section id="faq" class="faq-section container section hidden-section">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <div class="faq-container">
-                <details class="faq-item"><summary>What is the primary goal of SIPE?</summary><div class="faq-answer"><p>SIPE's main goal is to create a standardized, nationwide framework for fostering innovation and entrepreneurship within educational institutions...</p></div></details>
-                <details class="faq-item"><summary>Who is eligible to join the SIPE network?</summary><div class="faq-answer"><p>Our program is designed for educational institutions... Once a partner, all students are eligible.</p></div></details>
-                <details class="faq-item"><summary>How does the mentorship program work?</summary><div class="faq-answer"><p>We provide a cross-college Mentor Connect Platform that links students with experienced industry professionals...</p></div></details>
-                <details class="faq-item"><summary>How can our institution partner with SIPE?</summary><div class="faq-answer"><p>Please visit our registration portal and sign up as an institution. Our outreach team will get in touch.</p></div></details>
-            </div>
-        </section>
+    <section id="faq" class="section">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-subtitle">Everything you need to know about our mission and programs.</p>
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">What is the primary goal of SIPE?</button>
+        <div class="faq-answer">SIPE's main goal is to create a standardized, nationwide framework for fostering innovation and entrepreneurship within educational institutions, bridging the gap between academia and industry.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">Who is eligible to join the SIPE network?</button>
+        <div class="faq-answer">Our program is designed for educational institutions. Once an institution partners with us, all its students become eligible to participate in our programs, workshops, and mentorship opportunities.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">How does the mentorship program work?</button>
+        <div class="faq-answer">We provide a cross-college Mentor Connect Platform that links students with experienced industry professionals, researchers, and entrepreneurs for personalized guidance and project support.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">How can our institution partner with SIPE?</button>
+        <div class="faq-answer">Please visit our registration portal and sign up as an institution. Our outreach team will get in touch with you to discuss the partnership model and next steps.</div>
+      </div>
+    </div>
+  </section>
+  </main>
 
-        <section id="contact" class="contact-section container section hidden-section">
-            <h2 class="section-title">Have More Questions?</h2>
-            <p class="section-subtitle">Our team is ready to help. Reach out to us for partnership inquiries, program details, or any other questions you may have.</p>
-            <a href="contact.html" class="btn btn-primary">Contact Our Team</a>
-        </section>
-    </main>
+    <footer class="footer">
+    <p>&copy; 2025 SIPE - Society of Innovation and Professional Excellence. All Rights Reserved.</p>
+  </footer>
 
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Society of Innovation and Professional Excellence. All Rights Reserved.</p>
-        </div>
-    </footer>
+  <script>
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.hamburger');
+      menu.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    }
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- SCROLL ANIMATION ---
-            const sections = document.querySelectorAll('.hidden-section');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('show-section');
-                    }
-                });
-            }, { threshold: 0.1 });
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.hamburger');
+      menu.classList.remove('active');
+      hamburger.classList.remove('active');
+    }
 
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-        });
-    </script>
+    // Smooth scroll function
+    function scrollTo(elementId) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const headerHeight = document.querySelector('.header').offsetHeight;
+      const targetPosition = element.offsetTop - headerHeight - 20;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    }
+
+    // FAQ toggle
+    function toggleFAQ(button) {
+      const answer = button.nextElementSibling;
+      const isOpen = answer.classList.contains('show');
+      document.querySelectorAll('.faq-answer').forEach(item => item.classList.remove('show'));
+      document.querySelectorAll('.faq-question').forEach(item => item.classList.remove('active'));
+      if (!isOpen) {
+        answer.classList.add('show');
+        button.classList.add('active');
+      }
+    }
+
+    // Countdown timer
+    function updateTimer() {
+      const timerElement = document.getElementById('timer');
+      if (!timerElement) return;
+       const targetDate = new Date('2025-09-24T11:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      
+      if (distance < 0) {
+        timerElement.innerHTML = '<div class="timer-box"><div class="timer-number">🎉</div><div class="timer-label">Started!</div></div>';
+        return;
+      }
+      
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      
+      timerElement.innerHTML = `
+        <div class="timer-box"><div class="timer-number">${days}</div><div class="timer-label">Days</div></div>
+        <div class="timer-box"><div class="timer-number">${hours}</div><div class="timer-label">Hours</div></div>`;
+    }
+    updateTimer();
+    setInterval(updateTimer, 3600000); // Update every hour
+
+    // Navigation click handlers
+    document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        scrollTo(targetId);
+        closeMobileMenu();
+      });
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header');
+      if (window.scrollY > 50) {
+        header.style.background = 'rgba(255, 255, 255, 0.98)';
+        header.style.boxShadow = '0 4px 30px rgba(0, 102, 255, 0.1)';
+      } else {
+        header.style.background = 'rgba(255, 255, 255, 0.95)';
+        header.style.boxShadow = 'var(--shadow)';
+      }
+    });
+  </script>
 </body>
 </html>
