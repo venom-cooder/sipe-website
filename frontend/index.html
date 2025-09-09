@@ -83,23 +83,63 @@
     .mobile-menu a { display: block; padding: 1rem; color: var(--gray-900); text-decoration: none; border-radius: 8px; font-weight: 500; }
     .mobile-menu a:hover { background: var(--light-blue); color: var(--primary-blue); }
 
-    /* Hero Section - Minimal & Professional */
+    /* New Hero Section */
     .hero {
-      position: relative; height: 85vh; min-height: 600px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--white);
-      background-image: linear-gradient(rgba(7, 29, 73, 0.7), rgba(7, 29, 73, 0.7)), url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      background-color: var(--white);
+      padding: 4rem 2rem;
+      min-height: calc(90vh - 80px);
+      display: flex;
+      align-items: center;
     }
-    .hero-content { 
-        position: relative; text-align: center; max-width: 800px; padding: 3rem; 
-        opacity: 0; animation: fadeIn 1s ease-out forwards;
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+        max-width: 1280px;
+        margin: 0 auto;
     }
-    @keyframes fadeIn { to { opacity: 1; } }
-    .hero h1 { font-size: clamp(2.8rem, 5vw, 4rem); margin-bottom: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-    .hero p { font-size: clamp(1.1rem, 2.5vw, 1.25rem); margin-bottom: 2.5rem; opacity: 0.9; }
+    .hero-text h1 {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        color: var(--dark-blue);
+        margin-bottom: 1.5rem;
+        font-weight: 800;
+    }
+    .hero-text p {
+        font-size: 1.15rem;
+        color: var(--gray-600);
+        margin-bottom: 2.5rem;
+        max-width: 500px;
+    }
+    .hero-slideshow-container {
+        position: relative;
+        height: 500px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-xl);
+    }
+    .hero-slideshow-container .slide {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background-size: cover; background-position: center;
+        opacity: 0;
+        animation: crossfade 18s infinite ease-in-out;
+        transition: opacity 1s ease;
+    }
+    .hero-slideshow-container .slide:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop'); animation-delay: 0s; }
+    .hero-slideshow-container .slide:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop'); animation-delay: 6s; }
+    .hero-slideshow-container .slide:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop'); animation-delay: 12s; }
+    
+    @keyframes crossfade {
+        0%, 28% { opacity: 1; transform: scale(1.05); }
+        33%, 100% { opacity: 0; transform: scale(1.1); }
+    }
+
+    .hero-slideshow-container .join-btn {
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 10;
+    }
 
     /* General Section Styling */
     .section { padding: 6rem 2rem; }
@@ -119,7 +159,6 @@
     .timer-label { font-size: 0.9rem; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.05em; }
     
     /* Sharp Membership Section */
-    #membership { background-color: var(--gray-50); }
     .membership-container {
         display: grid; grid-template-columns: 1fr; gap: 2rem;
         align-items: stretch; max-width: 1000px; margin: 0 auto;
@@ -199,8 +238,20 @@
     .social-links a:hover { transform: scale(1.2); color: var(--sky-blue); }
     .social-links svg { width: 28px; height: 28px; }
     
-    @media (max-width: 968px) { .nav-links { display: none; } .hamburger { display: flex; } .join-btn { display: none; } }
-    @media (max-width: 768px) { .section { padding: 4rem 1rem; } .cards-grid { grid-template-columns: 1fr; } }
+    /* FULLY RESPONSIVE STYLES */
+    @media (max-width: 968px) {
+        .nav-links { display: none; }
+        .hamburger { display: flex; }
+        .join-btn { display: none; }
+        .hero-grid { grid-template-columns: 1fr; text-align: center; }
+        .hero-text { order: 2; }
+        .hero-slideshow-container { order: 1; height: 350px; }
+        .hero-text p { margin-left: auto; margin-right: auto; }
+    }
+    @media (max-width: 768px) {
+        .section { padding: 4rem 1rem; }
+        .cards-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -229,11 +280,18 @@
 
   <main>
     <section class="hero" id="home">
-      <div class="hero-content">
-        <h1>Empowering Student Innovation Across Indian Colleges</h1>
-        <p>A student-driven, mentor-supported startup creating standardized innovation frameworks for educational institutions nationwide.</p>
-        <a href="portal-select.html" class="join-btn">Get Started</a>
-      </div>
+        <div class="hero-grid">
+            <div class="hero-text">
+                <h1>Empowering Student Innovation Across Indian Colleges</h1>
+                <p>A student-driven, mentor-supported startup creating standardized innovation frameworks for educational institutions nationwide.</p>
+            </div>
+            <div class="hero-slideshow-container">
+                <div class="slide"></div>
+                <div class="slide"></div>
+                <div class="slide"></div>
+                <a href="portal-select.html" class="join-btn">Get Started</a>
+            </div>
+        </div>
     </section>
     
     <section id="about" class="section">
