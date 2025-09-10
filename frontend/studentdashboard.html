@@ -9,95 +9,146 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #3498db; /* Student-facing blue */
-            --primary-color-dark: #2980b9;
-            --base-color: #2c3e50; /* Base navy for structure */
-            --background-color: #f4f7f6;
+            /* --- NEW Green Theme --- */
+            --primary-color: #27ae60; /* Professional Green */
+            --primary-color-dark: #229954;
+            --base-color: #34495e; /* Dark Slate Blue */
+            --background-color: #f2f4f7; 
             --surface-color: #ffffff;
-            --text-color: #34495e;
+            --text-color: #2c3e50;
             --light-text-color: #7f8c8d;
             --border-color: #e0e0e0;
             --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
             --border-radius: 12px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--background-color); color: var(--text-color); display: flex; }
-        .sidebar { width: 260px; background-color: var(--base-color); color: white; min-height: 100vh; display: flex; flex-direction: column; padding: 1.5rem; }
+        body { background-color: var(--background-color); color: var(--text-color); }
+        .dashboard-layout { display: flex; }
+        
+        /* --- Desktop Sidebar --- */
+        .sidebar { 
+            width: 260px; background-color: var(--base-color); color: white; 
+            min-height: 100vh; display: flex; flex-direction: column; padding: 1.5rem;
+            transition: margin-left 0.3s ease;
+        }
         .main-content { flex-grow: 1; padding: 2.5rem; overflow-y: auto; height: 100vh; }
         .sidebar-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .sidebar-header .logo { font-size: 1.8rem; font-weight: 700; }
+        .sidebar-header .logo { font-size: 1.8rem; font-weight: 700; color: white; text-decoration: none; }
         .sidebar-nav ul { list-style: none; }
-        .sidebar-nav li a { display: flex; align-items: center; gap: 1rem; padding: 1rem; text-decoration: none; color: #bdc3c7; border-radius: 8px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
-        .sidebar-nav li a:hover, .sidebar-nav li a.active { background-color: rgba(255, 255, 255, 0.1); color: white; }
-        .sidebar-nav li a .icon { font-size: 1.5rem; }
-        .sidebar-footer { margin-top: auto; }
-        .sidebar-footer button { width: 100%; text-align: center; padding: 0.8rem; background-color: var(--primary-color); color: white; border-radius: 8px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; }
+        .sidebar-nav li a.nav-link { display: flex; align-items: center; gap: 1rem; padding: 1rem; text-decoration: none; color: #bdc3c7; border-radius: 8px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
+        .sidebar-nav li a.nav-link:hover, .sidebar-nav li a.nav-link.active { background-color: rgba(255, 255, 255, 0.1); color: white; }
+        .sidebar-nav li a.nav-link .icon { display: flex; align-items: center; }
+        .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; }
+        .sidebar-footer button, .sidebar-footer a { width: 100%; text-align: center; padding: 0.8rem; border-radius: 8px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; text-decoration: none; }
+        #logout-btn { background-color: #e74c3c; color: white; }
+        .home-btn { background-color: var(--primary-color); color: white; }
+        
+        /* --- Main Content Area --- */
         .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
         .page-header h1 { font-size: 2.2rem; }
-        .notification-bell { font-size: 1.5rem; cursor: pointer; position: relative; }
-        .notification-dot { width: 8px; height: 8px; background-color: #e74c3c; border-radius: 50%; position: absolute; top: 0; right: 0; }
         .content-view { display: none; }
-        .content-view.active { display: block; }
+        .content-view.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
         .card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-top: 1.5rem; }
-        h2 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--base-color); }
+        h2 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--base-color); border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
         .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; }
-        .btn { padding: 0.9rem 2rem; border: none; background-color: var(--primary-color); color: white; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
-        .filter-group { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-        .filter-btn { padding: 0.6rem 1.2rem; border: 1px solid var(--border-color); background: none; border-radius: 50px; cursor: pointer; font-weight: 500; }
-        .filter-btn.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
-        .lecture-grid, .alumni-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .lecture-card, .alumni-card, .event-card { border: 1px solid var(--border-color); border-radius: var(--border-radius); overflow: hidden; background-color: var(--surface-color); }
-        .lecture-card img, .alumni-card img { width: 100%; height: 180px; object-fit: cover; }
-        .lecture-card-content, .alumni-card-content, .event-card-content { padding: 1.5rem; }
-        .lecture-card h3, .alumni-card h3, .event-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-        .lecture-card p, .alumni-card p, .event-card p { color: var(--light-text-color); font-size: 0.9rem; }
-        .tag { background-color: #ecf0f1; color: var(--light-text-color); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; display: inline-block; margin-top: 1rem; }
-        .profile-details p { font-size: 1.1rem; margin-bottom: 1rem; }
-        .profile-details strong { color: var(--base-color); }
+        textarea.form-control { min-height: 120px; resize: vertical; }
+        .btn { padding: 0.9rem 2rem; border: none; background-color: var(--primary-color); color: white; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+        .btn:hover { transform: translateY(-2px); background-color: var(--primary-color-dark); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        
+        .alumni-card, .event-card { border: 1px solid var(--border-color); border-radius: var(--border-radius); overflow: hidden; background-color: var(--surface-color); transition: transform 0.3s, box-shadow 0.3s; }
+        .alumni-card:hover, .event-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .alumni-card img { width: 100%; height: 180px; object-fit: cover; }
+        .alumni-card-content, .event-card-content { padding: 1.5rem; }
+        .alumni-card h3, .event-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .alumni-card p, .event-card p { color: var(--light-text-color); font-size: 0.9rem; }
+        .profile-details p { font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid #f0f0f0; padding-bottom: 1rem; }
+        .profile-details strong { color: var(--base-color); min-width: 150px; display: inline-block; }
+        
+        /* --- Coming Soon Page --- */
+        .coming-soon-container { text-align: center; padding: 4rem 2rem; }
+        .coming-soon-container .icon { font-size: 4rem; margin-bottom: 1.5rem; color: var(--primary-color); }
+        
+        /* --- Mobile Navigation --- */
+        .mobile-nav { display: none; }
+        @media (max-width: 768px) {
+            body { padding-bottom: 80px; }
+            .sidebar { display: none; }
+            .main-content { padding: 1.5rem; }
+            .page-header h1 { font-size: 1.8rem; }
+            .mobile-nav {
+                display: flex; justify-content: space-around; align-items: center;
+                position: fixed; bottom: 0; left: 0; width: 100%; height: 65px;
+                background-color: var(--surface-color); box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+            .mobile-nav a.nav-link {
+                display: flex; flex-direction: column; align-items: center;
+                text-decoration: none; color: var(--light-text-color); font-weight: 500;
+                font-size: 0.7rem; padding: 0.5rem; border-radius: 8px;
+            }
+            .mobile-nav a.nav-link.active { color: var(--primary-color); }
+        }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="sidebar-header"><div class="logo">SIPE</div></div>
-        <nav class="sidebar-nav">
-            <ul>
-                <li><a href="#" class="nav-link active" data-view="dashboard-view"><span class="icon">🏠</span><span>Dashboard</span></a></li>
-                <li><a href="#" class="nav-link" data-view="lectures-view"><span class="icon">🎓</span><span>Lectures</span></a></li>
-                <li><a href="#" class="nav-link" data-view="hub-view"><span class="icon">💡</span><span>Innovation Hub</span></a></li>
-                <li><a href="#" class="nav-link" data-view="alumni-view"><span class="icon">👥</span><span>Alumni Network</span></a></li>
-                <li><a href="#" class="nav-link" data-view="events-view"><span class="icon">📅</span><span>Events</span></a></li>
-                <li><a href="#" class="nav-link" data-view="profile-view"><span class="icon">👤</span><span>My Profile</span></a></li>
-            </ul>
-        </nav>
-        <div class="sidebar-footer"><button id="logout-btn">Logout</button></div>
-    </aside>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header"><a href="index.html" class="logo">SIPE</a></div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="nav-link active" data-view="dashboard-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span>Dashboard</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="lectures-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span><span>Lectures</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="hub-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.09 16.05a2 2 0 0 0-2.18 0L9 18.2a2 2 0 0 0-2.18 0l-1.07.54a2 2 0 0 0-1.18 1.81v1.94a2 2 0 0 0 1.18 1.81l1.07.54a2 2 0 0 0 2.18 0L9 22.82a2 2 0 0 0 2.18 0l1.07-.54a2 2 0 0 0 1.18-1.81v-1.94a2 2 0 0 0-1.18-1.81z"/><path d="m14 6 3-3 3 3"/><path d="M17 3v13.34"/><path d="M4 12a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4Z"/><path d="M13.88 4.12A2 2 0 0 0 12.01 3H6.5a2.5 2.5 0 0 0 0 5H12"/></svg></span><span>Innovation Hub</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="cv-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span><span>Create Your CV</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="alumni-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Alumni Network</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="events-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></span><span>Events</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="profile-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>My Profile</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="home-btn">SIPE Home</a>
+                <button id="logout-btn">Logout</button>
+            </div>
+        </aside>
 
-    <main class="main-content">
-        <header class="page-header">
-            <h1 id="page-title">Dashboard</h1>
-            <div class="notification-bell"><span>🔔</span><div class="notification-dot"></div></div>
-        </header>
+        <main class="main-content">
+            <header class="page-header">
+                <h1 id="page-title">Dashboard</h1>
+            </header>
 
-        <section id="dashboard-view" class="content-view active"><div class="card"><h2 id="welcome-message">Welcome!</h2><p>This is your central hub for lectures, innovation support, and events.</p></div></section>
+            <section id="dashboard-view" class="content-view active"><div class="card"><h2 id="welcome-message">Welcome!</h2><p>This is your central hub for lectures, innovation support, and events. Select an option from the menu to get started.</p></div></section>
+            
+            <section id="lectures-view" class="content-view"><div class="card"><h2>Browse Lectures</h2><div id="lecture-grid-container" class="grid"><!-- Lectures will be loaded here --></div></div></section>
 
-        <section id="lectures-view" class="content-view"><div class="card"><h2>Browse Lectures</h2><div id="lecture-grid-container"><!-- Lectures will be loaded here --></div></div></section>
+            <section id="hub-view" class="content-view"><div class="card"><h2>Innovation Hub</h2><p>Have an idea? Let us know how we can help.</p><form id="hub-form"><div class="form-group"><label for="help-type">What kind of help do you need?</label><select id="help-type" class="form-control"><option>Startup Incubation</option><option>Project Mentorship</option><option>Research Guidance</option><option>Other</option></select></div><div class="form-group"><label for="prototype-file">Upload a Prototype or Proposal (Optional)</label><input type="file" id="prototype-file" class="form-control"></div><div class="form-group"><label for="financial-support">Expected Financial Support (in INR)</label><input type="number" id="financial-support" class="form-control" placeholder="e.g., 50000"></div><div class="form-group"><label for="idea-description">Briefly describe your idea</label><textarea id="idea-description" class="form-control" required></textarea></div><button type="submit" class="btn">Submit for Review</button></form></div></section>
+            
+            <section id="cv-view" class="content-view"><div class="card coming-soon-container"><div class="icon">✨</div><h2>CV Builder Coming Soon!</h2><p>We're working on a tool to help you create a professional, standout CV. Check back later!</p></div></section>
 
-        <section id="hub-view" class="content-view"><div class="card"><h2>Innovation Hub</h2><p>Have an idea? Let us know how we can help.</p><form id="hub-form"><div class="form-group"><label for="help-type">What kind of help do you need?</label><select id="help-type" class="form-control"><option>Startup Incubation</option><option>Project Mentorship</option><option>Research Guidance</option><option>Other</option></select></div><div class="form-group"><label for="prototype-file">Upload a Prototype or Proposal (Optional)</label><input type="file" id="prototype-file" class="form-control"></div><div class="form-group"><label for="financial-support">Expected Financial Support (in INR)</label><input type="number" id="financial-support" class="form-control" placeholder="e.g., 50000"></div><div class="form-group"><label for="idea-description">Briefly describe your idea</label><textarea id="idea-description" class="form-control" required></textarea></div><button type="submit" class="btn">Submit for Review</button></form></div></section>
+            <section id="alumni-view" class="content-view"><div class="card"><h2>Alumni Network</h2><p>Connect with alumni from your institution.</p><div id="alumni-grid-container" class="grid" style="margin-top: 1.5rem;"></div></div></section>
 
-        <section id="alumni-view" class="content-view"><div class="card"><h2>Alumni Network</h2><p>Connect with alumni from your institution.</p><div id="alumni-grid-container" class="alumni-grid" style="margin-top: 1.5rem;"></div></div></section>
+            <section id="events-view" class="content-view"><div class="card"><h2>Upcoming Events</h2><p>Events hosted by your institution.</p><div id="event-list-container" style="margin-top: 1.5rem;"></div></div></section>
 
-        <section id="events-view" class="content-view"><div class="card"><h2>Upcoming Events</h2><p>Events hosted by your institution.</p><div id="event-list-container" style="margin-top: 1.5rem;"></div></div></section>
+            <section id="profile-view" class="content-view"><div class="card profile-details"><h2>My Profile</h2><p><strong>Name:</strong> <span id="profile-name"></span></p><p><strong>Email:</strong> <span id="profile-email"></span></p><p><strong>Institution:</strong> <span id="profile-institution"></span></p><p><strong>Primary Target Exam:</strong> <span id="profile-exam"></span></p></div></section>
+        </main>
+    </div>
 
-        <section id="profile-view" class="content-view"><div class="card profile-details"><h2>My Profile</h2><p><strong>Name:</strong> <span id="profile-name"></span></p><p><strong>Email:</strong> <span id="profile-email"></span></p><p><strong>Institution:</strong> <span id="profile-institution"></span></p><p><strong>Primary Target Exam:</strong> <span id="profile-exam"></span></p></div></section>
-    </main>
-
+    <nav class="mobile-nav">
+        <a href="#" class="nav-link active" data-view="dashboard-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span>Dashboard</span></a>
+        <a href="#" class="nav-link" data-view="lectures-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span><span>Lectures</span></a>
+        <a href="#" class="nav-link" data-view="hub-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.09 16.05a2 2 0 0 0-2.18 0L9 18.2a2 2 0 0 0-2.18 0l-1.07.54a2 2 0 0 0-1.18 1.81v1.94a2 2 0 0 0 1.18 1.81l1.07.54a2 2 0 0 0 2.18 0L9 22.82a2 2 0 0 0 2.18 0l1.07-.54a2 2 0 0 0 1.18-1.81v-1.94a2 2 0 0 0-1.18-1.81z"/><path d="m14 6 3-3 3 3"/><path d="M17 3v13.34"/><path d="M4 12a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4Z"/><path d="M13.88 4.12A2 2 0 0 0 12.01 3H6.5a2.5 2.5 0 0 0 0 5H12"/></svg></span><span>Hub</span></a>
+        <a href="#" class="nav-link" data-view="alumni-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Alumni</span></a>
+        <a href="#" class="nav-link" data-view="profile-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>Profile</span></a>
+    </nav>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const STUDENT_API_URL = 'https://sipe-backend.onrender.com/api/students';
-            const PUBLIC_API_URL = 'https://sipe-backend.onrender.com/api'; // For public data like sessions
+            const PUBLIC_API_URL = 'https://sipe-backend.onrender.com/api';
             const token = localStorage.getItem('sipe-student-token');
 
             if (!token) {
@@ -115,15 +166,19 @@
                     const response = await fetch(`${STUDENT_API_URL}/profile`, { headers: authHeaders });
                     if (!response.ok) throw new Error('Could not fetch profile.');
                     const student = await response.json();
+                    
+                    if(!student) { // Handle case where student is null or undefined
+                         localStorage.removeItem('sipe-student-token');
+                         window.location.href = 'loginstudent.html';
+                         return;
+                    }
 
-                    // Populate welcome message and profile page
-                    welcomeMessage.textContent = `Welcome, ${student.name}!`;
+                    welcomeMessage.textContent = `Welcome, ${student.name.split(' ')[0]}!`;
                     document.getElementById('profile-name').textContent = student.name;
                     document.getElementById('profile-email').textContent = student.email;
                     document.getElementById('profile-institution').textContent = student.institution;
                     document.getElementById('profile-exam').textContent = student.exam;
                     
-                    // After getting the profile, fetch data specific to the institution
                     fetchAndDisplayAlumni(student.institution);
                     fetchAndDisplayEvents(student.institution);
 
@@ -137,7 +192,7 @@
             const fetchAndDisplayAlumni = async (institutionName) => {
                 const container = document.getElementById('alumni-grid-container');
                 try {
-                    const response = await fetch(`${PUBLIC_API_URL}/alumni/${institutionName}`);
+                    const response = await fetch(`${PUBLIC_API_URL}/alumni/${encodeURIComponent(institutionName)}`);
                     const alumni = await response.json();
                     if (alumni.length === 0) {
                         container.innerHTML = '<p>No alumni from your institution have been registered yet.</p>';
@@ -145,7 +200,7 @@
                     }
                     container.innerHTML = alumni.map(alum => `
                         <div class="alumni-card">
-                            <img src="${alum.picture || 'https://placehold.co/300x180/3498db/ffffff?text=Alumni'}" alt="${alum.name}">
+                            <img src="${alum.picture || `https://placehold.co/600x400/3498db/ffffff?text=${alum.name.charAt(0)}`}" alt="${alum.name}">
                             <div class="alumni-card-content">
                                 <h3>${alum.name}</h3>
                                 <p>${alum.company}</p>
@@ -160,7 +215,7 @@
             const fetchAndDisplayEvents = async (institutionName) => {
                 const container = document.getElementById('event-list-container');
                 try {
-                    const response = await fetch(`${PUBLIC_API_URL}/events/${institutionName}`);
+                    const response = await fetch(`${PUBLIC_API_URL}/events/${encodeURIComponent(institutionName)}`);
                     const events = await response.json();
                     if (events.length === 0) {
                         container.innerHTML = '<p>No upcoming events from your institution.</p>';
@@ -170,7 +225,7 @@
                         <div class="event-card" style="margin-bottom: 1rem;">
                             <div class="event-card-content">
                                 <h3>${event.title}</h3>
-                                <p>${new Date(event.date).toLocaleDateString()} at ${event.time}</p>
+                                <p>${new Date(event.date).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} at ${event.time}</p>
                                 <p>${event.description}</p>
                             </div>
                         </div>
@@ -180,29 +235,36 @@
                 }
             };
             
-            // Initial data load
             fetchAndDisplayProfile();
 
-            // View switching logic
-            const navLinks = document.querySelectorAll('.nav-link');
+            const allNavLinks = document.querySelectorAll('.nav-link');
             const contentViews = document.querySelectorAll('.content-view');
-            navLinks.forEach(link => {
+            
+            const switchView = (viewId) => {
+                const targetLink = document.querySelector(`.nav-link[data-view="${viewId}"]`);
+                if (!targetLink) return;
+
+                allNavLinks.forEach(nav => nav.classList.remove('active'));
+                document.querySelectorAll(`.nav-link[data-view="${viewId}"]`).forEach(l => l.classList.add('active'));
+
+                pageTitle.textContent = targetLink.querySelector('span:last-child').textContent;
+                
+                contentViews.forEach(view => {
+                    view.classList.toggle('active', view.id === viewId);
+                });
+            };
+
+            allNavLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    navLinks.forEach(nav => nav.classList.remove('active'));
-                    link.classList.add('active');
-                    pageTitle.textContent = link.querySelector('span:last-child').textContent;
                     const targetViewId = link.getAttribute('data-view');
-                    contentViews.forEach(view => {
-                        view.classList.toggle('active', view.id === targetViewId);
-                    });
+                    switchView(targetViewId);
                 });
             });
 
-            // Logout
             document.getElementById('logout-btn').addEventListener('click', () => {
                 localStorage.removeItem('sipe-student-token');
-                window.location.href = 'loginstudent.html';
+                window.location.href = 'index.html'; // Redirect to the main landing page
             });
         });
     </script>

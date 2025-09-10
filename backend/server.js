@@ -195,7 +195,7 @@ const studentAuthMiddleware = (req, res, next) => {
 // --- 5. API ENDPOINTS (ROUTES) ---
 // =================================================================
 
-// All endpoints are fully implemented below.
+// All endpoints are fully implemented belo
 
 // --- Public Endpoints ---
 
