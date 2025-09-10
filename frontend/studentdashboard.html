@@ -9,17 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* --- NEW Green Theme --- */
-            --primary-color: #27ae60; /* Professional Green */
-            --primary-color-dark: #229954;
-            --base-color: #34495e; /* Dark Slate Blue */
-            --background-color: #f2f4f7; 
+            /* --- NEW Purple/Indigo Theme --- */
+            --primary-color: #6a5acd; /* Slate Blue / Purple */
+            --primary-color-dark: #483d8b;
+            --base-color: #2c3e50; /* Base navy for structure */
+            --accent-color: #ff6b6b; /* Accent color for highlights */
+            --background-color: #f0f2f5; 
             --surface-color: #ffffff;
-            --text-color: #2c3e50;
-            --light-text-color: #7f8c8d;
-            --border-color: #e0e0e0;
+            --text-color: #34495e;
+            --light-text-color: #95a5a6;
+            --border-color: #e8eaf6;
             --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
-            --border-radius: 12px;
+            --border-radius: 16px; /* Bolder radius */
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--background-color); color: var(--text-color); }
@@ -29,36 +30,78 @@
         .sidebar { 
             width: 260px; background-color: var(--base-color); color: white; 
             min-height: 100vh; display: flex; flex-direction: column; padding: 1.5rem;
-            transition: margin-left 0.3s ease;
+            transition: margin-left 0.3s ease; border-right: 1px solid #34495e;
         }
         .main-content { flex-grow: 1; padding: 2.5rem; overflow-y: auto; height: 100vh; }
         .sidebar-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .sidebar-header .logo { font-size: 1.8rem; font-weight: 700; color: white; text-decoration: none; }
         .sidebar-nav ul { list-style: none; }
-        .sidebar-nav li a.nav-link { display: flex; align-items: center; gap: 1rem; padding: 1rem; text-decoration: none; color: #bdc3c7; border-radius: 8px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
-        .sidebar-nav li a.nav-link:hover, .sidebar-nav li a.nav-link.active { background-color: rgba(255, 255, 255, 0.1); color: white; }
+        .sidebar-nav li a.nav-link { display: flex; align-items: center; gap: 1rem; padding: 1rem; text-decoration: none; color: #bdc3c7; border-radius: 10px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
+        .sidebar-nav li a.nav-link:hover, .sidebar-nav li a.nav-link.active { background-color: var(--primary-color); color: white; }
         .sidebar-nav li a.nav-link .icon { display: flex; align-items: center; }
         .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; }
-        .sidebar-footer button, .sidebar-footer a { width: 100%; text-align: center; padding: 0.8rem; border-radius: 8px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; text-decoration: none; }
-        #logout-btn { background-color: #e74c3c; color: white; }
-        .home-btn { background-color: var(--primary-color); color: white; }
+        .sidebar-footer button, .sidebar-footer a { width: 100%; text-align: center; padding: 0.8rem; border-radius: 10px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; text-decoration: none; }
+        #logout-btn { background-color: var(--accent-color); color: white; }
+        .home-btn { background-color: var(--primary-color-dark); color: white; }
         
         /* --- Main Content Area --- */
-        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+        .page-header { margin-bottom: 2.5rem; }
         .page-header h1 { font-size: 2.2rem; }
+        .page-header p { color: var(--light-text-color); font-size: 1.1rem; }
         .content-view { display: none; }
         .content-view.active { display: block; animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-top: 1.5rem; }
+        .card { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-top: 1.5rem; border: 1px solid var(--border-color); }
         h2 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--base-color); border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
-        .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; }
+        .form-control { width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--border-color); border-radius: 10px; font-size: 1rem; }
         textarea.form-control { min-height: 120px; resize: vertical; }
-        .btn { padding: 0.9rem 2rem; border: none; background-color: var(--primary-color); color: white; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+        .btn { padding: 0.9rem 2rem; border: none; background-color: var(--primary-color); color: white; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s, background-color 0.2s; }
         .btn:hover { transform: translateY(-2px); background-color: var(--primary-color-dark); }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        
+        /* NEW: Dashboard Hub Cards */
+        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .hub-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hub-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .hub-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        .hub-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .hub-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            flex-grow: 1;
+        }
+        .hub-card .arrow {
+            font-size: 1.5rem;
+            align-self: flex-end;
+            margin-top: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .hub-card:hover .arrow {
+            transform: translateX(5px);
+        }
         
         .alumni-card, .event-card { border: 1px solid var(--border-color); border-radius: var(--border-radius); overflow: hidden; background-color: var(--surface-color); transition: transform 0.3s, box-shadow 0.3s; }
         .alumni-card:hover, .event-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
@@ -119,10 +162,48 @@
 
         <main class="main-content">
             <header class="page-header">
-                <h1 id="page-title">Dashboard</h1>
+                <div>
+                    <h1 id="page-title">Dashboard</h1>
+                    <p id="welcome-message" style="color: var(--light-text-color); font-size: 1.1rem;"></p>
+                </div>
             </header>
 
-            <section id="dashboard-view" class="content-view active"><div class="card"><h2 id="welcome-message">Welcome!</h2><p>This is your central hub for lectures, innovation support, and events. Select an option from the menu to get started.</p></div></section>
+            <section id="dashboard-view" class="content-view active">
+                <div class="hub-grid">
+                    <a href="#" class="hub-card nav-link" data-view="lectures-view">
+                        <div>
+                            <div class="icon">🎓</div>
+                            <h3>Browse Lectures</h3>
+                            <p>Access sessions from your institution and our elite mentor network.</p>
+                        </div>
+                        <div class="arrow">→</div>
+                    </a>
+                    <a href="#" class="hub-card nav-link" data-view="hub-view">
+                        <div>
+                            <div class="icon">💡</div>
+                            <h3>Innovation Hub</h3>
+                            <p>Submit your startup idea or project for mentorship and support.</p>
+                        </div>
+                        <div class="arrow">→</div>
+                    </a>
+                    <a href="#" class="hub-card nav-link" data-view="alumni-view">
+                        <div>
+                            <div class="icon">👥</div>
+                            <h3>Alumni Network</h3>
+                            <p>Connect with accomplished alumni from your college.</p>
+                        </div>
+                        <div class="arrow">→</div>
+                    </a>
+                    <a href="#" class="hub-card nav-link" data-view="cv-view">
+                        <div>
+                            <div class="icon">✨</div>
+                            <h3>Create Your CV</h3>
+                            <p>Build a professional CV with our upcoming tool.</p>
+                        </div>
+                        <div class="arrow">→</div>
+                    </a>
+                </div>
+            </section>
             
             <section id="lectures-view" class="content-view"><div class="card"><h2>Browse Lectures</h2><div id="lecture-grid-container" class="grid"><!-- Lectures will be loaded here --></div></div></section>
 
@@ -167,7 +248,7 @@
                     if (!response.ok) throw new Error('Could not fetch profile.');
                     const student = await response.json();
                     
-                    if(!student) { // Handle case where student is null or undefined
+                    if(!student) {
                          localStorage.removeItem('sipe-student-token');
                          window.location.href = 'loginstudent.html';
                          return;
@@ -196,17 +277,17 @@
                     const alumni = await response.json();
                     if (alumni.length === 0) {
                         container.innerHTML = '<p>No alumni from your institution have been registered yet.</p>';
-                        return;
-                    }
-                    container.innerHTML = alumni.map(alum => `
-                        <div class="alumni-card">
-                            <img src="${alum.picture || `https://placehold.co/600x400/3498db/ffffff?text=${alum.name.charAt(0)}`}" alt="${alum.name}">
-                            <div class="alumni-card-content">
-                                <h3>${alum.name}</h3>
-                                <p>${alum.company}</p>
+                    } else {
+                        container.innerHTML = alumni.map(alum => `
+                            <div class="alumni-card">
+                                <img src="${alum.picture || `https://placehold.co/600x400/27ae60/ffffff?text=${alum.name.charAt(0)}`}" alt="${alum.name}">
+                                <div class="alumni-card-content">
+                                    <h3>${alum.name}</h3>
+                                    <p>${alum.company}</p>
+                                </div>
                             </div>
-                        </div>
-                    `).join('');
+                        `).join('');
+                    }
                 } catch (error) {
                     container.innerHTML = '<p>Could not load alumni data.</p>';
                 }
@@ -219,17 +300,17 @@
                     const events = await response.json();
                     if (events.length === 0) {
                         container.innerHTML = '<p>No upcoming events from your institution.</p>';
-                        return;
-                    }
-                    container.innerHTML = events.map(event => `
-                        <div class="event-card" style="margin-bottom: 1rem;">
-                            <div class="event-card-content">
-                                <h3>${event.title}</h3>
-                                <p>${new Date(event.date).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} at ${event.time}</p>
-                                <p>${event.description}</p>
+                    } else {
+                        container.innerHTML = events.map(event => `
+                            <div class="event-card" style="margin-bottom: 1rem;">
+                                <div class="event-card-content">
+                                    <h3>${event.title}</h3>
+                                    <p>${new Date(event.date).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} at ${event.time}</p>
+                                    <p>${event.description}</p>
+                                </div>
                             </div>
-                        </div>
-                    `).join('');
+                        `).join('');
+                    }
                 } catch (error) {
                     container.innerHTML = '<p>Could not load event data.</p>';
                 }
@@ -264,7 +345,7 @@
 
             document.getElementById('logout-btn').addEventListener('click', () => {
                 localStorage.removeItem('sipe-student-token');
-                window.location.href = 'index.html'; // Redirect to the main landing page
+                window.location.href = 'index.html';
             });
         });
     </script>
