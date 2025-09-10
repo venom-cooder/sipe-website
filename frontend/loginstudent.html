@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Adopting the new Indigo/Purple theme from your dashboard design */
             --primary-color: #6a5acd; --primary-color-dark: #483d8b; --background-color: #f0f2f5;
             --surface-color: #ffffff; --text-color: #34495e; --light-text-color: #95a5a6;
             --error-color: #D0021B; --success-color: #2E7D32; --accent-color: #ff6b6b;
@@ -20,7 +19,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--background-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; }
         
-        /* --- Login/Signup Container --- */
         .container-wrapper { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); width: 100%; max-width: 480px; overflow: hidden; }
         .header { text-align: center; margin-bottom: 2rem; }
         .header h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.5rem; }
@@ -50,7 +48,6 @@
         .otp-group .form-group { flex-grow: 1; }
         .btn-otp { padding: 0.8rem 1rem; font-size: 0.9rem; white-space: nowrap; }
 
-        /* --- Membership Choice Page --- */
         .plan-options { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
         .plan-card { border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 1.5rem; text-align: center; transition: all 0.3s ease; }
         .plan-card:hover { transform: translateY(-5px); box-shadow: var(--box-shadow); }
@@ -62,13 +59,11 @@
         .plan-premium { border-color: var(--primary-color); border-width: 2px; }
         .plan-card .btn { margin-top: 1rem; }
 
-        /* --- Payment Page Specific --- */
         .offer-card { border: 2px dashed var(--primary-color); background-color: #f0f6ff; padding: 1.5rem; border-radius: var(--border-radius); text-align: center; margin-bottom: 2rem; }
         .offer-card .tag { background-color: var(--primary-color); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; display: inline-block; margin-bottom: 1rem; }
         .offer-card .new-price { font-size: 3rem; font-weight: 700; color: var(--primary-color); }
         .offer-card .old-price { font-size: 1.2rem; text-decoration: line-through; color: var(--light-text-color); margin-left: 0.5rem; }
         
-        /* --- NEW DASHBOARD STYLES --- */
         .dashboard-container { max-width: 100%; width: 100%; height: 100vh; padding: 0; background: none; box-shadow: none; }
         .dashboard-layout { display: flex; width: 100%; height: 100%; }
         .sidebar { width: 260px; background-color: #2c3e50; color: white; min-height: 100vh; display: flex; flex-direction: column; padding: 1.5rem; transition: margin-left 0.3s ease; border-right: 1px solid #34495e; }
@@ -82,33 +77,37 @@
         .sidebar-nav li a.nav-link.locked { color: #7f8c8d; cursor: not-allowed; position: relative;}
         .sidebar-nav li a.nav-link.locked::after { content: '🔒'; position: absolute; right: 1rem; }
         .sidebar-nav li a.nav-link.locked:hover { background: none; }
-
         .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; }
         .btn-logout { background-color: var(--accent-color); color: white; width: 100%; text-align: center; padding: 0.8rem; border-radius: 10px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; }
         
-        .page-header { margin-bottom: 2.5rem; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
         .page-header h1 { font-size: 2.2rem; }
         .page-header p { color: var(--light-text-color); font-size: 1.1rem; }
+        .user-avatar { width: 50px; height: 50px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 600; }
         .content-view { display: none; }
         .content-view.active { display: block; animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
         .card { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-top: 1.5rem; border: 1px solid var(--border-color); }
         h2 { font-size: 1.8rem; margin-bottom: 1.5rem; color: #2c3e50; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
         
-        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
-        .hub-card { background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark)); color: white; padding: 2rem; border-radius: var(--border-radius); text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
-        .hub-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
-        .hub-card .icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.8; }
-        .hub-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: white; border: none; }
-        .hub-card .arrow { font-size: 1.5rem; align-self: flex-end; margin-top: 1.5rem; transition: transform 0.3s ease; }
-        .hub-card:hover .arrow { transform: translateX(5px); }
+        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .hub-card { background: var(--surface-color); color: var(--text-color); padding: 2rem; border-radius: var(--border-radius); text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; border: 1px solid var(--border-color); }
+        .hub-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .hub-card .icon-wrapper { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; font-size: 2rem; }
+        .hub-card.idea .icon-wrapper { background-color: #e3f2fd; color: #1e88e5; }
+        .hub-card.cv .icon-wrapper { background-color: #e8f5e9; color: #43a047; }
+        .hub-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-color); border: none; }
+        .hub-card p { color: var(--light-text-color); }
         
         .profile-details p { font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid #f0f0f0; padding-bottom: 1rem; }
         .profile-details strong { color: #2c3e50; min-width: 150px; display: inline-block; }
         
-        .coming-soon-container, .upgrade-prompt { text-align: center; padding: 4rem 2rem; }
-        .coming-soon-container .icon, .upgrade-prompt .icon { font-size: 4rem; margin-bottom: 1.5rem; color: var(--primary-color); }
+        .coming-soon-container { text-align: center; padding: 4rem 2rem; }
+        .upgrade-prompt { text-align: center; padding: 2.5rem; background: linear-gradient(135deg, #6a5acd, #483d8b); color: white; border-radius: var(--border-radius); }
+        .upgrade-prompt .icon { font-size: 3rem; margin-bottom: 1rem; }
+        .upgrade-prompt h2 { color: white; border: none; font-size: 1.5rem; }
+        .upgrade-prompt p { color: rgba(255,255,255,0.8); margin-bottom: 1.5rem; }
+        .upgrade-prompt .btn-primary { background: white; color: var(--primary-color); }
 
         .mobile-nav { display: none; }
         @media (max-width: 768px) {
@@ -130,19 +129,15 @@
 
     <!-- View 1: Landing Page -->
     <div id="landing-view">
-        <div class="header">
-            <h1>Welcome to <span class="logo">SIPE</span></h1>
-            <p>Your journey to success starts here.</p>
-        </div>
+        <div class="header"><h1>Welcome to <span class="logo">SIPE</span></h1><p>Your journey to success starts here.</p></div>
         <div class="landing-actions">
             <button id="go-to-signup-btn" class="btn btn-primary">Sign Up</button>
             <button id="go-to-signin-btn" class="btn btn-secondary">Sign In</button>
         </div>
     </div>
 
-    <!-- View 2: Authentication (Login/Signup) -->
+    <!-- View 2: Authentication -->
     <div id="auth-view" class="hidden">
-         <!-- Login Form -->
         <div id="login-form-container" class="hidden">
             <div class="header"><h1>Welcome Back!</h1><p>Log in to continue your journey.</p></div>
             <form id="login-form">
@@ -152,7 +147,6 @@
                 <button type="button" class="btn btn-secondary back-to-landing">Back</button>
             </form>
         </div>
-        <!-- Signup Form -->
         <div id="signup-form-container" class="hidden">
             <div class="header"><h1>Create Your Account</h1><p>Join SIPE and get started.</p></div>
             <form id="signup-form">
@@ -187,7 +181,7 @@
         <button id="pay-button" class="btn btn-primary">Pay ₹213 Securely</button>
     </div>
 
-    <!-- View 5: Premium Dashboard (Integrated) -->
+    <!-- View 5: Premium Dashboard -->
     <div id="premium-dashboard-view" class="hidden dashboard-container">
         <div class="dashboard-layout">
             <aside class="sidebar">
@@ -206,17 +200,18 @@
             <main class="main-content">
                 <header class="page-header">
                     <div><h1 class="page-title">Dashboard</h1><p class="welcome-message"></p></div>
+                    <div class="user-avatar"></div>
                 </header>
-                <section class="content-view active" data-content="dashboard"><div class="hub-grid"><a class="hub-card nav-link" data-view="hub"><div><div class="icon">💡</div><h3>Innovation Hub</h3><p>Submit your startup idea.</p></div><div class="arrow">→</div></a><a class="hub-card nav-link" data-view="cv"><div><div class="icon">✨</div><h3>Create Your CV</h3><p>Build a professional CV.</p></div><div class="arrow">→</div></a></div></section>
-                <section class="content-view" data-content="hub"><div class="card"><h2>Innovation Hub</h2><form><div class="form-group"><label>What kind of help do you need?</label><input type="text" class="form-control"></div><button type="submit" class="btn btn-primary">Submit for Review</button></form></div></section>
+                <section class="content-view active" data-content="dashboard"><div class="hub-grid"><div class="hub-card nav-link idea" data-view="hub"><div class="icon-wrapper"><span class="icon">💡</span></div><div><h3>Innovation Hub</h3><p>Submit your startup idea.</p></div></div><div class="hub-card nav-link cv" data-view="cv"><div class="icon-wrapper"><span class="icon">✨</span></div><div><h3>Create Your CV</h3><p>Build a professional CV.</p></div></div></div></section>
+                <section class="content-view" data-content="hub"><div class="card"><h2>Innovation Hub</h2><form id="hub-form"><div class="form-group"><label for="hub-help-type">What kind of help do you need?</label><select id="hub-help-type" class="form-control" required><option>Startup Incubation</option><option>Project Mentorship</option><option>Other</option></select></div><div class="form-group"><label for="hub-description">Briefly describe your idea</label><textarea id="hub-description" class="form-control" required></textarea></div><button type="submit" class="btn btn-primary">Submit for Review</button></form></div></section>
                 <section class="content-view" data-content="cv"><div class="card coming-soon-container"><div class="icon">✨</div><h2>CV Builder Coming Soon!</h2></div></section>
                 <section class="content-view" data-content="events"><div class="card"><h2>Upcoming Events</h2><div class="events-container"></div></div></section>
-                <section class="content-view" data-content="profile"><div class="card profile-details"><h2>My Profile</h2><p><strong>Name:</strong> <span class="profile-name"></span></p><p><strong>Email:</strong> <span class="profile-email"></span></p></div></section>
+                <section class="content-view" data-content="profile"><div class="card profile-details"><h2>My Profile</h2><p><strong>Name:</strong> <span class="profile-name"></span></p><p><strong>Email:</strong> <span class="profile-email"></span></p><p><strong>Institution:</strong> <span class="profile-institution"></span></p></div></section>
             </main>
         </div>
     </div>
 
-     <!-- View 6: Free Dashboard (Integrated) -->
+     <!-- View 6: Free Dashboard -->
     <div id="free-dashboard-view" class="hidden dashboard-container">
         <div class="dashboard-layout">
             <aside class="sidebar">
@@ -234,11 +229,12 @@
             </aside>
             <main class="main-content">
                 <header class="page-header">
-                    <div><h1 class="page-title">Dashboard</h1><p class="welcome-message"></p></div>
+                     <div><h1 class="page-title">Dashboard</h1><p class="welcome-message"></p></div>
+                     <div class="user-avatar"></div>
                 </header>
                 <section class="content-view active" data-content="dashboard"><div class="upgrade-prompt card"><div class="icon">🚀</div><h2>Upgrade to Pro!</h2><p>Unlock the Innovation Hub, CV Builder, and more.</p><button class="btn btn-primary upgrade-from-dash-btn">Upgrade Now</button></div></section>
                 <section class="content-view" data-content="events"><div class="card"><h2>Upcoming Events</h2><div class="events-container"></div></div></section>
-                <section class="content-view" data-content="profile"><div class="card profile-details"><h2>My Profile</h2><p><strong>Name:</strong> <span class="profile-name"></span></p><p><strong>Email:</strong> <span class="profile-email"></span></p></div></section>
+                <section class="content-view" data-content="profile"><div class="card profile-details"><h2>My Profile</h2><p><strong>Name:</strong> <span class="profile-name"></span></p><p><strong>Email:</strong> <span class="profile-email"></span></p><p><strong>Institution:</strong> <span class="profile-institution"></span></p></div></section>
             </main>
         </div>
     </div>
@@ -246,11 +242,11 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Backend API URL ---
     const STUDENT_API_URL = 'https://sipe-backend.onrender.com/api/students';
+    const HUB_API_URL = 'https://sipe-backend.onrender.com/api/hub-ideas';
 
-    // --- Page Views ---
     const appContainer = document.getElementById('app-container');
+    const allViews = document.querySelectorAll('#app-container > div');
     const landingView = document.getElementById('landing-view');
     const authView = document.getElementById('auth-view');
     const membershipChoiceView = document.getElementById('membership-choice-view');
@@ -258,7 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const premiumDashboardView = document.getElementById('premium-dashboard-view');
     const freeDashboardView = document.getElementById('free-dashboard-view');
 
-    // --- Buttons and Links ---
     const goToSignupBtn = document.getElementById('go-to-signup-btn');
     const goToSigninBtn = document.getElementById('go-to-signin-btn');
     const backToLandingBtns = document.querySelectorAll('.back-to-landing');
@@ -269,21 +264,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const payButton = document.getElementById('pay-button');
     const logoutButtons = document.querySelectorAll('.btn-logout');
     
-    // --- Forms & Inputs ---
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
     const institutionOtherCheckbox = document.getElementById('institution-other-checkbox');
     const institutionSelect = document.getElementById('signup-institution');
     const institutionOtherInput = document.getElementById('institution-other-input');
 
-    // --- Other Elements ---
     const messageArea = document.getElementById('message-area');
-
     let isOtpVerified = false;
 
-    // --- Main View Management ---
     function showView(viewToShow) {
-        [landingView, authView, membershipChoiceView, paymentView, premiumDashboardView, freeDashboardView].forEach(v => v.classList.add('hidden'));
+        allViews.forEach(v => v.classList.add('hidden'));
         viewToShow.classList.remove('hidden');
         
         if (viewToShow.id.includes('dashboard-view')) {
@@ -300,7 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
     goToSigninBtn.addEventListener('click', () => { showView(authView); document.getElementById('login-form-container').classList.remove('hidden'); document.getElementById('signup-form-container').classList.add('hidden'); });
     backToLandingBtns.forEach(btn => btn.addEventListener('click', () => showView(landingView)));
 
-    // --- Form Logic ---
     institutionOtherCheckbox.addEventListener('change', () => {
         const isChecked = institutionOtherCheckbox.checked;
         institutionSelect.classList.toggle('hidden', isChecked);
@@ -335,6 +325,23 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('signup-submit-btn').disabled = false;
     });
 
+    const handleAuthSuccess = (data, formData) => {
+        localStorage.setItem('sipe-student-token', data.token);
+        const profileData = data.student || formData;
+        localStorage.setItem('sipe-student-profile', JSON.stringify(profileData));
+
+        if (data.membershipStatus === 'premium') {
+            showMessage('Login successful! Welcome back.', 'success');
+            setTimeout(() => { showView(premiumDashboardView); initDashboard('premium'); }, 1000);
+        } else if (data.membershipStatus === 'free') {
+            showMessage('Login successful! Welcome.', 'success');
+            setTimeout(() => { showView(freeDashboardView); initDashboard('free'); }, 1000);
+        } else {
+            showMessage('Account created! Choose your plan.', 'success');
+            setTimeout(() => showView(membershipChoiceView), 1500);
+        }
+    };
+    
     signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (!isOtpVerified) { showMessage('Please verify OTP.', 'error'); return; }
@@ -352,9 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`${STUDENT_API_URL}/signup`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
             const data = await response.json();
             if (!response.ok) throw new Error(data.message);
-            localStorage.setItem('sipe-student-token', data.token); localStorage.setItem('sipe-student-email', formData.email);
-            showMessage('Account created! Choose your plan.', 'success');
-            setTimeout(() => showView(membershipChoiceView), 1500);
+            handleAuthSuccess(data, formData);
         } catch (error) { showMessage(error.message, 'error'); } 
         finally { signupSubmitBtn.disabled = false; signupSubmitBtn.textContent = 'Create Account'; }
     });
@@ -368,14 +373,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`${STUDENT_API_URL}/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
             const data = await response.json();
             if (!response.ok) throw new Error(data.message);
-            localStorage.setItem('sipe-student-token', data.token); localStorage.setItem('sipe-student-email', formData.email);
-            showMessage('Login successful! Choose your plan.', 'success');
-            setTimeout(() => showView(membershipChoiceView), 1500);
-        } catch(error) { showMessage(error.message, 'error'); } 
-        finally { loginBtn.disabled = false; loginBtn.textContent = 'Log In'; }
+            handleAuthSuccess(data, formData);
+        } catch(error) { 
+            showMessage(error.message, 'error'); 
+            loginBtn.disabled = false; 
+            loginBtn.textContent = 'Log In';
+        }
     });
     
-    // --- Membership and Payment ---
     chooseFreePlanBtn.addEventListener('click', () => { showView(freeDashboardView); initDashboard('free'); });
     choosePaidPlanBtn.addEventListener('click', () => showView(paymentView));
     document.querySelectorAll('.upgrade-from-dash-btn').forEach(btn => btn.addEventListener('click', () => showView(paymentView)));
@@ -395,21 +400,20 @@ document.addEventListener('DOMContentLoaded', () => {
         rzp1.open();
     });
 
-    // --- Dashboard Logic ---
     function initDashboard(type) {
         const dashboardId = `#${type}-dashboard-view`;
         const dashboardElement = document.querySelector(dashboardId);
         
-        const token = localStorage.getItem('sipe-student-token');
-        if(!token) { window.location.href = 'index.html'; return; }
-        fetch(`${STUDENT_API_URL}/profile`, { headers: { 'Authorization': `Bearer ${token}` } })
-            .then(res => res.json())
-            .then(student => {
-                dashboardElement.querySelectorAll('.welcome-message').forEach(el => el.textContent = `Welcome, ${student.name.split(' ')[0]}!`);
-                dashboardElement.querySelectorAll('.profile-name').forEach(el => el.textContent = student.name);
-                dashboardElement.querySelectorAll('.profile-email').forEach(el => el.textContent = student.email);
-            })
-            .catch(err => console.error("Failed to fetch profile", err));
+        const profile = JSON.parse(localStorage.getItem('sipe-student-profile'));
+        if (profile) {
+            const welcomeEl = dashboardElement.querySelector('.welcome-message');
+            const nameInitial = profile.name ? profile.name.charAt(0).toUpperCase() : '?';
+            if(welcomeEl) welcomeEl.textContent = `Welcome, ${profile.name.split(' ')[0]}!`;
+            dashboardElement.querySelectorAll('.profile-name').forEach(el => el.textContent = profile.name);
+            dashboardElement.querySelectorAll('.profile-email').forEach(el => el.textContent = profile.email);
+            dashboardElement.querySelectorAll('.profile-institution').forEach(el => el.textContent = profile.institution);
+            dashboardElement.querySelectorAll('.user-avatar').forEach(el => el.textContent = nameInitial);
+        }
 
         const navLinks = dashboardElement.querySelectorAll('.nav-link');
         const contentViews = dashboardElement.querySelectorAll('.content-view');
@@ -418,29 +422,52 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 if (link.classList.contains('locked')) {
-                    alert('This feature is for Pro members only. Please upgrade.');
-                    return;
+                    alert('This feature is for Pro members only. Please upgrade.'); return;
                 }
                 const viewName = link.getAttribute('data-view');
-                
                 navLinks.forEach(nav => nav.classList.remove('active'));
-                link.classList.add('active');
-
+                document.querySelectorAll(`${dashboardId} .nav-link[data-view="${viewName}"]`).forEach(l => l.classList.add('active'));
                 contentViews.forEach(view => view.classList.toggle('active', view.getAttribute('data-content') === viewName));
                 dashboardElement.querySelector('.page-title').textContent = link.querySelector('span:last-child').textContent;
             });
         });
+
+        if(type === 'premium') {
+            const hubForm = document.getElementById('hub-form');
+            hubForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = hubForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true; submitBtn.textContent = 'Submitting...';
+                const ideaData = {
+                    helpType: document.getElementById('hub-help-type').value,
+                    description: document.getElementById('hub-description').value
+                };
+                const token = localStorage.getItem('sipe-student-token');
+                try {
+                    const response = await fetch(HUB_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                        body: JSON.stringify(ideaData)
+                    });
+                    if (!response.ok) throw new Error('Failed to submit idea.');
+                    alert('Your idea has been submitted successfully!');
+                    hubForm.reset();
+                } catch (error) {
+                    alert(error.message);
+                } finally {
+                    submitBtn.disabled = false; submitBtn.textContent = 'Submit for Review';
+                }
+            });
+        }
     }
 
-    logoutButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            localStorage.removeItem('sipe-student-email');
-            localStorage.removeItem('sipe-student-token');
-            showView(landingView);
-        });
-    });
+    const handleLogout = () => {
+        localStorage.removeItem('sipe-student-profile');
+        localStorage.removeItem('sipe-student-token');
+        showView(landingView);
+    };
+    logoutButtons.forEach(btn => btn.addEventListener('click', handleLogout));
 
-    // Initial state
     showView(landingView);
 });
 </script>
