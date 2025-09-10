@@ -10,50 +10,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4A90E2; --primary-color-dark: #357ABD; --background-color: #f4f7f6;
-            --surface-color: #ffffff; --text-color: #333333; --light-text-color: #777777;
-            --error-color: #D0021B; --success-color: #2E7D32; --box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px; --border-color: #dde2e7;
+            /* Adopting the new Indigo/Purple theme from your dashboard design */
+            --primary-color: #6a5acd; --primary-color-dark: #483d8b; --background-color: #f0f2f5;
+            --surface-color: #ffffff; --text-color: #34495e; --light-text-color: #95a5a6;
+            --error-color: #D0021B; --success-color: #2E7D32; --accent-color: #ff6b6b;
+            --box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px; --border-color: #e8eaf6;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--background-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; }
         
+        /* --- Login/Signup Container --- */
         .container-wrapper { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); width: 100%; max-width: 480px; overflow: hidden; }
         .header { text-align: center; margin-bottom: 2rem; }
         .header h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.5rem; }
         .header .logo { font-weight: 800; color: var(--primary-color); }
         .header p { color: var(--light-text-color); }
         
-        /* Form Styles */
         .form-group { margin-bottom: 1.25rem; position: relative; }
         .form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-color); }
         .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
-        .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); }
+        .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2); }
         
         .btn { width: 100%; padding: 0.9rem; border: none; color: white; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center; }
         .btn-primary { background: linear-gradient(45deg, var(--primary-color), var(--primary-color-dark)); }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(106, 90, 205, 0.3); }
         .btn-secondary { background: #e0e0e0; color: var(--text-color); margin-top: 1rem; }
         .btn-secondary:hover { background: #d1d1d1; }
-        .btn:disabled { background: #a0c3e8; cursor: not-allowed; }
+        .btn:disabled { background: #a9a1d9; cursor: not-allowed; }
         
         .hidden { display: none; }
         
-        /* Message Area */
         .message-area { text-align: center; margin-bottom: 1rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; display: none; }
         .message-area.success { display: block; color: var(--success-color); background-color: #e8f5e9; }
         .message-area.error { display: block; color: var(--error-color); background-color: #fdecea; }
-        .message-area.info { display: block; color: #0d47a1; background-color: #e3f2fd; }
 
-        /* Landing Page Specific */
         .landing-actions { display: flex; flex-direction: column; gap: 1rem; }
-
-        /* Signup Form Specific */
         .otp-group { display: flex; gap: 1rem; align-items: flex-end; }
         .otp-group .form-group { flex-grow: 1; }
         .btn-otp { padding: 0.8rem 1rem; font-size: 0.9rem; white-space: nowrap; }
 
-        /* Membership Choice Page */
+        /* --- Membership Choice Page --- */
         .plan-options { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
         .plan-card { border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 1.5rem; text-align: center; transition: all 0.3s ease; }
         .plan-card:hover { transform: translateY(-5px); box-shadow: var(--box-shadow); }
@@ -65,31 +62,70 @@
         .plan-premium { border-color: var(--primary-color); border-width: 2px; }
         .plan-card .btn { margin-top: 1rem; }
 
-        /* Payment Page Specific */
+        /* --- Payment Page Specific --- */
         .offer-card { border: 2px dashed var(--primary-color); background-color: #f0f6ff; padding: 1.5rem; border-radius: var(--border-radius); text-align: center; margin-bottom: 2rem; }
         .offer-card .tag { background-color: var(--primary-color); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; display: inline-block; margin-bottom: 1rem; }
-        .offer-card .price-wrapper { margin: 1rem 0; }
         .offer-card .new-price { font-size: 3rem; font-weight: 700; color: var(--primary-color); }
         .offer-card .old-price { font-size: 1.2rem; text-decoration: line-through; color: var(--light-text-color); margin-left: 0.5rem; }
-        .offer-card .deadline { font-weight: 500; color: var(--error-color); }
-
-        /* Dashboard Specific */
-        .dashboard-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; }
-        .btn-logout { background: var(--error-color); color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.2s; }
-        .course-item { padding: 1rem; background-color: #f9f9f9; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--border-color); }
         
-        /* Free Dashboard Specific */
-        .upgrade-prompt { text-align: center; background-color: #f0f6ff; padding: 1.5rem; border-radius: var(--border-radius); margin-bottom: 1.5rem; border: 1px solid var(--primary-color); }
-        .upgrade-prompt h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-        .upgrade-prompt p { margin-bottom: 1rem; color: var(--light-text-color); }
-        .course-item.locked { opacity: 0.6; background-color: #f1f1f1; position: relative; overflow: hidden; }
-        .course-item.locked::after { content: '🔒'; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); font-size: 1.5rem; }
+        /* --- NEW DASHBOARD STYLES --- */
+        .dashboard-container { max-width: 100%; width: 100%; height: 100vh; padding: 0; background: none; box-shadow: none; }
+        .dashboard-layout { display: flex; width: 100%; height: 100%; }
+        .sidebar { width: 260px; background-color: #2c3e50; color: white; min-height: 100vh; display: flex; flex-direction: column; padding: 1.5rem; transition: margin-left 0.3s ease; border-right: 1px solid #34495e; }
+        .main-content { flex-grow: 1; padding: 2.5rem; overflow-y: auto; height: 100vh; }
+        .sidebar-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-header .logo { font-size: 1.8rem; font-weight: 700; color: white; text-decoration: none; }
+        .sidebar-nav ul { list-style: none; }
+        .sidebar-nav li a.nav-link { display: flex; align-items: center; gap: 1rem; padding: 1rem; text-decoration: none; color: #bdc3c7; border-radius: 10px; transition: background-color 0.2s, color 0.2s; font-weight: 500; }
+        .sidebar-nav li a.nav-link:hover, .sidebar-nav li a.nav-link.active { background-color: var(--primary-color); color: white; }
+        .sidebar-nav li a.nav-link .icon { display: flex; align-items: center; }
+        .sidebar-nav li a.nav-link.locked { color: #7f8c8d; cursor: not-allowed; position: relative;}
+        .sidebar-nav li a.nav-link.locked::after { content: '🔒'; position: absolute; right: 1rem; }
+        .sidebar-nav li a.nav-link.locked:hover { background: none; }
 
+        .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; }
+        .btn-logout { background-color: var(--accent-color); color: white; width: 100%; text-align: center; padding: 0.8rem; border-radius: 10px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; }
+        
+        .page-header { margin-bottom: 2.5rem; }
+        .page-header h1 { font-size: 2.2rem; }
+        .page-header p { color: var(--light-text-color); font-size: 1.1rem; }
+        .content-view { display: none; }
+        .content-view.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-top: 1.5rem; border: 1px solid var(--border-color); }
+        h2 { font-size: 1.8rem; margin-bottom: 1.5rem; color: #2c3e50; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+        
+        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .hub-card { background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark)); color: white; padding: 2rem; border-radius: var(--border-radius); text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+        .hub-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .hub-card .icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.8; }
+        .hub-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: white; border: none; }
+        .hub-card .arrow { font-size: 1.5rem; align-self: flex-end; margin-top: 1.5rem; transition: transform 0.3s ease; }
+        .hub-card:hover .arrow { transform: translateX(5px); }
+        
+        .profile-details p { font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid #f0f0f0; padding-bottom: 1rem; }
+        .profile-details strong { color: #2c3e50; min-width: 150px; display: inline-block; }
+        
+        .coming-soon-container, .upgrade-prompt { text-align: center; padding: 4rem 2rem; }
+        .coming-soon-container .icon, .upgrade-prompt .icon { font-size: 4rem; margin-bottom: 1.5rem; color: var(--primary-color); }
+
+        .mobile-nav { display: none; }
+        @media (max-width: 768px) {
+            body { padding: 0; }
+            .container-wrapper, .dashboard-container { border-radius: 0; min-height: 100vh; max-width: 100%; }
+            .sidebar { display: none; }
+            .main-content { padding: 1.5rem; height: calc(100vh - 65px); }
+            .page-header h1 { font-size: 1.8rem; }
+            .mobile-nav { display: flex; justify-content: space-around; align-items: center; position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; background-color: var(--surface-color); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000; }
+            .mobile-nav a.nav-link { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--light-text-color); font-weight: 500; font-size: 0.7rem; padding: 0.5rem; border-radius: 8px; }
+            .mobile-nav a.nav-link.active { color: var(--primary-color); }
+        }
     </style>
 </head>
 <body>
 
-<div class="container-wrapper">
+<div id="app-container" class="container-wrapper">
     <div id="message-area" class="message-area"></div>
 
     <!-- View 1: Landing Page -->
@@ -106,99 +142,29 @@
 
     <!-- View 2: Authentication (Login/Signup) -->
     <div id="auth-view" class="hidden">
-        <!-- Login Form -->
+         <!-- Login Form -->
         <div id="login-form-container" class="hidden">
-            <div class="header">
-                <h1>Welcome Back!</h1>
-                <p>Log in to continue your journey.</p>
-            </div>
+            <div class="header"><h1>Welcome Back!</h1><p>Log in to continue your journey.</p></div>
             <form id="login-form">
-                <div class="form-group">
-                    <input type="email" id="login-email" class="form-control" placeholder="Email Address" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="login-password" class="form-control" placeholder="Password" required>
-                </div>
+                <div class="form-group"><input type="email" id="login-email" class="form-control" placeholder="Email Address" required></div>
+                <div class="form-group"><input type="password" id="login-password" class="form-control" placeholder="Password" required></div>
                 <button type="submit" class="btn btn-primary">Log In</button>
                 <button type="button" class="btn btn-secondary back-to-landing">Back</button>
             </form>
         </div>
         <!-- Signup Form -->
         <div id="signup-form-container" class="hidden">
-            <div class="header">
-                <h1>Create Your Account</h1>
-                <p>Join SIPE and get started.</p>
-            </div>
+            <div class="header"><h1>Create Your Account</h1><p>Join SIPE and get started.</p></div>
             <form id="signup-form">
-                <div class="form-group">
-                    <label for="signup-name">Full Name</label>
-                    <input type="text" id="signup-name" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-contact">Contact Number</label>
-                    <input type="tel" id="signup-contact" class="form-control" pattern="[0-9]{10}" placeholder="10-digit mobile number" required>
-                </div>
-                <div class="form-group">
-                     <label for="signup-institution">College/Institute</label>
-                     <select id="signup-institution" class="form-control" required>
-                         <option value="" disabled selected>Select your institution</option>
-                         <option value="JEC">Jabalpur Engineering College (JEC)</option>
-                         <option value="IIITDM">IIITDM Jabalpur</option>
-                         <option value="GGITS">Gyan Ganga Institute of Technology & Sciences (GGITS)</option>
-                         <option value="SRIT">Shri Ram Institute of Technology (SRIT)</option>
-                     </select>
-                     <div style="margin-top: 0.5rem;"><input type="checkbox" id="institution-other-checkbox"> <label for="institution-other-checkbox" style="display: inline;">My institution is not listed</label></div>
-                     <input type="text" id="institution-other-input" class="form-control hidden" placeholder="Enter your institution name" style="margin-top: 0.5rem;">
-                </div>
-                <div class="form-group">
-                    <label for="signup-branch">Branch</label>
-                    <input type="text" id="signup-branch" class="form-control" required placeholder="e.g., Computer Science">
-                </div>
-                 <div class="form-group">
-                    <label for="signup-type">Student Type</label>
-                    <select id="signup-type" class="form-control" required>
-                        <option value="" disabled selected>Select your level</option>
-                        <option value="UG">Undergraduate (UG)</option>
-                        <option value="PG">Postgraduate (PG)</option>
-                        <option value="PhD">PhD</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="signup-semester">Semester</label>
-                    <select id="signup-semester" class="form-control" required>
-                        <option value="" disabled selected>Select your semester</option>
-                        <option value="1">1st</option>
-                        <option value="2">2nd</option>
-                        <option value="3">3rd</option>
-                        <option value="4">4th</option>
-                        <option value="5">5th</option>
-                        <option value="6">6th</option>
-                        <option value="7">7th</option>
-                        <option value="8">8th</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="signup-email">Email Address</label>
-                    <div class="otp-group">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <input type="email" id="signup-email" class="form-control" required>
-                        </div>
-                        <button type="button" id="send-otp-btn" class="btn btn-secondary btn-otp">Send OTP</button>
-                    </div>
-                </div>
-                <div id="otp-verify-container" class="form-group hidden">
-                    <label for="signup-otp">Enter OTP</label>
-                    <div class="otp-group">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <input type="text" id="signup-otp" class="form-control" placeholder="Check your email">
-                        </div>
-                        <button type="button" id="verify-otp-btn" class="btn btn-secondary btn-otp">Verify</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">Create Password</label>
-                    <input type="password" id="signup-password" class="form-control" required>
-                </div>
+                <div class="form-group"><label for="signup-name">Full Name</label><input type="text" id="signup-name" class="form-control" required></div>
+                <div class="form-group"><label for="signup-contact">Contact Number</label><input type="tel" id="signup-contact" class="form-control" pattern="[0-9]{10}" placeholder="10-digit mobile number" required></div>
+                <div class="form-group"><label for="signup-institution">College/Institute</label><select id="signup-institution" class="form-control" required><option value="" disabled selected>Select</option><option value="JEC">JEC</option><option value="IIITDM">IIITDM</option><option value="GGITS">GGITS</option><option value="SRIT">SRIT</option></select><div style="margin-top:0.5rem;"><input type="checkbox" id="institution-other-checkbox"><label for="institution-other-checkbox" style="display:inline;">Not listed</label></div><input type="text" id="institution-other-input" class="form-control hidden" placeholder="Enter institution name" style="margin-top:0.5rem;"></div>
+                <div class="form-group"><label for="signup-branch">Branch</label><input type="text" id="signup-branch" class="form-control" required placeholder="e.g., Computer Science"></div>
+                <div class="form-group"><label for="signup-type">Student Type</label><select id="signup-type" class="form-control" required><option value="" disabled selected>Select</option><option value="UG">UG</option><option value="PG">PG</option><option value="PhD">PhD</option></select></div>
+                <div class="form-group"><label for="signup-semester">Semester</label><select id="signup-semester" class="form-control" required><option value="" disabled selected>Select</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div>
+                <div class="form-group"><label for="signup-email">Email Address</label><div class="otp-group"><div class="form-group" style="margin-bottom:0;"><input type="email" id="signup-email" class="form-control" required></div><button type="button" id="send-otp-btn" class="btn btn-secondary btn-otp">Send OTP</button></div></div>
+                <div id="otp-verify-container" class="form-group hidden"><label for="signup-otp">Enter OTP</label><div class="otp-group"><div class="form-group" style="margin-bottom:0;"><input type="text" id="signup-otp" class="form-control" placeholder="Check email"></div><button type="button" id="verify-otp-btn" class="btn btn-secondary btn-otp">Verify</button></div></div>
+                <div class="form-group"><label for="signup-password">Create Password</label><input type="password" id="signup-password" class="form-control" required></div>
                 <button type="submit" id="signup-submit-btn" class="btn btn-primary" disabled>Create Account</button>
                 <button type="button" class="btn btn-secondary back-to-landing">Back</button>
             </form>
@@ -207,102 +173,75 @@
 
     <!-- View 3: Membership Choice -->
     <div id="membership-choice-view" class="hidden">
-        <div class="header">
-            <h1>Choose Your Plan</h1>
-            <p>Start free or unlock everything with Pro.</p>
-        </div>
+        <div class="header"><h1>Choose Your Plan</h1><p>Start free or unlock everything with Pro.</p></div>
         <div class="plan-options">
-            <div class="plan-card">
-                <h2>Free Plan</h2>
-                <p class="plan-price">₹0</p>
-                <ul>
-                    <li>✔ Access to basic notes</li>
-                    <li>✔ Community support</li>
-                    <li>✖ Premium Masterclasses</li>
-                    <li>✖ Mock Tests</li>
-                </ul>
-                <button id="choose-free-plan-btn" class="btn btn-secondary" style="margin-top: 0;">Get Started for Free</button>
-            </div>
-            <div class="plan-card plan-premium">
-                <h2>Pro Membership</h2>
-                <p class="plan-price">₹213 <span class="old-price-small">₹499</span></p>
-                <ul>
-                    <li>✔ Access to basic notes</li>
-                    <li>✔ Community support</li>
-                    <li>✔ Premium Masterclasses</li>
-                    <li>✔ Mock Tests & Analysis</li>
-                </ul>
-                <button id="choose-paid-plan-btn" class="btn btn-primary">Upgrade to Pro</button>
-            </div>
+            <div class="plan-card"><h2>Free Plan</h2><p class="plan-price">₹0</p><ul><li>✔ Basic Notes</li><li>✔ Community Support</li><li>✖ Premium Masterclasses</li><li>✖ Mock Tests</li></ul><button id="choose-free-plan-btn" class="btn btn-secondary" style="margin-top:0;">Get Started Free</button></div>
+            <div class="plan-card plan-premium"><h2>Pro Membership</h2><p class="plan-price">₹213 <span class="old-price-small">₹499</span></p><ul><li>✔ Basic Notes</li><li>✔ Community Support</li><li>✔ Premium Masterclasses</li><li>✔ Mock Tests & Analysis</li></ul><button id="choose-paid-plan-btn" class="btn btn-primary">Upgrade to Pro</button></div>
         </div>
     </div>
 
     <!-- View 4: Payment Page -->
     <div id="payment-view" class="hidden">
-        <div class="header">
-            <h1>One Last Step!</h1>
-            <p>Unlock your premium membership.</p>
-        </div>
-        <div class="offer-card">
-            <span class="tag">Early Bird Offer</span>
-            <div class="price-wrapper">
-                <span class="new-price">₹213</span>
-                <span class="old-price">₹499</span>
-            </div>
-            <p class="deadline">Offer valid only till 17th September 2025!</p>
-        </div>
+        <div class="header"><h1>One Last Step!</h1><p>Unlock your premium membership.</p></div>
+        <div class="offer-card"><span class="tag">Early Bird Offer</span><div class="price-wrapper"><span class="new-price">₹213</span><span class="old-price">₹499</span></div><p>Offer valid only till 17th September 2025!</p></div>
         <button id="pay-button" class="btn btn-primary">Pay ₹213 Securely</button>
     </div>
 
-    <!-- View 5: Premium Dashboard -->
-    <div id="dashboard-view" class="hidden">
-        <div class="dashboard-header">
-            <div>
-                <h1 style="font-size: 1.5rem;">SIPE Dashboard (Premium)</h1>
-                <p id="welcome-message" style="color: var(--light-text-color);"></p>
-            </div>
-            <button class="btn-logout">Logout</button>
-        </div>
-        <div class="courses-list">
-            <h3 style="font-weight: 600; margin-bottom: 1rem;">Your Premium Content:</h3>
-            <div class="course-item">
-                <h4 style="font-weight: 500;">GATE Masterclass</h4>
-                <p style="font-size: 0.9rem; color: var(--light-text-color);">Status: Unlocked</p>
-            </div>
-             <div class="course-item">
-                <h4 style="font-weight: 500;">UPSC Foundation Course</h4>
-                <p style="font-size: 0.9rem; color: var(--light-text-color);">Status: Unlocked</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- View 6: Free Dashboard -->
-    <div id="free-dashboard-view" class="hidden">
-        <div class="dashboard-header">
-            <div>
-                <h1 style="font-size: 1.5rem;">SIPE Dashboard (Free)</h1>
-                <p id="welcome-message-free" style="color: var(--light-text-color);"></p>
-            </div>
-            <button class="btn-logout">Logout</button>
-        </div>
-        <div class="upgrade-prompt">
-            <h3>You're on the Free Plan!</h3>
-            <p>Unlock all features including premium masterclasses and mock tests.</p>
-            <button id="upgrade-from-free-btn" class="btn btn-primary">Upgrade to Pro Now</button>
-        </div>
-        <div class="courses-list">
-            <h3 style="font-weight: 600; margin-bottom: 1rem;">Your Free Content:</h3>
-            <div class="course-item">
-                <h4 style="font-weight: 500;">Introduction to GATE</h4>
-                <p style="font-size: 0.9rem; color: var(--light-text-color);">Status: Unlocked</p>
-            </div>
-             <div class="course-item locked">
-                <h4 style="font-weight: 500;">GATE Masterclass</h4>
-                <p style="font-size: 0.9rem; color: var(--light-text-color);">Status: Locked</p>
-            </div>
+    <!-- View 5: Premium Dashboard (Integrated) -->
+    <div id="premium-dashboard-view" class="hidden dashboard-container">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header"><a href="#" class="logo">SIPE (Pro)</a></div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-view="dashboard"><span class="icon">🏠</span><span>Dashboard</span></a></li>
+                        <li><a href="#" class="nav-link" data-view="hub"><span class="icon">💡</span><span>Innovation Hub</span></a></li>
+                        <li><a href="#" class="nav-link" data-view="cv"><span class="icon">✨</span><span>Create Your CV</span></a></li>
+                        <li><a href="#" class="nav-link" data-view="events"><span class="icon">📅</span><span>Events</span></a></li>
+                        <li><a href="#" class="nav-link" data-view="profile"><span class="icon">👤</span><span>My Profile</span></a></li>
+                    </ul>
+                </nav>
+                <div class="sidebar-footer"><button class="btn-logout">Logout</button></div>
+            </aside>
+            <main class="main-content">
+                <header class="page-header">
+                    <div><h1 class="page-title">Dashboard</h1><p class="welcome-message"></p></div>
+                </header>
+                <section class="content-view active" data-content="dashboard"><div class="hub-grid"><a class="hub-card nav-link" data-view="hub"><div><div class="icon">💡</div><h3>Innovation Hub</h3><p>Submit your startup idea.</p></div><div class="arrow">→</div></a><a class="hub-card nav-link" data-view="cv"><div><div class="icon">✨</div><h3>Create Your CV</h3><p>Build a professional CV.</p></div><div class="arrow">→</div></a></div></section>
+                <section class="content-view" data-content="hub"><div class="card"><h2>Innovation Hub</h2><form><div class="form-group"><label>What kind of help do you need?</label><input type="text" class="form-control"></div><button type="submit" class="btn btn-primary">Submit for Review</button></form></div></section>
+                <section class="content-view" data-content="cv"><div class="card coming-soon-container"><div class="icon">✨</div><h2>CV Builder Coming Soon!</h2></div></section>
+                <section class="content-view" data-content="events"><div class="card"><h2>Upcoming Events</h2><div class="events-container"></div></div></section>
+                <section class="content-view" data-content="profile"><div class="card profile-details"><h2>My Profile</h2><p><strong>Name:</strong> <span class="profile-name"></span></p><p><strong>Email:</strong> <span class="profile-email"></span></p></div></section>
+            </main>
         </div>
     </div>
 
+     <!-- View 6: Free Dashboard (Integrated) -->
+    <div id="free-dashboard-view" class="hidden dashboard-container">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header"><a href="#" class="logo">SIPE (Free)</a></div>
+                <nav class="sidebar-nav">
+                     <ul>
+                        <li><a href="#" class="nav-link active" data-view="dashboard"><span class="icon">🏠</span><span>Dashboard</span></a></li>
+                        <li><a href="#" class="nav-link locked" data-view="hub"><span class="icon">💡</span><span>Innovation Hub</span></a></li>
+                        <li><a href="#" class="nav-link locked" data-view="cv"><span class="icon">✨</span><span>Create Your CV</span></a></li>
+                        <li><a href="#" class="nav-link" data-view="events"><span class="icon">📅</span><span>Events</span></a></li>
+                        <li><a href="#" class="nav-link" data-view="profile"><span class="icon">👤</span><span>My Profile</span></a></li>
+                    </ul>
+                </nav>
+                <div class="sidebar-footer"><button class="btn-logout">Logout</button></div>
+            </aside>
+            <main class="main-content">
+                <header class="page-header">
+                    <div><h1 class="page-title">Dashboard</h1><p class="welcome-message"></p></div>
+                </header>
+                <section class="content-view active" data-content="dashboard"><div class="upgrade-prompt card"><div class="icon">🚀</div><h2>Upgrade to Pro!</h2><p>Unlock the Innovation Hub, CV Builder, and more.</p><button class="btn btn-primary upgrade-from-dash-btn">Upgrade Now</button></div></section>
+                <section class="content-view" data-content="events"><div class="card"><h2>Upcoming Events</h2><div class="events-container"></div></div></section>
+                <section class="content-view" data-content="profile"><div class="card profile-details"><h2>My Profile</h2><p><strong>Name:</strong> <span class="profile-name"></span></p><p><strong>Email:</strong> <span class="profile-email"></span></p></div></section>
+            </main>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -311,16 +250,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const STUDENT_API_URL = 'https://sipe-backend.onrender.com/api/students';
 
     // --- Page Views ---
+    const appContainer = document.getElementById('app-container');
     const landingView = document.getElementById('landing-view');
     const authView = document.getElementById('auth-view');
     const membershipChoiceView = document.getElementById('membership-choice-view');
     const paymentView = document.getElementById('payment-view');
-    const dashboardView = document.getElementById('dashboard-view');
+    const premiumDashboardView = document.getElementById('premium-dashboard-view');
     const freeDashboardView = document.getElementById('free-dashboard-view');
-
-    // --- Form Containers ---
-    const loginFormContainer = document.getElementById('login-form-container');
-    const signupFormContainer = document.getElementById('signup-form-container');
 
     // --- Buttons and Links ---
     const goToSignupBtn = document.getElementById('go-to-signup-btn');
@@ -328,50 +264,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToLandingBtns = document.querySelectorAll('.back-to-landing');
     const sendOtpBtn = document.getElementById('send-otp-btn');
     const verifyOtpBtn = document.getElementById('verify-otp-btn');
-    const signupSubmitBtn = document.getElementById('signup-submit-btn');
     const chooseFreePlanBtn = document.getElementById('choose-free-plan-btn');
     const choosePaidPlanBtn = document.getElementById('choose-paid-plan-btn');
-    const upgradeFromFreeBtn = document.getElementById('upgrade-from-free-btn');
     const payButton = document.getElementById('pay-button');
     const logoutButtons = document.querySelectorAll('.btn-logout');
     
     // --- Forms & Inputs ---
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
-    const otpVerifyContainer = document.getElementById('otp-verify-container');
-    const institutionSelect = document.getElementById('signup-institution');
     const institutionOtherCheckbox = document.getElementById('institution-other-checkbox');
+    const institutionSelect = document.getElementById('signup-institution');
     const institutionOtherInput = document.getElementById('institution-other-input');
 
     // --- Other Elements ---
     const messageArea = document.getElementById('message-area');
-    const welcomeMessage = document.getElementById('welcome-message');
-    const welcomeMessageFree = document.getElementById('welcome-message-free');
 
     let isOtpVerified = false;
 
-    // --- View Management ---
+    // --- Main View Management ---
     function showView(viewToShow) {
-        [landingView, authView, membershipChoiceView, paymentView, dashboardView, freeDashboardView].forEach(view => view.classList.add('hidden'));
+        [landingView, authView, membershipChoiceView, paymentView, premiumDashboardView, freeDashboardView].forEach(v => v.classList.add('hidden'));
         viewToShow.classList.remove('hidden');
+        
+        if (viewToShow.id.includes('dashboard-view')) {
+            appContainer.classList.remove('container-wrapper');
+            document.body.style.padding = '0';
+        } else {
+            appContainer.classList.add('container-wrapper');
+            document.body.style.padding = '1rem';
+        }
         messageArea.className = 'message-area';
     }
 
-    goToSignupBtn.addEventListener('click', () => {
-        showView(authView);
-        signupFormContainer.classList.remove('hidden');
-        loginFormContainer.classList.add('hidden');
-    });
-
-    goToSigninBtn.addEventListener('click', () => {
-        showView(authView);
-        loginFormContainer.classList.remove('hidden');
-        signupFormContainer.classList.add('hidden');
-    });
-
-    backToLandingBtns.forEach(btn => {
-        btn.addEventListener('click', () => showView(landingView));
-    });
+    goToSignupBtn.addEventListener('click', () => { showView(authView); document.getElementById('signup-form-container').classList.remove('hidden'); document.getElementById('login-form-container').classList.add('hidden'); });
+    goToSigninBtn.addEventListener('click', () => { showView(authView); document.getElementById('login-form-container').classList.remove('hidden'); document.getElementById('signup-form-container').classList.add('hidden'); });
+    backToLandingBtns.forEach(btn => btn.addEventListener('click', () => showView(landingView)));
 
     // --- Form Logic ---
     institutionOtherCheckbox.addEventListener('change', () => {
@@ -389,169 +316,121 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sendOtpBtn.addEventListener('click', async () => {
         const email = document.getElementById('signup-email').value;
-        if (!email) {
-            showMessage('Please enter your email address first.', 'error');
-            return;
-        }
-        
-        sendOtpBtn.disabled = true;
-        sendOtpBtn.textContent = 'Sending...';
-
+        if (!email) { showMessage('Please enter email.', 'error'); return; }
+        sendOtpBtn.disabled = true; sendOtpBtn.textContent = 'Sending...';
         try {
-            const response = await fetch(`${STUDENT_API_URL}/send-otp`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
-            });
+            const response = await fetch(`${STUDENT_API_URL}/send-otp`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
             const data = await response.json();
-            if (!response.ok) throw new Error(data.message || 'Failed to send OTP.');
-            
+            if (!response.ok) throw new Error(data.message);
             showMessage(data.message, 'success');
-            otpVerifyContainer.classList.remove('hidden');
-        } catch (error) {
-            showMessage(error.message, 'error');
-        } finally {
-            sendOtpBtn.disabled = false;
-            sendOtpBtn.textContent = 'Send OTP';
-        }
+            document.getElementById('otp-verify-container').classList.remove('hidden');
+        } catch (error) { showMessage(error.message, 'error'); } 
+        finally { sendOtpBtn.disabled = false; sendOtpBtn.textContent = 'Send OTP'; }
     });
 
     verifyOtpBtn.addEventListener('click', () => {
-        const otp = document.getElementById('signup-otp').value;
-        if (!otp) {
-            showMessage('Please enter the OTP.', 'error');
-            return;
-        }
+        if (!document.getElementById('signup-otp').value) { showMessage('Please enter OTP.', 'error'); return; }
         isOtpVerified = true;
-        showMessage('OTP entered. Please fill the rest of the form.', 'success');
-        verifyOtpBtn.textContent = 'OK';
-        signupSubmitBtn.disabled = false;
+        showMessage('OTP entered.', 'success');
+        document.getElementById('signup-submit-btn').disabled = false;
     });
 
     signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (!isOtpVerified) {
-            showMessage('Please enter and confirm the OTP sent to your email.', 'error');
-            return;
-        }
-        
-        signupSubmitBtn.disabled = true;
-        signupSubmitBtn.textContent = 'Creating Account...';
-
+        if (!isOtpVerified) { showMessage('Please verify OTP.', 'error'); return; }
+        const signupSubmitBtn = document.getElementById('signup-submit-btn');
+        signupSubmitBtn.disabled = true; signupSubmitBtn.textContent = 'Creating...';
         const formData = {
-            name: document.getElementById('signup-name').value,
-            contactNumber: document.getElementById('signup-contact').value,
+            name: document.getElementById('signup-name').value, contactNumber: document.getElementById('signup-contact').value,
             institution: institutionOtherCheckbox.checked ? institutionOtherInput.value : institutionSelect.value,
-            branch: document.getElementById('signup-branch').value,
-            type: document.getElementById('signup-type').value,
-            semester: document.getElementById('signup-semester').value,
-            email: document.getElementById('signup-email').value,
-            otp: document.getElementById('signup-otp').value,
-            password: document.getElementById('signup-password').value,
+            branch: document.getElementById('signup-branch').value, type: document.getElementById('signup-type').value,
+            semester: document.getElementById('signup-semester').value, email: document.getElementById('signup-email').value,
+            otp: document.getElementById('signup-otp').value, password: document.getElementById('signup-password').value,
             exam: 'Not Specified'
         };
-
         try {
-            const response = await fetch(`${STUDENT_API_URL}/signup`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
+            const response = await fetch(`${STUDENT_API_URL}/signup`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
             const data = await response.json();
-            
-            console.log('Server Response:', data);
-
-            if (!response.ok) throw new Error(data.message || 'Signup failed.');
-
-            localStorage.setItem('sipe-student-token', data.token);
-            localStorage.setItem('sipe-student-email', formData.email);
-            
-            showMessage('Account created! Please choose your plan.', 'success');
+            if (!response.ok) throw new Error(data.message);
+            localStorage.setItem('sipe-student-token', data.token); localStorage.setItem('sipe-student-email', formData.email);
+            showMessage('Account created! Choose your plan.', 'success');
             setTimeout(() => showView(membershipChoiceView), 1500);
-
-        } catch (error) {
-            showMessage(error.message, 'error');
-        } finally {
-            signupSubmitBtn.disabled = false;
-            signupSubmitBtn.textContent = 'Create Account';
-        }
+        } catch (error) { showMessage(error.message, 'error'); } 
+        finally { signupSubmitBtn.disabled = false; signupSubmitBtn.textContent = 'Create Account'; }
     });
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const loginBtn = loginForm.querySelector('.btn-primary');
-        loginBtn.disabled = true;
-        loginBtn.textContent = 'Logging In...';
-        
-        const formData = {
-            email: document.getElementById('login-email').value,
-            password: document.getElementById('login-password').value
-        };
-
+        loginBtn.disabled = true; loginBtn.textContent = 'Logging In...';
+        const formData = { email: document.getElementById('login-email').value, password: document.getElementById('login-password').value };
         try {
-             const response = await fetch(`${STUDENT_API_URL}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
+            const response = await fetch(`${STUDENT_API_URL}/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
             const data = await response.json();
-            if (!response.ok) throw new Error(data.message || 'Login failed.');
-
-            localStorage.setItem('sipe-student-token', data.token);
-            localStorage.setItem('sipe-student-email', formData.email);
-            showMessage('Login successful! Please choose your plan.', 'success');
+            if (!response.ok) throw new Error(data.message);
+            localStorage.setItem('sipe-student-token', data.token); localStorage.setItem('sipe-student-email', formData.email);
+            showMessage('Login successful! Choose your plan.', 'success');
             setTimeout(() => showView(membershipChoiceView), 1500);
-        } catch(error) {
-            showMessage(error.message, 'error');
-        } finally {
-            loginBtn.disabled = false;
-            loginBtn.textContent = 'Log In';
-        }
+        } catch(error) { showMessage(error.message, 'error'); } 
+        finally { loginBtn.disabled = false; loginBtn.textContent = 'Log In'; }
     });
     
-    // --- Membership and Payment Logic ---
-    chooseFreePlanBtn.addEventListener('click', () => {
-        const userEmail = localStorage.getItem('sipe-student-email');
-        if (userEmail) {
-            welcomeMessageFree.textContent = `Welcome, ${userEmail}!`;
-        }
-        showView(freeDashboardView);
-    });
-
-    choosePaidPlanBtn.addEventListener('click', () => {
-        showView(paymentView);
-    });
-    
-    upgradeFromFreeBtn.addEventListener('click', () => {
-        showView(paymentView);
-    });
+    // --- Membership and Payment ---
+    chooseFreePlanBtn.addEventListener('click', () => { showView(freeDashboardView); initDashboard('free'); });
+    choosePaidPlanBtn.addEventListener('click', () => showView(paymentView));
+    document.querySelectorAll('.upgrade-from-dash-btn').forEach(btn => btn.addEventListener('click', () => showView(paymentView)));
 
     payButton.addEventListener('click', () => {
-        const options = {
-            "key": "rzp_live_RFuzCbNfGsxbso",
-            "amount": "21300", // 213 * 100
-            "currency": "INR",
-            "name": "SIPE Pro Membership",
-            "description": "Early Bird Offer",
-            "image": "https://placehold.co/128x128/4A90E2/ffffff?text=SIPE",
-            "handler": function (response) {
-                console.log('Payment successful:', response);
-                const userEmail = localStorage.getItem('sipe-student-email');
-                if (userEmail) {
-                    welcomeMessage.textContent = `Welcome, ${userEmail}!`;
-                }
-                showView(dashboardView);
+        const rzp1 = new Razorpay({
+            key: "rzp_live_RBEGqyWPzJKz9j", amount: "21300", currency: "INR", name: "SIPE Pro Membership",
+            description: "Early Bird Offer", image: "https://placehold.co/128x128/6a5acd/ffffff?text=SIPE",
+            handler: (response) => {
+                showView(premiumDashboardView);
+                initDashboard('premium');
             },
-            "prefill": {
-                "email": localStorage.getItem('sipe-student-email') || "",
-            },
-            "theme": { "color": "#4A90E2" },
-            "modal": { "ondismiss": () => console.log('Checkout form was closed.') }
-        };
-        const rzp1 = new Razorpay(options);
+            prefill: { email: localStorage.getItem('sipe-student-email') || "" },
+            theme: { color: "#6a5acd" }
+        });
         rzp1.on('payment.failed', (response) => alert("Payment failed: " + response.error.description));
         rzp1.open();
     });
+
+    // --- Dashboard Logic ---
+    function initDashboard(type) {
+        const dashboardId = `#${type}-dashboard-view`;
+        const dashboardElement = document.querySelector(dashboardId);
+        
+        const token = localStorage.getItem('sipe-student-token');
+        if(!token) { window.location.href = 'index.html'; return; }
+        fetch(`${STUDENT_API_URL}/profile`, { headers: { 'Authorization': `Bearer ${token}` } })
+            .then(res => res.json())
+            .then(student => {
+                dashboardElement.querySelectorAll('.welcome-message').forEach(el => el.textContent = `Welcome, ${student.name.split(' ')[0]}!`);
+                dashboardElement.querySelectorAll('.profile-name').forEach(el => el.textContent = student.name);
+                dashboardElement.querySelectorAll('.profile-email').forEach(el => el.textContent = student.email);
+            })
+            .catch(err => console.error("Failed to fetch profile", err));
+
+        const navLinks = dashboardElement.querySelectorAll('.nav-link');
+        const contentViews = dashboardElement.querySelectorAll('.content-view');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (link.classList.contains('locked')) {
+                    alert('This feature is for Pro members only. Please upgrade.');
+                    return;
+                }
+                const viewName = link.getAttribute('data-view');
+                
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                link.classList.add('active');
+
+                contentViews.forEach(view => view.classList.toggle('active', view.getAttribute('data-content') === viewName));
+                dashboardElement.querySelector('.page-title').textContent = link.querySelector('span:last-child').textContent;
+            });
+        });
+    }
 
     logoutButtons.forEach(btn => {
         btn.addEventListener('click', () => {
