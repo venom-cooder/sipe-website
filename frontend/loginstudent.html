@@ -53,6 +53,18 @@
         .otp-group .form-group { flex-grow: 1; }
         .btn-otp { padding: 0.8rem 1rem; font-size: 0.9rem; white-space: nowrap; }
 
+        /* Membership Choice Page */
+        .plan-options { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+        .plan-card { border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 1.5rem; text-align: center; transition: all 0.3s ease; }
+        .plan-card:hover { transform: translateY(-5px); box-shadow: var(--box-shadow); }
+        .plan-card h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .plan-card .plan-price { font-size: 2.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem; }
+        .plan-card .old-price-small { font-size: 1rem; text-decoration: line-through; color: var(--light-text-color); }
+        .plan-card ul { list-style: none; margin-bottom: 1.5rem; color: var(--light-text-color); text-align: left; max-width: 200px; margin-left: auto; margin-right: auto;}
+        .plan-card ul li { margin-bottom: 0.5rem; }
+        .plan-premium { border-color: var(--primary-color); border-width: 2px; }
+        .plan-card .btn { margin-top: 1rem; }
+
         /* Payment Page Specific */
         .offer-card { border: 2px dashed var(--primary-color); background-color: #f0f6ff; padding: 1.5rem; border-radius: var(--border-radius); text-align: center; margin-bottom: 2rem; }
         .offer-card .tag { background-color: var(--primary-color); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; display: inline-block; margin-bottom: 1rem; }
@@ -65,6 +77,14 @@
         .dashboard-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; }
         .btn-logout { background: var(--error-color); color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.2s; }
         .course-item { padding: 1rem; background-color: #f9f9f9; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--border-color); }
+        
+        /* Free Dashboard Specific */
+        .upgrade-prompt { text-align: center; background-color: #f0f6ff; padding: 1.5rem; border-radius: var(--border-radius); margin-bottom: 1.5rem; border: 1px solid var(--primary-color); }
+        .upgrade-prompt h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .upgrade-prompt p { margin-bottom: 1rem; color: var(--light-text-color); }
+        .course-item.locked { opacity: 0.6; background-color: #f1f1f1; position: relative; overflow: hidden; }
+        .course-item.locked::after { content: '🔒'; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); font-size: 1.5rem; }
+
     </style>
 </head>
 <body>
@@ -185,7 +205,39 @@
         </div>
     </div>
 
-    <!-- View 3: Payment Page -->
+    <!-- View 3: Membership Choice -->
+    <div id="membership-choice-view" class="hidden">
+        <div class="header">
+            <h1>Choose Your Plan</h1>
+            <p>Start free or unlock everything with Pro.</p>
+        </div>
+        <div class="plan-options">
+            <div class="plan-card">
+                <h2>Free Plan</h2>
+                <p class="plan-price">₹0</p>
+                <ul>
+                    <li>✔ Access to basic notes</li>
+                    <li>✔ Community support</li>
+                    <li>✖ Premium Masterclasses</li>
+                    <li>✖ Mock Tests</li>
+                </ul>
+                <button id="choose-free-plan-btn" class="btn btn-secondary" style="margin-top: 0;">Get Started for Free</button>
+            </div>
+            <div class="plan-card plan-premium">
+                <h2>Pro Membership</h2>
+                <p class="plan-price">₹213 <span class="old-price-small">₹499</span></p>
+                <ul>
+                    <li>✔ Access to basic notes</li>
+                    <li>✔ Community support</li>
+                    <li>✔ Premium Masterclasses</li>
+                    <li>✔ Mock Tests & Analysis</li>
+                </ul>
+                <button id="choose-paid-plan-btn" class="btn btn-primary">Upgrade to Pro</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View 4: Payment Page -->
     <div id="payment-view" class="hidden">
         <div class="header">
             <h1>One Last Step!</h1>
@@ -202,14 +254,14 @@
         <button id="pay-button" class="btn btn-primary">Pay ₹213 Securely</button>
     </div>
 
-    <!-- View 4: Dashboard -->
+    <!-- View 5: Premium Dashboard -->
     <div id="dashboard-view" class="hidden">
         <div class="dashboard-header">
             <div>
-                <h1 style="font-size: 1.5rem;">SIPE Dashboard</h1>
+                <h1 style="font-size: 1.5rem;">SIPE Dashboard (Premium)</h1>
                 <p id="welcome-message" style="color: var(--light-text-color);"></p>
             </div>
-            <button id="logout-button" class="btn-logout">Logout</button>
+            <button class="btn-logout">Logout</button>
         </div>
         <div class="courses-list">
             <h3 style="font-weight: 600; margin-bottom: 1rem;">Your Premium Content:</h3>
@@ -223,6 +275,34 @@
             </div>
         </div>
     </div>
+
+    <!-- View 6: Free Dashboard -->
+    <div id="free-dashboard-view" class="hidden">
+        <div class="dashboard-header">
+            <div>
+                <h1 style="font-size: 1.5rem;">SIPE Dashboard (Free)</h1>
+                <p id="welcome-message-free" style="color: var(--light-text-color);"></p>
+            </div>
+            <button class="btn-logout">Logout</button>
+        </div>
+        <div class="upgrade-prompt">
+            <h3>You're on the Free Plan!</h3>
+            <p>Unlock all features including premium masterclasses and mock tests.</p>
+            <button id="upgrade-from-free-btn" class="btn btn-primary">Upgrade to Pro Now</button>
+        </div>
+        <div class="courses-list">
+            <h3 style="font-weight: 600; margin-bottom: 1rem;">Your Free Content:</h3>
+            <div class="course-item">
+                <h4 style="font-weight: 500;">Introduction to GATE</h4>
+                <p style="font-size: 0.9rem; color: var(--light-text-color);">Status: Unlocked</p>
+            </div>
+             <div class="course-item locked">
+                <h4 style="font-weight: 500;">GATE Masterclass</h4>
+                <p style="font-size: 0.9rem; color: var(--light-text-color);">Status: Locked</p>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -233,8 +313,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Page Views ---
     const landingView = document.getElementById('landing-view');
     const authView = document.getElementById('auth-view');
+    const membershipChoiceView = document.getElementById('membership-choice-view');
     const paymentView = document.getElementById('payment-view');
     const dashboardView = document.getElementById('dashboard-view');
+    const freeDashboardView = document.getElementById('free-dashboard-view');
 
     // --- Form Containers ---
     const loginFormContainer = document.getElementById('login-form-container');
@@ -247,8 +329,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendOtpBtn = document.getElementById('send-otp-btn');
     const verifyOtpBtn = document.getElementById('verify-otp-btn');
     const signupSubmitBtn = document.getElementById('signup-submit-btn');
+    const chooseFreePlanBtn = document.getElementById('choose-free-plan-btn');
+    const choosePaidPlanBtn = document.getElementById('choose-paid-plan-btn');
+    const upgradeFromFreeBtn = document.getElementById('upgrade-from-free-btn');
     const payButton = document.getElementById('pay-button');
-    const logoutButton = document.getElementById('logout-button');
+    const logoutButtons = document.querySelectorAll('.btn-logout');
     
     // --- Forms & Inputs ---
     const loginForm = document.getElementById('login-form');
@@ -261,14 +346,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Other Elements ---
     const messageArea = document.getElementById('message-area');
     const welcomeMessage = document.getElementById('welcome-message');
+    const welcomeMessageFree = document.getElementById('welcome-message-free');
 
-    let isOtpVerified = false; // This will now be a simple flag for UI flow
+    let isOtpVerified = false;
 
     // --- View Management ---
     function showView(viewToShow) {
-        [landingView, authView, paymentView, dashboardView].forEach(view => view.classList.add('hidden'));
+        [landingView, authView, membershipChoiceView, paymentView, dashboardView, freeDashboardView].forEach(view => view.classList.add('hidden'));
         viewToShow.classList.remove('hidden');
-        messageArea.className = 'message-area'; // Reset messages on view change
+        messageArea.className = 'message-area';
     }
 
     goToSignupBtn.addEventListener('click', () => {
@@ -336,7 +422,6 @@ document.addEventListener('DOMContentLoaded', () => {
             showMessage('Please enter the OTP.', 'error');
             return;
         }
-        // This is a simple UI confirmation. The real verification happens on the backend during signup.
         isOtpVerified = true;
         showMessage('OTP entered. Please fill the rest of the form.', 'success');
         verifyOtpBtn.textContent = 'OK';
@@ -353,7 +438,6 @@ document.addEventListener('DOMContentLoaded', () => {
         signupSubmitBtn.disabled = true;
         signupSubmitBtn.textContent = 'Creating Account...';
 
-        // Collect all form data
         const formData = {
             name: document.getElementById('signup-name').value,
             contactNumber: document.getElementById('signup-contact').value,
@@ -364,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
             email: document.getElementById('signup-email').value,
             otp: document.getElementById('signup-otp').value,
             password: document.getElementById('signup-password').value,
-            exam: 'Not Specified' // ADDED: This field is likely required by the backend.
+            exam: 'Not Specified'
         };
 
         try {
@@ -375,7 +459,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const data = await response.json();
             
-            // DEBUGGING: Log the full response from the server
             console.log('Server Response:', data);
 
             if (!response.ok) throw new Error(data.message || 'Signup failed.');
@@ -383,8 +466,8 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('sipe-student-token', data.token);
             localStorage.setItem('sipe-student-email', formData.email);
             
-            showMessage('Account created! Proceeding to payment.', 'success');
-            setTimeout(() => showView(paymentView), 1500);
+            showMessage('Account created! Please choose your plan.', 'success');
+            setTimeout(() => showView(membershipChoiceView), 1500);
 
         } catch (error) {
             showMessage(error.message, 'error');
@@ -416,14 +499,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
             localStorage.setItem('sipe-student-token', data.token);
             localStorage.setItem('sipe-student-email', formData.email);
-            showMessage('Login successful! Proceeding to payment.', 'success');
-            setTimeout(() => showView(paymentView), 1500);
+            showMessage('Login successful! Please choose your plan.', 'success');
+            setTimeout(() => showView(membershipChoiceView), 1500);
         } catch(error) {
             showMessage(error.message, 'error');
         } finally {
             loginBtn.disabled = false;
             loginBtn.textContent = 'Log In';
         }
+    });
+    
+    // --- Membership and Payment Logic ---
+    chooseFreePlanBtn.addEventListener('click', () => {
+        const userEmail = localStorage.getItem('sipe-student-email');
+        if (userEmail) {
+            welcomeMessageFree.textContent = `Welcome, ${userEmail}!`;
+        }
+        showView(freeDashboardView);
+    });
+
+    choosePaidPlanBtn.addEventListener('click', () => {
+        showView(paymentView);
+    });
+    
+    upgradeFromFreeBtn.addEventListener('click', () => {
+        showView(paymentView);
     });
 
     payButton.addEventListener('click', () => {
@@ -453,10 +553,12 @@ document.addEventListener('DOMContentLoaded', () => {
         rzp1.open();
     });
 
-    logoutButton.addEventListener('click', () => {
-        localStorage.removeItem('sipe-student-email');
-        localStorage.removeItem('sipe-student-token');
-        showView(landingView);
+    logoutButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            localStorage.removeItem('sipe-student-email');
+            localStorage.removeItem('sipe-student-token');
+            showView(landingView);
+        });
     });
 
     // Initial state
@@ -465,5 +567,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
 
