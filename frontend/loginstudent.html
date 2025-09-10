@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Portal | SIPE</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,317 +17,448 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--background-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; }
-        .auth-container { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); width: 100%; max-width: 450px; overflow: hidden; }
-        .auth-header { text-align: center; margin-bottom: 2rem; }
-        .auth-header h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.5rem; }
-        .auth-header .logo { font-weight: 800; color: var(--primary-color); }
-        .auth-header p { color: var(--light-text-color); }
+        
+        .container-wrapper { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); width: 100%; max-width: 480px; overflow: hidden; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.5rem; }
+        .header .logo { font-weight: 800; color: var(--primary-color); }
+        .header p { color: var(--light-text-color); }
+        
+        /* Form Styles */
         .form-group { margin-bottom: 1.25rem; position: relative; }
         .form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-color); }
-        .form-control { width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
-        .form-group .icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--light-text-color); }
+        .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
         .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); }
-        .btn-submit { width: 100%; padding: 0.9rem; border: none; background: linear-gradient(45deg, var(--primary-color), var(--primary-color-dark)); color: white; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
-        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3); }
-        .btn-submit:disabled { background: #a0c3e8; cursor: not-allowed; }
-        .toggle-auth { text-align: center; margin-top: 1.5rem; color: var(--light-text-color); }
-        .toggle-auth a { color: var(--primary-color); font-weight: 600; text-decoration: none; cursor: pointer; }
-        .toggle-auth a:hover { text-decoration: underline; }
+        
+        .btn { width: 100%; padding: 0.9rem; border: none; color: white; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center; }
+        .btn-primary { background: linear-gradient(45deg, var(--primary-color), var(--primary-color-dark)); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3); }
+        .btn-secondary { background: #e0e0e0; color: var(--text-color); margin-top: 1rem; }
+        .btn-secondary:hover { background: #d1d1d1; }
+        .btn:disabled { background: #a0c3e8; cursor: not-allowed; }
+        
         .hidden { display: none; }
+        
+        /* Message Area */
         .message-area { text-align: center; margin-bottom: 1rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; display: none; }
         .message-area.success { display: block; color: var(--success-color); background-color: #e8f5e9; }
         .message-area.error { display: block; color: var(--error-color); background-color: #fdecea; }
-        .institution-other-wrapper { margin-top: 0.5rem; font-size: 0.9rem; }
-        .institution-other-wrapper label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
-        #institution-other-input { margin-top: 0.75rem; }
-        .password-requirements { font-size: 0.8rem; color: var(--light-text-color); margin-top: 0.5rem; }
+        .message-area.info { display: block; color: #0d47a1; background-color: #e3f2fd; }
+
+        /* Landing Page Specific */
+        .landing-actions { display: flex; flex-direction: column; gap: 1rem; }
+
+        /* Signup Form Specific */
+        .otp-group { display: flex; gap: 1rem; align-items: flex-end; }
+        .otp-group .form-group { flex-grow: 1; }
+        .btn-otp { padding: 0.8rem 1rem; font-size: 0.9rem; white-space: nowrap; }
+
+        /* Payment Page Specific */
+        .offer-card { border: 2px dashed var(--primary-color); background-color: #f0f6ff; padding: 1.5rem; border-radius: var(--border-radius); text-align: center; margin-bottom: 2rem; }
+        .offer-card .tag { background-color: var(--primary-color); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; display: inline-block; margin-bottom: 1rem; }
+        .offer-card .price-wrapper { margin: 1rem 0; }
+        .offer-card .new-price { font-size: 3rem; font-weight: 700; color: var(--primary-color); }
+        .offer-card .old-price { font-size: 1.2rem; text-decoration: line-through; color: var(--light-text-color); margin-left: 0.5rem; }
+        .offer-card .deadline { font-weight: 500; color: var(--error-color); }
+
+        /* Dashboard Specific */
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .btn-logout { background: var(--error-color); color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.2s; }
+        .course-item { padding: 1rem; background-color: #f9f9f9; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--border-color); }
     </style>
 </head>
 <body>
 
-    <div class="auth-container">
-        <div id="message-area" class="message-area"></div>
+<div class="container-wrapper">
+    <div id="message-area" class="message-area"></div>
 
-        <!-- Login Form -->
-        <div id="login-form-container">
-            <div class="auth-header">
-                <h1>Welcome Back, Student!</h1>
-                <p>Log in to access your <span class="logo">SIPE</span> dashboard.</p>
-            </div>
-            <form id="login-form">
-                <div class="form-group">
-                    <span class="icon">📧</span>
-                    <input type="email" id="login-email" class="form-control" placeholder="Email Address" required>
-                </div>
-                <div class="form-group">
-                    <span class="icon">🔒</span>
-                    <input type="password" id="login-password" class="form-control" placeholder="Password" required>
-                </div>
-                <button type="submit" class="btn-submit">Log In</button>
-            </form>
-            <p class="toggle-auth">
-                Don't have an account? <a id="show-signup">Sign Up Here</a>
-            </p>
+    <!-- View 1: Landing Page -->
+    <div id="landing-view">
+        <div class="header">
+            <h1>Welcome to <span class="logo">SIPE</span></h1>
+            <p>Your journey to success starts here.</p>
         </div>
-
-        <!-- Signup Form -->
-        <div id="signup-form-container" class="hidden">
-            <div class="auth-header">
-                <h1>Create Your Student Account</h1>
-                <p>Join <span class="logo">SIPE</span> and start your journey.</p>
-            </div>
-            <form id="signup-form">
-                <!-- Step 1: User Details -->
-                <div id="signup-step-1">
-                    <div class="form-group">
-                        <label for="signup-name">Full Name</label>
-                        <input type="text" id="signup-name" class="form-control" required style="padding-left: 1rem;">
-                    </div>
-                    <div class="form-group">
-                        <label for="signup-email">Email Address</label>
-                        <input type="email" id="signup-email" class="form-control" required style="padding-left: 1rem;">
-                    </div>
-                    <!-- NEW CONTACT NUMBER FIELD -->
-                    <div class="form-group">
-                        <label for="signup-contact">Contact Number</label>
-                        <input type="tel" id="signup-contact" class="form-control" pattern="[0-9]{10}" placeholder="10-digit mobile number" required style="padding-left: 1rem;">
-                    </div>
-                    <div class="form-group">
-                        <label for="signup-institution">Institution Name</label>
-                        <select id="signup-institution" class="form-control" required style="padding-left: 1rem;">
-                            <option value="" disabled selected>Select your institution</option>
-                            <option value="IIITDM Jabalpur">IIITDM Jabalpur</option>
-                            <option value="Jabalpur Engineering College (JEC)">Jabalpur Engineering College (JEC)</option>
-                            <option value="Shri Ram Institute of Technology (SRIT)">Shri Ram Institute of Technology (SRIT)</option>
-                            <option value="Gyan Ganga Institute of Technology & Sciences (GGITS)">Gyan Ganga Institute of Technology & Sciences (GGITS)</option>
-                            <option value="Global Engineering College Jabalpur">Global Engineering College Jabalpur</option>
-                            <option value="Gyan Ganga College of Technology (GGCT)">Gyan Ganga College of Technology (GGCT)</option>
-                            <option value="Baderia Global Institute of Engineering and Management">Baderia Global Institute of Engineering and Management</option>
-                            <option value="Jawaharlal Nehru Krishi Vishwavidyalaya – Faculty of Agricultural Engineering">Jawaharlal Nehru Krishi Vishwavidyalaya – Faculty of Agricultural Engineering</option>
-                            <option value="Hitkarini College of Engineering and Technology">Hitkarini College of Engineering and Technology</option>
-                            <option value="St. Aloysius Institute of Technology">St. Aloysius Institute of Technology</option>
-                            <option value="Takshshila Institute of Engineering and Technology">Takshshila Institute of Engineering and Technology</option>
-                            <option value="Laxmi Bai Sahuji Institute of Engineering & Technology">Laxmi Bai Sahuji Institute of Engineering & Technology</option>
-                            <option value="LNCT Jabalpur">LNCT Jabalpur</option>
-                            <option value="SGBM Institute of Technology and Science">SGBM Institute of Technology and Science</option>
-                        </select>
-                        <div class="institution-other-wrapper">
-                            <label><input type="checkbox" id="institution-other-checkbox"> My institution is not listed</label>
-                        </div>
-                        <input type="text" id="institution-other-input" class="form-control hidden" placeholder="Enter your institution name">
-                    </div>
-                    <div class="form-group">
-                        <label for="signup-exam">Primary Target Exam</label>
-                        <select id="signup-exam" class="form-control" required style="padding-left: 1rem;">
-                            <option value="" disabled selected>Select your target exam</option>
-                            <option value="GATE">GATE</option>
-                            <option value="UPSC">UPSC (CSE)</option>
-                            <option value="CDS">CDS</option>
-                            <option value="CAT">CAT</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <button type="button" id="send-otp-btn" class="btn-submit">Send Verification OTP</button>
-                </div>
-                <!-- Step 2: OTP and Password -->
-                <div id="signup-step-2" class="hidden">
-                    <div class="form-group">
-                        <label for="signup-otp">Verification OTP</label>
-                        <input type="text" id="signup-otp" class="form-control" placeholder="Check your email for the OTP" required style="padding-left: 1rem;">
-                    </div>
-                    <div class="form-group">
-                        <label for="signup-password">Create Password</label>
-                        <input type="password" id="signup-password" class="form-control" required style="padding-left: 1rem;">
-                        <p class="password-requirements">Must be at least 8 characters and include a number.</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="signup-confirm-password">Confirm Password</label>
-                        <input type="password" id="signup-confirm-password" class="form-control" required style="padding-left: 1rem;">
-                    </div>
-                    <button type="submit" class="btn-submit">Create Account</button>
-                </div>
-            </form>
-            <p class="toggle-auth">
-                Already have an account? <a id="show-login">Log In Here</a>
-            </p>
+        <div class="landing-actions">
+            <button id="go-to-signup-btn" class="btn btn-primary">Sign Up</button>
+            <button id="go-to-signin-btn" class="btn btn-secondary">Sign In</button>
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const STUDENT_API_URL = 'https://sipe-backend.onrender.com/api/students';
+    <!-- View 2: Authentication (Login/Signup) -->
+    <div id="auth-view" class="hidden">
+        <!-- Login Form -->
+        <div id="login-form-container" class="hidden">
+            <div class="header">
+                <h1>Welcome Back!</h1>
+                <p>Log in to continue your journey.</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <input type="email" id="login-email" class="form-control" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" class="form-control" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Log In</button>
+                <button type="button" class="btn btn-secondary back-to-landing">Back</button>
+            </form>
+        </div>
+        <!-- Signup Form -->
+        <div id="signup-form-container" class="hidden">
+            <div class="header">
+                <h1>Create Your Account</h1>
+                <p>Join SIPE and get started.</p>
+            </div>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-contact">Contact Number</label>
+                    <input type="tel" id="signup-contact" class="form-control" pattern="[0-9]{10}" placeholder="10-digit mobile number" required>
+                </div>
+                <div class="form-group">
+                     <label for="signup-institution">College/Institute</label>
+                     <select id="signup-institution" class="form-control" required>
+                         <option value="" disabled selected>Select your institution</option>
+                         <option value="JEC">Jabalpur Engineering College (JEC)</option>
+                         <option value="IIITDM">IIITDM Jabalpur</option>
+                         <option value="GGITS">Gyan Ganga Institute of Technology & Sciences (GGITS)</option>
+                         <option value="SRIT">Shri Ram Institute of Technology (SRIT)</option>
+                     </select>
+                     <div style="margin-top: 0.5rem;"><input type="checkbox" id="institution-other-checkbox"> <label for="institution-other-checkbox" style="display: inline;">My institution is not listed</label></div>
+                     <input type="text" id="institution-other-input" class="form-control hidden" placeholder="Enter your institution name" style="margin-top: 0.5rem;">
+                </div>
+                <div class="form-group">
+                    <label for="signup-branch">Branch</label>
+                    <input type="text" id="signup-branch" class="form-control" required placeholder="e.g., Computer Science">
+                </div>
+                 <div class="form-group">
+                    <label for="signup-type">Student Type</label>
+                    <select id="signup-type" class="form-control" required>
+                        <option value="" disabled selected>Select your level</option>
+                        <option value="UG">Undergraduate (UG)</option>
+                        <option value="PG">Postgraduate (PG)</option>
+                        <option value="PhD">PhD</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="signup-semester">Semester</label>
+                    <select id="signup-semester" class="form-control" required>
+                        <option value="" disabled selected>Select your semester</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                        <option value="6">6th</option>
+                        <option value="7">7th</option>
+                        <option value="8">8th</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <div class="otp-group">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <input type="email" id="signup-email" class="form-control" required>
+                        </div>
+                        <button type="button" id="send-otp-btn" class="btn btn-secondary btn-otp">Send OTP</button>
+                    </div>
+                </div>
+                <div id="otp-verify-container" class="form-group hidden">
+                    <label for="signup-otp">Enter OTP</label>
+                    <div class="otp-group">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <input type="text" id="signup-otp" class="form-control" placeholder="Check your email">
+                        </div>
+                        <button type="button" id="verify-otp-btn" class="btn btn-secondary btn-otp">Verify</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Create Password</label>
+                    <input type="password" id="signup-password" class="form-control" required>
+                </div>
+                <button type="submit" id="signup-submit-btn" class="btn btn-primary" disabled>Create Account</button>
+                <button type="button" class="btn btn-secondary back-to-landing">Back</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- View 3: Payment Page -->
+    <div id="payment-view" class="hidden">
+        <div class="header">
+            <h1>One Last Step!</h1>
+            <p>Unlock your premium membership.</p>
+        </div>
+        <div class="offer-card">
+            <span class="tag">Early Bird Offer</span>
+            <div class="price-wrapper">
+                <span class="new-price">₹213</span>
+                <span class="old-price">₹499</span>
+            </div>
+            <p class="deadline">Offer valid only till 17th September 2025!</p>
+        </div>
+        <button id="pay-button" class="btn btn-primary">Pay ₹213 Securely</button>
+    </div>
+
+    <!-- View 4: Dashboard -->
+    <div id="dashboard-view" class="hidden">
+        <div class="dashboard-header">
+            <div>
+                <h1 style="font-size: 1.5rem;">SIPE Dashboard</h1>
+                <p id="welcome-message" style="color: var(--light-text-color);"></p>
+            </div>
+            <button id="logout-button" class="btn-logout">Logout</button>
+        </div>
+        <div class="courses-list">
+            <h3 style="font-weight: 600; margin-bottom: 1rem;">Your Premium Content:</h3>
+            <div class="course-item">
+                <h4 style="font-weight: 500;">GATE Masterclass</h4>
+                <p style="font-size: 0.9rem; color: var(--light-text-color);">Status: Unlocked</p>
+            </div>
+             <div class="course-item">
+                <h4 style="font-weight: 500;">UPSC Foundation Course</h4>
+                <p style="font-size: 0.9rem; color: var(--light-text-color);">Status: Unlocked</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Backend API URL ---
+    const STUDENT_API_URL = 'https://sipe-backend.onrender.com/api/students';
+
+    // --- Page Views ---
+    const landingView = document.getElementById('landing-view');
+    const authView = document.getElementById('auth-view');
+    const paymentView = document.getElementById('payment-view');
+    const dashboardView = document.getElementById('dashboard-view');
+
+    // --- Form Containers ---
+    const loginFormContainer = document.getElementById('login-form-container');
+    const signupFormContainer = document.getElementById('signup-form-container');
+
+    // --- Buttons and Links ---
+    const goToSignupBtn = document.getElementById('go-to-signup-btn');
+    const goToSigninBtn = document.getElementById('go-to-signin-btn');
+    const backToLandingBtns = document.querySelectorAll('.back-to-landing');
+    const sendOtpBtn = document.getElementById('send-otp-btn');
+    const verifyOtpBtn = document.getElementById('verify-otp-btn');
+    const signupSubmitBtn = document.getElementById('signup-submit-btn');
+    const payButton = document.getElementById('pay-button');
+    const logoutButton = document.getElementById('logout-button');
+    
+    // --- Forms & Inputs ---
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const otpVerifyContainer = document.getElementById('otp-verify-container');
+    const institutionSelect = document.getElementById('signup-institution');
+    const institutionOtherCheckbox = document.getElementById('institution-other-checkbox');
+    const institutionOtherInput = document.getElementById('institution-other-input');
+
+    // --- Other Elements ---
+    const messageArea = document.getElementById('message-area');
+    const welcomeMessage = document.getElementById('welcome-message');
+
+    let isOtpVerified = false; // This will now be a simple flag for UI flow
+
+    // --- View Management ---
+    function showView(viewToShow) {
+        [landingView, authView, paymentView, dashboardView].forEach(view => view.classList.add('hidden'));
+        viewToShow.classList.remove('hidden');
+        messageArea.className = 'message-area'; // Reset messages on view change
+    }
+
+    goToSignupBtn.addEventListener('click', () => {
+        showView(authView);
+        signupFormContainer.classList.remove('hidden');
+        loginFormContainer.classList.add('hidden');
+    });
+
+    goToSigninBtn.addEventListener('click', () => {
+        showView(authView);
+        loginFormContainer.classList.remove('hidden');
+        signupFormContainer.classList.add('hidden');
+    });
+
+    backToLandingBtns.forEach(btn => {
+        btn.addEventListener('click', () => showView(landingView));
+    });
+
+    // --- Form Logic ---
+    institutionOtherCheckbox.addEventListener('change', () => {
+        const isChecked = institutionOtherCheckbox.checked;
+        institutionSelect.classList.toggle('hidden', isChecked);
+        institutionOtherInput.classList.toggle('hidden', !isChecked);
+        institutionSelect.required = !isChecked;
+        institutionOtherInput.required = isChecked;
+    });
+
+    function showMessage(message, type) {
+        messageArea.textContent = message;
+        messageArea.className = `message-area ${type}`;
+    }
+
+    sendOtpBtn.addEventListener('click', async () => {
+        const email = document.getElementById('signup-email').value;
+        if (!email) {
+            showMessage('Please enter your email address first.', 'error');
+            return;
+        }
+        
+        sendOtpBtn.disabled = true;
+        sendOtpBtn.textContent = 'Sending...';
+
+        try {
+            const response = await fetch(`${STUDENT_API_URL}/send-otp`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || 'Failed to send OTP.');
             
-            const loginContainer = document.getElementById('login-form-container');
-            const signupContainer = document.getElementById('signup-form-container');
-            const showSignupLink = document.getElementById('show-signup');
-            const showLoginLink = document.getElementById('show-login');
-            const messageArea = document.getElementById('message-area');
-            const loginForm = document.getElementById('login-form');
-            const signupForm = document.getElementById('signup-form');
-            const signupStep1 = document.getElementById('signup-step-1');
-            const signupStep2 = document.getElementById('signup-step-2');
-            const sendOtpBtn = document.getElementById('send-otp-btn');
-            const institutionSelect = document.getElementById('signup-institution');
-            const institutionOtherCheckbox = document.getElementById('institution-other-checkbox');
-            const institutionOtherInput = document.getElementById('institution-other-input');
-            const passwordInput = document.getElementById('signup-password');
-            const confirmPasswordInput = document.getElementById('signup-confirm-password');
+            showMessage(data.message, 'success');
+            otpVerifyContainer.classList.remove('hidden');
+        } catch (error) {
+            showMessage(error.message, 'error');
+        } finally {
+            sendOtpBtn.disabled = false;
+            sendOtpBtn.textContent = 'Send OTP';
+        }
+    });
 
-            const showMessage = (message, type) => {
-                messageArea.textContent = message;
-                messageArea.className = `message-area ${type}`;
-            };
+    verifyOtpBtn.addEventListener('click', () => {
+        const otp = document.getElementById('signup-otp').value;
+        if (!otp) {
+            showMessage('Please enter the OTP.', 'error');
+            return;
+        }
+        // This is a simple UI confirmation. The real verification happens on the backend during signup.
+        isOtpVerified = true;
+        showMessage('OTP entered. Please fill the rest of the form.', 'success');
+        verifyOtpBtn.textContent = 'OK';
+        signupSubmitBtn.disabled = false;
+    });
 
-            showSignupLink.addEventListener('click', () => {
-                loginContainer.classList.add('hidden');
-                signupContainer.classList.remove('hidden');
-                messageArea.className = 'message-area';
+    signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!isOtpVerified) {
+            showMessage('Please enter and confirm the OTP sent to your email.', 'error');
+            return;
+        }
+        
+        signupSubmitBtn.disabled = true;
+        signupSubmitBtn.textContent = 'Creating Account...';
+
+        // Collect all form data
+        const formData = {
+            name: document.getElementById('signup-name').value,
+            contactNumber: document.getElementById('signup-contact').value,
+            institution: institutionOtherCheckbox.checked ? institutionOtherInput.value : institutionSelect.value,
+            branch: document.getElementById('signup-branch').value,
+            type: document.getElementById('signup-type').value,
+            semester: document.getElementById('signup-semester').value,
+            email: document.getElementById('signup-email').value,
+            otp: document.getElementById('signup-otp').value,
+            password: document.getElementById('signup-password').value,
+        };
+
+        try {
+            const response = await fetch(`${STUDENT_API_URL}/signup`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
             });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || 'Signup failed.');
 
-            showLoginLink.addEventListener('click', () => {
-                signupContainer.classList.add('hidden');
-                loginContainer.classList.remove('hidden');
-                messageArea.className = 'message-area';
+            localStorage.setItem('sipe-student-token', data.token);
+            localStorage.setItem('sipe-student-email', formData.email);
+            
+            showMessage('Account created! Proceeding to payment.', 'success');
+            setTimeout(() => showView(paymentView), 1500);
+
+        } catch (error) {
+            showMessage(error.message, 'error');
+        } finally {
+            signupSubmitBtn.disabled = false;
+            signupSubmitBtn.textContent = 'Create Account';
+        }
+    });
+
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const loginBtn = loginForm.querySelector('.btn-primary');
+        loginBtn.disabled = true;
+        loginBtn.textContent = 'Logging In...';
+        
+        const formData = {
+            email: document.getElementById('login-email').value,
+            password: document.getElementById('login-password').value
+        };
+
+        try {
+             const response = await fetch(`${STUDENT_API_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
             });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || 'Login failed.');
 
-            institutionOtherCheckbox.addEventListener('change', () => {
-                const isChecked = institutionOtherCheckbox.checked;
-                institutionSelect.classList.toggle('hidden', isChecked);
-                institutionOtherInput.classList.toggle('hidden', !isChecked);
-                if (isChecked) {
-                    institutionSelect.removeAttribute('required');
-                    institutionOtherInput.setAttribute('required', 'required');
-                } else {
-                    institutionOtherInput.removeAttribute('required');
-                    institutionSelect.setAttribute('required', 'required');
+            localStorage.setItem('sipe-student-token', data.token);
+            localStorage.setItem('sipe-student-email', formData.email);
+            showMessage('Login successful! Proceeding to payment.', 'success');
+            setTimeout(() => showView(paymentView), 1500);
+        } catch(error) {
+            showMessage(error.message, 'error');
+        } finally {
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Log In';
+        }
+    });
+
+    payButton.addEventListener('click', () => {
+        const options = {
+            "key": "rzp_live_RBEGqyWPzJKz9j",
+            "amount": "21300", // 213 * 100
+            "currency": "INR",
+            "name": "SIPE Pro Membership",
+            "description": "Early Bird Offer",
+            "image": "https://placehold.co/128x128/4A90E2/ffffff?text=SIPE",
+            "handler": function (response) {
+                console.log('Payment successful:', response);
+                const userEmail = localStorage.getItem('sipe-student-email');
+                if (userEmail) {
+                    welcomeMessage.textContent = `Welcome, ${userEmail}!`;
                 }
-            });
+                showView(dashboardView);
+            },
+            "prefill": {
+                "email": localStorage.getItem('sipe-student-email') || "",
+            },
+            "theme": { "color": "#4A90E2" },
+            "modal": { "ondismiss": () => console.log('Checkout form was closed.') }
+        };
+        const rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', (response) => alert("Payment failed: " + response.error.description));
+        rzp1.open();
+    });
 
-            sendOtpBtn.addEventListener('click', async () => {
-                const email = document.getElementById('signup-email').value;
-                if (!email) {
-                    showMessage('Please enter your email address.', 'error');
-                    return;
-                }
-                sendOtpBtn.disabled = true;
-                sendOtpBtn.textContent = 'Sending...';
-                try {
-                    const response = await fetch(`${STUDENT_API_URL}/send-otp`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email })
-                    });
-                    const data = await response.json();
-                    if (!response.ok) throw new Error(data.message || 'Failed to send OTP.');
-                    showMessage(data.message, 'success');
-                    signupStep1.classList.add('hidden');
-                    signupStep2.classList.remove('hidden');
-                } catch (error) {
-                    showMessage(error.message, 'error');
-                } finally {
-                    sendOtpBtn.disabled = false;
-                    sendOtpBtn.textContent = 'Send Verification OTP';
-                }
-            });
+    logoutButton.addEventListener('click', () => {
+        localStorage.removeItem('sipe-student-email');
+        localStorage.removeItem('sipe-student-token');
+        showView(landingView);
+    });
 
-            signupForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const createAccountBtn = signupStep2.querySelector('.btn-submit');
-                
-                const password = passwordInput.value;
-                const confirmPassword = confirmPasswordInput.value;
-
-                if (password.length < 8) {
-                    showMessage('Password must be at least 8 characters long.', 'error');
-                    return;
-                }
-                if (!/\d/.test(password)) {
-                    showMessage('Password must contain at least one number.', 'error');
-                    return;
-                }
-                if (password !== confirmPassword) {
-                    showMessage('Passwords do not match.', 'error');
-                    return;
-                }
-
-                createAccountBtn.disabled = true;
-                createAccountBtn.textContent = 'Creating Account...';
-
-                let institutionName = institutionOtherCheckbox.checked 
-                    ? institutionOtherInput.value 
-                    : institutionSelect.value;
-                
-                if (!institutionName) {
-                    showMessage('Please select or enter an institution name.', 'error');
-                    createAccountBtn.disabled = false;
-                    createAccountBtn.textContent = 'Create Account';
-                    return;
-                }
-
-                const formData = {
-                    name: document.getElementById('signup-name').value,
-                    email: document.getElementById('signup-email').value,
-                    contactNumber: document.getElementById('signup-contact').value, // Added contact number
-                    institution: institutionName,
-                    exam: document.getElementById('signup-exam').value,
-                    otp: document.getElementById('signup-otp').value,
-                    password: password,
-                };
-
-                try {
-                    const response = await fetch(`${STUDENT_API_URL}/signup`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-                    const data = await response.json();
-                    if (!response.ok) throw new Error(data.message || 'Signup failed.');
-                    
-                    showMessage('Account created successfully! Please log in.', 'success');
-                    signupForm.reset();
-                    signupStep2.classList.add('hidden');
-                    signupStep1.classList.remove('hidden');
-                    showLoginLink.click();
-                } catch (error) {
-                    showMessage(error.message, 'error');
-                } finally {
-                    createAccountBtn.disabled = false;
-                    createAccountBtn.textContent = 'Create Account';
-                }
-            });
-
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const loginBtn = loginForm.querySelector('.btn-submit');
-                loginBtn.disabled = true;
-                loginBtn.textContent = 'Logging In...';
-
-                const formData = {
-                    email: document.getElementById('login-email').value,
-                    password: document.getElementById('login-password').value
-                };
-
-                try {
-                    const response = await fetch(`${STUDENT_API_URL}/login`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-                    const data = await response.json();
-                    if (!response.ok) throw new Error(data.message || 'Login failed.');
-                    
-                    showMessage('Login successful! Redirecting...', 'success');
-                    localStorage.setItem('sipe-student-token', data.token);
-                    setTimeout(() => {
-                        window.location.href = 'chapter-select.html';
-                    }, 1500);
-                } catch (error) {
-                    showMessage(error.message, 'error');
-                    loginBtn.disabled = false;
-                    loginBtn.textContent = 'Log In';
-                }
-            });
-        });
-    </script>
+    // Initial state
+    showView(landingView);
+});
+</script>
 </body>
 </html>
+
+
