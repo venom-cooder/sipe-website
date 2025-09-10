@@ -364,6 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
             email: document.getElementById('signup-email').value,
             otp: document.getElementById('signup-otp').value,
             password: document.getElementById('signup-password').value,
+            exam: 'Not Specified' // ADDED: This field is likely required by the backend.
         };
 
         try {
@@ -373,6 +374,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(formData)
             });
             const data = await response.json();
+            
+            // DEBUGGING: Log the full response from the server
+            console.log('Server Response:', data);
+
             if (!response.ok) throw new Error(data.message || 'Signup failed.');
 
             localStorage.setItem('sipe-student-token', data.token);
