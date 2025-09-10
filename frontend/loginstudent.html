@@ -3,312 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIPE Student Portal</title>
+    <title>Student Portal | SIPE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6a5acd;
-            --primary-color-light: #8370e0;
-            --background-color: #f4f7f6;
-            --surface-color: #ffffff;
-            --text-color: #333;
-            --text-light-color: #888;
-            --border-color: #e0e0e0;
-            --error-color: #e74c3c;
-            --success-color: #2ecc71;
-            --box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --primary-color: #4A90E2; --primary-color-dark: #357ABD; --background-color: #f4f7f6;
+            --surface-color: #ffffff; --text-color: #333333; --light-text-color: #777777;
+            --error-color: #D0021B; --success-color: #2E7D32; --box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px; --border-color: #dde2e7;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: var(--background-color);
-            padding: 2rem 1rem;
-        }
-
-        .form-container {
-            width: 100%;
-            max-width: 450px;
-            background: var(--surface-color);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: var(--box-shadow);
-            overflow: hidden;
-            transition: max-width 0.4s ease-in-out;
-        }
-        
-        .form-container.expanded {
-            max-width: 700px;
-        }
-
-        .form-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .form-header h1 {
-            color: var(--text-color);
-            font-weight: 700;
-            font-size: 2rem;
-        }
-        
-        .form-header h1 span {
-            color: var(--primary-color);
-        }
-
-        .form-header p {
-            color: var(--text-light-color);
-            margin-top: 0.5rem;
-        }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-        
-        .form-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-light-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 1rem;
-            background-color: #fafafa;
-            transition: all 0.2s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
-            background-color: #fff;
-        }
-        
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 16px 12px;
-            padding-right: 2.5rem;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: linear-gradient(45deg, var(--primary-color), var(--primary-color-light));
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 20px rgba(106, 90, 205, 0.4);
-        }
-
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .otp-group {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        .otp-group .form-control { flex-grow: 1; }
-        .otp-group .btn { width: auto; white-space: nowrap; padding: 0.9rem 1.2rem; }
-
-        .form-footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: var(--text-light-color);
-        }
-
-        .form-footer a {
-            color: var(--primary-color);
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-        .form-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .message-area {
-            text-align: center;
-            font-weight: 500;
-            padding: 0.8rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            display: none;
-        }
-        .message-area.success { display: block; color: var(--success-color); background-color: #eafaf1; }
-        .message-area.error { display: block; color: var(--error-color); background-color: #fbecec; }
-        
-        .hidden {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .form-container.expanded { max-width: 450px; }
-            .form-container { padding: 2rem; }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--background-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; }
+        .auth-container { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); width: 100%; max-width: 450px; overflow: hidden; }
+        .auth-header { text-align: center; margin-bottom: 2rem; }
+        .auth-header h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.5rem; }
+        .auth-header .logo { font-weight: 800; color: var(--primary-color); }
+        .auth-header p { color: var(--light-text-color); }
+        .form-group { margin-bottom: 1.25rem; position: relative; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-color); }
+        .form-control { width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-group .icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--light-text-color); }
+        .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); }
+        .btn-submit { width: 100%; padding: 0.9rem; border: none; background: linear-gradient(45deg, var(--primary-color), var(--primary-color-dark)); color: white; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3); }
+        .btn-submit:disabled { background: #a0c3e8; cursor: not-allowed; }
+        .toggle-auth { text-align: center; margin-top: 1.5rem; color: var(--light-text-color); }
+        .toggle-auth a { color: var(--primary-color); font-weight: 600; text-decoration: none; cursor: pointer; }
+        .toggle-auth a:hover { text-decoration: underline; }
+        .hidden { display: none; }
+        .message-area { text-align: center; margin-bottom: 1rem; font-weight: 500; padding: 0.8rem; border-radius: 8px; display: none; }
+        .message-area.success { display: block; color: var(--success-color); background-color: #e8f5e9; }
+        .message-area.error { display: block; color: var(--error-color); background-color: #fdecea; }
+        .institution-other-wrapper { margin-top: 0.5rem; font-size: 0.9rem; }
+        .institution-other-wrapper label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+        #institution-other-input { margin-top: 0.75rem; }
+        .password-requirements { font-size: 0.8rem; color: var(--light-text-color); margin-top: 0.5rem; }
     </style>
 </head>
 <body>
 
-    <div class="form-container" id="form-container">
-        
-        <form id="login-form">
-            <div class="form-header">
-                <h1>Welcome Back!</h1>
-                <p>Log in to access your <span>SIPE</span> portal.</p>
-            </div>
-            <div id="login-message-area" class="message-area"></div>
-            <div class="form-group">
-                <label for="login-email" class="form-label">Email Address</label>
-                <input type="email" id="login-email" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="login-password" class="form-label">Password</label>
-                <input type="password" id="login-password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn">Log In</button>
-            <div class="form-footer">
-                <p>Don't have an account? <a id="show-signup-link">Sign Up</a></p>
-            </div>
-        </form>
+    <div class="auth-container">
+        <div id="message-area" class="message-area"></div>
 
-        <form id="signup-form" class="hidden">
-            <div class="form-header">
-                <h1>Create Account</h1>
-                <p>Join <span>SIPE</span> and start your journey.</p>
+        <!-- Login Form -->
+        <div id="login-form-container">
+            <div class="auth-header">
+                <h1>Welcome Back, Student!</h1>
+                <p>Log in to access your <span class="logo">SIPE</span> dashboard.</p>
             </div>
-             <div id="signup-message-area" class="message-area"></div>
-            <div class="form-grid">
-                <div class="form-group"><label for="signup-name" class="form-label">Full Name</label><input type="text" id="signup-name" class="form-control" required></div>
-                <div class="form-group"><label for="signup-contact" class="form-label">Contact</label><input type="tel" id="signup-contact" class="form-control" pattern="[0-9]{10}" required></div>
-                
-                <div class="form-group full-width"><label for="signup-institution" class="form-label">College/Institute</label><select id="signup-institution" class="form-control" required><option value="" disabled selected>Select your institution</option><option value="JEC">JEC</option><option value="IIITDM">IIITDM</option><option value="GGITS">GGITS</option><option value="SRIT">SRIT</option><option value="Other">Other (Please specify)</option></select></div>
-                <div class="form-group full-width hidden" id="institution-other-container"><label for="institution-other-input" class="form-label">Please specify</label><input type="text" id="institution-other-input" class="form-control"></div>
+            <form id="login-form">
+                <div class="form-group">
+                    <span class="icon">📧</span>
+                    <input type="email" id="login-email" class="form-control" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <span class="icon">🔒</span>
+                    <input type="password" id="login-password" class="form-control" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn-submit">Log In</button>
+            </form>
+            <p class="toggle-auth">
+                Don't have an account? <a id="show-signup">Sign Up Here</a>
+            </p>
+        </div>
 
-                <div class="form-group"><label for="signup-branch" class="form-label">Branch</label><input type="text" id="signup-branch" class="form-control" required></div>
-                <div class="form-group"><label for="signup-semester" class="form-label">Semester</label><select id="signup-semester" class="form-control" required><option value="" disabled selected>Select</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div>
+        <!-- Signup Form -->
+        <div id="signup-form-container" class="hidden">
+            <div class="auth-header">
+                <h1>Create Your Student Account</h1>
+                <p>Join <span class="logo">SIPE</span> and start your journey.</p>
             </div>
-            
-            <div class="form-group"><label for="signup-email" class="form-label">Email Address</label><div class="otp-group"><input type="email" id="signup-email" class="form-control" required><button type="button" id="send-otp-btn" class="btn">Send OTP</button></div></div>
-            <div id="otp-verify-container" class="form-group hidden"><label for="signup-otp" class="form-label">Enter OTP</label><div class="otp-group"><input type="text" id="signup-otp" class="form-control" placeholder="Check email"><button type="button" id="verify-otp-btn" class="btn">Verify</button></div></div>
-            <div class="form-group"><label for="signup-password" class="form-label">Create Password</label><input type="password" id="signup-password" class="form-control" required></div>
-            
-            <button type="submit" id="signup-submit-btn" class="btn" disabled>Create Account</button>
-            <div class="form-footer">
-                <p>Already have an account? <a id="show-login-link">Sign In</a></p>
-            </div>
-        </form>
-
+            <form id="signup-form">
+                <!-- Step 1: User Details -->
+                <div id="signup-step-1">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" class="form-control" required style="padding-left: 1rem;">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" class="form-control" required style="padding-left: 1rem;">
+                    </div>
+                    <!-- NEW CONTACT NUMBER FIELD -->
+                    <div class="form-group">
+                        <label for="signup-contact">Contact Number</label>
+                        <input type="tel" id="signup-contact" class="form-control" pattern="[0-9]{10}" placeholder="10-digit mobile number" required style="padding-left: 1rem;">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-institution">Institution Name</label>
+                        <select id="signup-institution" class="form-control" required style="padding-left: 1rem;">
+                            <option value="" disabled selected>Select your institution</option>
+                            <option value="IIITDM Jabalpur">IIITDM Jabalpur</option>
+                            <option value="Jabalpur Engineering College (JEC)">Jabalpur Engineering College (JEC)</option>
+                            <option value="Shri Ram Institute of Technology (SRIT)">Shri Ram Institute of Technology (SRIT)</option>
+                            <option value="Gyan Ganga Institute of Technology & Sciences (GGITS)">Gyan Ganga Institute of Technology & Sciences (GGITS)</option>
+                            <option value="Global Engineering College Jabalpur">Global Engineering College Jabalpur</option>
+                            <option value="Gyan Ganga College of Technology (GGCT)">Gyan Ganga College of Technology (GGCT)</option>
+                            <option value="Baderia Global Institute of Engineering and Management">Baderia Global Institute of Engineering and Management</option>
+                            <option value="Jawaharlal Nehru Krishi Vishwavidyalaya – Faculty of Agricultural Engineering">Jawaharlal Nehru Krishi Vishwavidyalaya – Faculty of Agricultural Engineering</option>
+                            <option value="Hitkarini College of Engineering and Technology">Hitkarini College of Engineering and Technology</option>
+                            <option value="St. Aloysius Institute of Technology">St. Aloysius Institute of Technology</option>
+                            <option value="Takshshila Institute of Engineering and Technology">Takshshila Institute of Engineering and Technology</option>
+                            <option value="Laxmi Bai Sahuji Institute of Engineering & Technology">Laxmi Bai Sahuji Institute of Engineering & Technology</option>
+                            <option value="LNCT Jabalpur">LNCT Jabalpur</option>
+                            <option value="SGBM Institute of Technology and Science">SGBM Institute of Technology and Science</option>
+                        </select>
+                        <div class="institution-other-wrapper">
+                            <label><input type="checkbox" id="institution-other-checkbox"> My institution is not listed</label>
+                        </div>
+                        <input type="text" id="institution-other-input" class="form-control hidden" placeholder="Enter your institution name">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-exam">Primary Target Exam</label>
+                        <select id="signup-exam" class="form-control" required style="padding-left: 1rem;">
+                            <option value="" disabled selected>Select your target exam</option>
+                            <option value="GATE">GATE</option>
+                            <option value="UPSC">UPSC (CSE)</option>
+                            <option value="CDS">CDS</option>
+                            <option value="CAT">CAT</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <button type="button" id="send-otp-btn" class="btn-submit">Send Verification OTP</button>
+                </div>
+                <!-- Step 2: OTP and Password -->
+                <div id="signup-step-2" class="hidden">
+                    <div class="form-group">
+                        <label for="signup-otp">Verification OTP</label>
+                        <input type="text" id="signup-otp" class="form-control" placeholder="Check your email for the OTP" required style="padding-left: 1rem;">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Create Password</label>
+                        <input type="password" id="signup-password" class="form-control" required style="padding-left: 1rem;">
+                        <p class="password-requirements">Must be at least 8 characters and include a number.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm-password">Confirm Password</label>
+                        <input type="password" id="signup-confirm-password" class="form-control" required style="padding-left: 1rem;">
+                    </div>
+                    <button type="submit" class="btn-submit">Create Account</button>
+                </div>
+            </form>
+            <p class="toggle-auth">
+                Already have an account? <a id="show-login">Log In Here</a>
+            </p>
+        </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const formContainer = document.getElementById('form-container');
+            const STUDENT_API_URL = 'https://sipe-backend.onrender.com/api/students';
+            
+            const loginContainer = document.getElementById('login-form-container');
+            const signupContainer = document.getElementById('signup-form-container');
+            const showSignupLink = document.getElementById('show-signup');
+            const showLoginLink = document.getElementById('show-login');
+            const messageArea = document.getElementById('message-area');
             const loginForm = document.getElementById('login-form');
             const signupForm = document.getElementById('signup-form');
-            const showSignupLink = document.getElementById('show-signup-link');
-            const showLoginLink = document.getElementById('show-login-link');
-            
-            const loginMessageArea = document.getElementById('login-message-area');
-            const signupMessageArea = document.getElementById('signup-message-area');
-            
+            const signupStep1 = document.getElementById('signup-step-1');
+            const signupStep2 = document.getElementById('signup-step-2');
+            const sendOtpBtn = document.getElementById('send-otp-btn');
             const institutionSelect = document.getElementById('signup-institution');
-            const institutionOtherContainer = document.getElementById('institution-other-container');
+            const institutionOtherCheckbox = document.getElementById('institution-other-checkbox');
             const institutionOtherInput = document.getElementById('institution-other-input');
+            const passwordInput = document.getElementById('signup-password');
+            const confirmPasswordInput = document.getElementById('signup-confirm-password');
 
-            // --- Form Switching Logic ---
-            showSignupLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                loginForm.classList.add('hidden');
-                signupForm.classList.remove('hidden');
-                formContainer.classList.add('expanded');
-            });
-
-            showLoginLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                signupForm.classList.add('hidden');
-                loginForm.classList.remove('hidden');
-                formContainer.classList.remove('expanded');
-            });
-            
-            // --- Message Display Logic ---
-            function showMessage(area, message, type) {
-                const messageArea = area === 'login' ? loginMessageArea : signupMessageArea;
+            const showMessage = (message, type) => {
                 messageArea.textContent = message;
                 messageArea.className = `message-area ${type}`;
-            }
+            };
 
-            // --- Sign Up Form Specific Logic ---
-            institutionSelect.addEventListener('change', () => {
-                const isOther = institutionSelect.value === 'Other';
-                institutionOtherContainer.classList.toggle('hidden', !isOther);
-                institutionOtherInput.required = isOther;
+            showSignupLink.addEventListener('click', () => {
+                loginContainer.classList.add('hidden');
+                signupContainer.classList.remove('hidden');
+                messageArea.className = 'message-area';
             });
 
-            document.getElementById('send-otp-btn').addEventListener('click', () => {
-                document.getElementById('otp-verify-container').classList.remove('hidden');
-                showMessage('signup', 'Dummy OTP sent! Check your inbox.', 'success');
+            showLoginLink.addEventListener('click', () => {
+                signupContainer.classList.add('hidden');
+                loginContainer.classList.remove('hidden');
+                messageArea.className = 'message-area';
             });
 
-            document.getElementById('verify-otp-btn').addEventListener('click', () => {
-                document.getElementById('signup-submit-btn').disabled = false;
-                showMessage('signup', 'OTP Verified! You can now create your account.', 'success');
+            institutionOtherCheckbox.addEventListener('change', () => {
+                const isChecked = institutionOtherCheckbox.checked;
+                institutionSelect.classList.toggle('hidden', isChecked);
+                institutionOtherInput.classList.toggle('hidden', !isChecked);
+                if (isChecked) {
+                    institutionSelect.removeAttribute('required');
+                    institutionOtherInput.setAttribute('required', 'required');
+                } else {
+                    institutionOtherInput.removeAttribute('required');
+                    institutionSelect.setAttribute('required', 'required');
+                }
             });
 
-            // --- Prevent actual form submission for this demo ---
-            loginForm.addEventListener('submit', (e) => {
+            sendOtpBtn.addEventListener('click', async () => {
+                const email = document.getElementById('signup-email').value;
+                if (!email) {
+                    showMessage('Please enter your email address.', 'error');
+                    return;
+                }
+                sendOtpBtn.disabled = true;
+                sendOtpBtn.textContent = 'Sending...';
+                try {
+                    const response = await fetch(`${STUDENT_API_URL}/send-otp`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Failed to send OTP.');
+                    showMessage(data.message, 'success');
+                    signupStep1.classList.add('hidden');
+                    signupStep2.classList.remove('hidden');
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                } finally {
+                    sendOtpBtn.disabled = false;
+                    sendOtpBtn.textContent = 'Send Verification OTP';
+                }
+            });
+
+            signupForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                showMessage('login', 'Login successful! (Simulation)', 'success');
+                const createAccountBtn = signupStep2.querySelector('.btn-submit');
+                
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                if (password.length < 8) {
+                    showMessage('Password must be at least 8 characters long.', 'error');
+                    return;
+                }
+                if (!/\d/.test(password)) {
+                    showMessage('Password must contain at least one number.', 'error');
+                    return;
+                }
+                if (password !== confirmPassword) {
+                    showMessage('Passwords do not match.', 'error');
+                    return;
+                }
+
+                createAccountBtn.disabled = true;
+                createAccountBtn.textContent = 'Creating Account...';
+
+                let institutionName = institutionOtherCheckbox.checked 
+                    ? institutionOtherInput.value 
+                    : institutionSelect.value;
+                
+                if (!institutionName) {
+                    showMessage('Please select or enter an institution name.', 'error');
+                    createAccountBtn.disabled = false;
+                    createAccountBtn.textContent = 'Create Account';
+                    return;
+                }
+
+                const formData = {
+                    name: document.getElementById('signup-name').value,
+                    email: document.getElementById('signup-email').value,
+                    contactNumber: document.getElementById('signup-contact').value, // Added contact number
+                    institution: institutionName,
+                    exam: document.getElementById('signup-exam').value,
+                    otp: document.getElementById('signup-otp').value,
+                    password: password,
+                };
+
+                try {
+                    const response = await fetch(`${STUDENT_API_URL}/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Signup failed.');
+                    
+                    showMessage('Account created successfully! Please log in.', 'success');
+                    signupForm.reset();
+                    signupStep2.classList.add('hidden');
+                    signupStep1.classList.remove('hidden');
+                    showLoginLink.click();
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                } finally {
+                    createAccountBtn.disabled = false;
+                    createAccountBtn.textContent = 'Create Account';
+                }
             });
 
-            signupForm.addEventListener('submit', (e) => {
+            loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                showMessage('signup', 'Account created! (Simulation)', 'success');
+                const loginBtn = loginForm.querySelector('.btn-submit');
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Logging In...';
+
+                const formData = {
+                    email: document.getElementById('login-email').value,
+                    password: document.getElementById('login-password').value
+                };
+
+                try {
+                    const response = await fetch(`${STUDENT_API_URL}/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Login failed.');
+                    
+                    showMessage('Login successful! Redirecting...', 'success');
+                    localStorage.setItem('sipe-student-token', data.token);
+                    setTimeout(() => {
+                        window.location.href = 'chapter-select.html';
+                    }, 1500);
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Log In';
+                }
             });
         });
     </script>
