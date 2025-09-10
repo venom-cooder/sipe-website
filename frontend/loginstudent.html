@@ -20,6 +20,7 @@
         html, body { height: 100%; }
         body { background-color: var(--background-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; }
         
+        /* --- Login/Signup Container --- */
         .container-wrapper { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); width: 100%; max-width: 480px; overflow: hidden; }
         .header { text-align: center; margin-bottom: 2rem; }
         .header h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.5rem; }
@@ -69,6 +70,7 @@
         .offer-card .new-price { font-size: 3rem; font-weight: 700; color: var(--primary-color); }
         .offer-card .old-price { font-size: 1.2rem; text-decoration: line-through; color: var(--light-text-color); margin-left: 0.5rem; }
         
+        /* --- NEW DASHBOARD STYLES --- */
         .dashboard-container { max-width: 100%; width: 100%; height: 100vh; padding: 0; background: none; box-shadow: none; }
         .dashboard-layout { display: flex; width: 100%; height: 100%; }
         .sidebar { width: 260px; background-color: #2c3e50; color: white; min-height: 100vh; display: flex; flex-direction: column; padding: 1.5rem; transition: margin-left 0.3s ease; border-right: 1px solid #34495e; }
@@ -84,7 +86,7 @@
         .sidebar-nav li a.nav-link.locked:hover { background: none; }
         .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; }
         .btn-logout { background-color: var(--accent-color); color: white; width: 100%; text-align: center; padding: 0.8rem; border-radius: 10px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; }
-        .btn-home { background-color: var(--primary-color-dark); color: white; display: block; }
+        .btn-home { background-color: var(--primary-color-dark); color: white; display: block; text-decoration: none; }
         
         .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
         .page-header h1 { font-size: 2.2rem; }
@@ -130,21 +132,21 @@
 </head>
 <body>
 
-<div id="app-container" class="container-wrapper">
+<div id="app-container">
     <div id="message-area" class="message-area"></div>
 
     <!-- View 1: Landing Page -->
-    <div id="landing-view">
+    <div id="landing-view" class="container-wrapper">
         <div class="header"><h1>Welcome to <span class="logo">SIPE</span></h1><p>Your journey to success starts here.</p></div>
         <div class="landing-actions">
             <button id="go-to-signup-btn" class="btn btn-primary">Sign Up</button>
             <button id="go-to-signin-btn" class="btn btn-secondary">Sign In</button>
         </div>
-        <p class="return-link"><a href="https://sipe.com">Return to SIPE Main Page</a></p>
+        <p class="return-link"><a href="https://www.sipe.studio">Return to SIPE Main Page</a></p>
     </div>
 
     <!-- View 2: Authentication -->
-    <div id="auth-view" class="hidden">
+    <div id="auth-view" class="container-wrapper hidden">
         <div id="login-form-container" class="hidden">
             <div class="header"><h1>Welcome Back!</h1><p>Log in to continue your journey.</p></div>
             <form id="login-form">
@@ -173,7 +175,7 @@
     </div>
 
     <!-- View 3: Membership Choice -->
-    <div id="membership-choice-view" class="hidden">
+    <div id="membership-choice-view" class="container-wrapper hidden">
         <div class="header"><h1>Choose Your Plan</h1><p>Start free or unlock everything with Pro.</p></div>
         <div class="plan-options">
             <div class="plan-card"><h2>Free Plan</h2><p class="plan-price">₹0</p><ul><li>✔ Basic Notes</li><li>✔ Community Support</li><li>✖ Premium Masterclasses</li><li>✖ Mock Tests</li></ul><button id="choose-free-plan-btn" class="btn btn-secondary" style="margin-top:0;">Get Started Free</button></div>
@@ -182,7 +184,7 @@
     </div>
 
     <!-- View 4: Payment Page -->
-    <div id="payment-view" class="hidden">
+    <div id="payment-view" class="container-wrapper hidden">
         <div class="header"><h1>One Last Step!</h1><p>Unlock your premium membership.</p></div>
         <div class="offer-card"><span class="tag">Early Bird Offer</span><div class="price-wrapper"><span class="new-price">₹213</span><span class="old-price">₹499</span></div><p>Offer valid only till 17th September 2025!</p></div>
         <button id="pay-button" class="btn btn-primary">Pay ₹213 Securely</button>
@@ -284,12 +286,18 @@ document.addEventListener('DOMContentLoaded', () => {
         allViews.forEach(v => v.classList.add('hidden'));
         viewToShow.classList.remove('hidden');
         
-        if (viewToShow.id.includes('dashboard-view')) {
-            appContainer.classList.remove('container-wrapper');
-            document.body.style.padding = '0';
+        if (viewToShow.classList.contains('dashboard-container')) {
+             if (!appContainer.classList.contains('dashboard-mode')) {
+                appContainer.classList.remove('container-wrapper');
+                appContainer.classList.add('dashboard-container');
+                document.body.style.padding = '0';
+            }
         } else {
-            appContainer.classList.add('container-wrapper');
-            document.body.style.padding = '1rem';
+            if (appContainer.classList.contains('dashboard-container')) {
+                appContainer.classList.add('container-wrapper');
+                appContainer.classList.remove('dashboard-container');
+                 document.body.style.padding = '1rem';
+            }
         }
         messageArea.className = 'message-area';
     }
@@ -397,6 +405,12 @@ document.addEventListener('DOMContentLoaded', () => {
             key: "rzp_live_RFuzCbNfGsxbso", amount: "21300", currency: "INR", name: "SIPE Pro Membership",
             description: "Early Bird Offer", image: "https://placehold.co/128x128/6a5acd/ffffff?text=SIPE",
             handler: (response) => {
+                // Here you would typically verify payment on your backend
+                // For now, we'll assume it's successful and update the local profile
+                const profile = JSON.parse(localStorage.getItem('sipe-student-profile'));
+                profile.membershipStatus = 'premium';
+                localStorage.setItem('sipe-student-profile', JSON.stringify(profile));
+
                 showView(premiumDashboardView);
                 initDashboard('premium');
             },
