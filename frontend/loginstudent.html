@@ -12,7 +12,7 @@
             --primary-color: #4A90E2; --primary-color-dark: #357ABD; --background-color: #f4f7f6;
             --surface-color: #ffffff; --text-color: #333333; --light-text-color: #777777;
             --error-color: #D0021B; --success-color: #2E7D32; --box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
+            --border-radius: 12px; --border-color: #dde2e7;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--background-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; }
@@ -21,14 +21,14 @@
         .auth-header h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.5rem; }
         .auth-header .logo { font-weight: 800; color: var(--primary-color); }
         .auth-header p { color: var(--light-text-color); }
-        .form-group { margin-bottom: 1.25rem; }
+        .form-group { margin-bottom: 1.25rem; position: relative; }
         .form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-color); }
-        .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
-        .form-control:disabled { background-color: #f0f0f0; cursor: not-allowed; }
+        .form-control { width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-group .icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--light-text-color); }
         .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); }
-        .btn-submit { width: 100%; padding: 0.9rem; border: none; background-color: var(--primary-color); color: white; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s, transform 0.2s; }
-        .btn-submit:hover { background-color: var(--primary-color-dark); transform: translateY(-2px); }
-        .btn-submit:disabled { background-color: #a0c3e8; cursor: not-allowed; }
+        .btn-submit { width: 100%; padding: 0.9rem; border: none; background: linear-gradient(45deg, var(--primary-color), var(--primary-color-dark)); color: white; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3); }
+        .btn-submit:disabled { background: #a0c3e8; cursor: not-allowed; }
         .toggle-auth { text-align: center; margin-top: 1.5rem; color: var(--light-text-color); }
         .toggle-auth a { color: var(--primary-color); font-weight: 600; text-decoration: none; cursor: pointer; }
         .toggle-auth a:hover { text-decoration: underline; }
@@ -55,12 +55,12 @@
             </div>
             <form id="login-form">
                 <div class="form-group">
-                    <label for="login-email">Email Address</label>
-                    <input type="email" id="login-email" class="form-control" required>
+                    <span class="icon">📧</span>
+                    <input type="email" id="login-email" class="form-control" placeholder="Email Address" required>
                 </div>
                 <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" class="form-control" required>
+                    <span class="icon">🔒</span>
+                    <input type="password" id="login-password" class="form-control" placeholder="Password" required>
                 </div>
                 <button type="submit" class="btn-submit">Log In</button>
             </form>
@@ -80,16 +80,35 @@
                 <div id="signup-step-1">
                     <div class="form-group">
                         <label for="signup-name">Full Name</label>
-                        <input type="text" id="signup-name" class="form-control" required>
+                        <input type="text" id="signup-name" class="form-control" required style="padding-left: 1rem;">
                     </div>
                     <div class="form-group">
                         <label for="signup-email">Email Address</label>
-                        <input type="email" id="signup-email" class="form-control" required>
+                        <input type="email" id="signup-email" class="form-control" required style="padding-left: 1rem;">
+                    </div>
+                    <!-- NEW CONTACT NUMBER FIELD -->
+                    <div class="form-group">
+                        <label for="signup-contact">Contact Number</label>
+                        <input type="tel" id="signup-contact" class="form-control" pattern="[0-9]{10}" placeholder="10-digit mobile number" required style="padding-left: 1rem;">
                     </div>
                     <div class="form-group">
                         <label for="signup-institution">Institution Name</label>
-                        <select id="signup-institution" class="form-control" required>
-                            <option value="" disabled selected>Loading partners...</option>
+                        <select id="signup-institution" class="form-control" required style="padding-left: 1rem;">
+                            <option value="" disabled selected>Select your institution</option>
+                            <option value="IIITDM Jabalpur">IIITDM Jabalpur</option>
+                            <option value="Jabalpur Engineering College (JEC)">Jabalpur Engineering College (JEC)</option>
+                            <option value="Shri Ram Institute of Technology (SRIT)">Shri Ram Institute of Technology (SRIT)</option>
+                            <option value="Gyan Ganga Institute of Technology & Sciences (GGITS)">Gyan Ganga Institute of Technology & Sciences (GGITS)</option>
+                            <option value="Global Engineering College Jabalpur">Global Engineering College Jabalpur</option>
+                            <option value="Gyan Ganga College of Technology (GGCT)">Gyan Ganga College of Technology (GGCT)</option>
+                            <option value="Baderia Global Institute of Engineering and Management">Baderia Global Institute of Engineering and Management</option>
+                            <option value="Jawaharlal Nehru Krishi Vishwavidyalaya – Faculty of Agricultural Engineering">Jawaharlal Nehru Krishi Vishwavidyalaya – Faculty of Agricultural Engineering</option>
+                            <option value="Hitkarini College of Engineering and Technology">Hitkarini College of Engineering and Technology</option>
+                            <option value="St. Aloysius Institute of Technology">St. Aloysius Institute of Technology</option>
+                            <option value="Takshshila Institute of Engineering and Technology">Takshshila Institute of Engineering and Technology</option>
+                            <option value="Laxmi Bai Sahuji Institute of Engineering & Technology">Laxmi Bai Sahuji Institute of Engineering & Technology</option>
+                            <option value="LNCT Jabalpur">LNCT Jabalpur</option>
+                            <option value="SGBM Institute of Technology and Science">SGBM Institute of Technology and Science</option>
                         </select>
                         <div class="institution-other-wrapper">
                             <label><input type="checkbox" id="institution-other-checkbox"> My institution is not listed</label>
@@ -98,7 +117,7 @@
                     </div>
                     <div class="form-group">
                         <label for="signup-exam">Primary Target Exam</label>
-                        <select id="signup-exam" class="form-control" required>
+                        <select id="signup-exam" class="form-control" required style="padding-left: 1rem;">
                             <option value="" disabled selected>Select your target exam</option>
                             <option value="GATE">GATE</option>
                             <option value="UPSC">UPSC (CSE)</option>
@@ -113,16 +132,16 @@
                 <div id="signup-step-2" class="hidden">
                     <div class="form-group">
                         <label for="signup-otp">Verification OTP</label>
-                        <input type="text" id="signup-otp" class="form-control" placeholder="Check your email for the OTP" required>
+                        <input type="text" id="signup-otp" class="form-control" placeholder="Check your email for the OTP" required style="padding-left: 1rem;">
                     </div>
                     <div class="form-group">
                         <label for="signup-password">Create Password</label>
-                        <input type="password" id="signup-password" class="form-control" required>
+                        <input type="password" id="signup-password" class="form-control" required style="padding-left: 1rem;">
                         <p class="password-requirements">Must be at least 8 characters and include a number.</p>
                     </div>
                     <div class="form-group">
                         <label for="signup-confirm-password">Confirm Password</label>
-                        <input type="password" id="signup-confirm-password" class="form-control" required>
+                        <input type="password" id="signup-confirm-password" class="form-control" required style="padding-left: 1rem;">
                     </div>
                     <button type="submit" class="btn-submit">Create Account</button>
                 </div>
@@ -136,9 +155,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const STUDENT_API_URL = 'https://sipe-backend.onrender.com/api/students';
-            const PUBLIC_API_URL = 'https://sipe-backend.onrender.com/api';
-
-            // DOM elements
+            
             const loginContainer = document.getElementById('login-form-container');
             const signupContainer = document.getElementById('signup-form-container');
             const showSignupLink = document.getElementById('show-signup');
@@ -159,31 +176,6 @@
                 messageArea.textContent = message;
                 messageArea.className = `message-area ${type}`;
             };
-
-            const loadInstitutions = async () => {
-                try {
-                    const response = await fetch(`${PUBLIC_API_URL}/institutions`);
-                    if (!response.ok) throw new Error('Network response was not ok.');
-                    const institutions = await response.json();
-                    institutionSelect.innerHTML = '<option value="" disabled selected>Select a partner institution</option>';
-                    if (institutions.length > 0) {
-                        institutions.forEach(inst => {
-                            const option = document.createElement('option');
-                            option.value = inst.name;
-                            option.textContent = inst.name;
-                            institutionSelect.appendChild(option);
-                        });
-                    } else {
-                        institutionSelect.innerHTML = '<option value="" disabled>No partner institutions found</option>';
-                    }
-                } catch (error) {
-                    console.error('Error loading institutions:', error);
-                    institutionSelect.innerHTML = '<option value="" disabled>Could not load partners</option>';
-                    showMessage('Could not load institution list. Please ensure the backend is running.', 'error');
-                }
-            };
-            
-            loadInstitutions();
 
             showSignupLink.addEventListener('click', () => {
                 loginContainer.classList.add('hidden');
@@ -274,6 +266,7 @@
                 const formData = {
                     name: document.getElementById('signup-name').value,
                     email: document.getElementById('signup-email').value,
+                    contactNumber: document.getElementById('signup-contact').value, // Added contact number
                     institution: institutionName,
                     exam: document.getElementById('signup-exam').value,
                     otp: document.getElementById('signup-otp').value,
@@ -325,7 +318,7 @@
                     showMessage('Login successful! Redirecting...', 'success');
                     localStorage.setItem('sipe-student-token', data.token);
                     setTimeout(() => {
-                        window.location.href = 'chapter-select.html'; // UPDATED REDIRECT
+                        window.location.href = 'chapter-select.html';
                     }, 1500);
                 } catch (error) {
                     showMessage(error.message, 'error');
