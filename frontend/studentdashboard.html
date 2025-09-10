@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* --- NEW Purple/Indigo Theme --- */
+            /* --- Purple/Indigo Theme --- */
             --primary-color: #6a5acd; /* Slate Blue / Purple */
             --primary-color-dark: #483d8b;
             --base-color: #2c3e50; /* Base navy for structure */
@@ -20,7 +20,7 @@
             --light-text-color: #95a5a6;
             --border-color: #e8eaf6;
             --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
-            --border-radius: 16px; /* Bolder radius */
+            --border-radius: 16px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--background-color); color: var(--text-color); }
@@ -60,59 +60,29 @@
         textarea.form-control { min-height: 120px; resize: vertical; }
         .btn { padding: 0.9rem 2rem; border: none; background-color: var(--primary-color); color: white; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s, background-color 0.2s; }
         .btn:hover { transform: translateY(-2px); background-color: var(--primary-color-dark); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
         
-        /* NEW: Dashboard Hub Cards */
         .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
         .hub-card {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
-            color: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            color: white; padding: 2rem; border-radius: var(--border-radius); text-decoration: none;
+            display: flex; flex-direction: column; justify-content: space-between;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .hub-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
-        .hub-card .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            opacity: 0.8;
-        }
-        .hub-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-        .hub-card p {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            flex-grow: 1;
-        }
-        .hub-card .arrow {
-            font-size: 1.5rem;
-            align-self: flex-end;
-            margin-top: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-        .hub-card:hover .arrow {
-            transform: translateX(5px);
-        }
+        .hub-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .hub-card .icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.8; }
+        .hub-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: white; border: none; }
+        .hub-card p { font-size: 0.9rem; opacity: 0.8; flex-grow: 1; }
+        .hub-card .arrow { font-size: 1.5rem; align-self: flex-end; margin-top: 1.5rem; transition: transform 0.3s ease; }
+        .hub-card:hover .arrow { transform: translateX(5px); }
         
-        .alumni-card, .event-card { border: 1px solid var(--border-color); border-radius: var(--border-radius); overflow: hidden; background-color: var(--surface-color); transition: transform 0.3s, box-shadow 0.3s; }
-        .alumni-card:hover, .event-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .alumni-card img { width: 100%; height: 180px; object-fit: cover; }
-        .alumni-card-content, .event-card-content { padding: 1.5rem; }
-        .alumni-card h3, .event-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-        .alumni-card p, .event-card p { color: var(--light-text-color); font-size: 0.9rem; }
+        .event-card { border: 1px solid var(--border-color); border-radius: var(--border-radius); overflow: hidden; background-color: var(--surface-color); transition: transform 0.3s, box-shadow 0.3s; }
+        .event-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .event-card-content { padding: 1.5rem; }
+        .event-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .event-card p { color: var(--light-text-color); font-size: 0.9rem; }
         .profile-details p { font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid #f0f0f0; padding-bottom: 1rem; }
         .profile-details strong { color: var(--base-color); min-width: 150px; display: inline-block; }
         
-        /* --- Coming Soon Page --- */
         .coming-soon-container { text-align: center; padding: 4rem 2rem; }
         .coming-soon-container .icon { font-size: 4rem; margin-bottom: 1.5rem; color: var(--primary-color); }
         
@@ -145,11 +115,10 @@
             <div class="sidebar-header"><a href="index.html" class="logo">SIPE</a></div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="#" class="nav-link active" data-view="dashboard-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span>Dashboard</span></a></li>
-                    <li><a href="#" class="nav-link" data-view="lectures-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span><span>Lectures</span></a></li>
+                    <!-- SIMPLIFIED NAVIGATION -->
+                    <li><a href="#" class="nav-link active" data-view="dashboard-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span><span>Dashboard</span></a></li>
                     <li><a href="#" class="nav-link" data-view="hub-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.09 16.05a2 2 0 0 0-2.18 0L9 18.2a2 2 0 0 0-2.18 0l-1.07.54a2 2 0 0 0-1.18 1.81v1.94a2 2 0 0 0 1.18 1.81l1.07.54a2 2 0 0 0 2.18 0L9 22.82a2 2 0 0 0 2.18 0l1.07-.54a2 2 0 0 0 1.18-1.81v-1.94a2 2 0 0 0-1.18-1.81z"/><path d="m14 6 3-3 3 3"/><path d="M17 3v13.34"/><path d="M4 12a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4Z"/><path d="M13.88 4.12A2 2 0 0 0 12.01 3H6.5a2.5 2.5 0 0 0 0 5H12"/></svg></span><span>Innovation Hub</span></a></li>
                     <li><a href="#" class="nav-link" data-view="cv-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span><span>Create Your CV</span></a></li>
-                    <li><a href="#" class="nav-link" data-view="alumni-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Alumni Network</span></a></li>
                     <li><a href="#" class="nav-link" data-view="events-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></span><span>Events</span></a></li>
                     <li><a href="#" class="nav-link" data-view="profile-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>My Profile</span></a></li>
                 </ul>
@@ -169,28 +138,13 @@
             </header>
 
             <section id="dashboard-view" class="content-view active">
+                 <!-- SIMPLIFIED HUB GRID -->
                 <div class="hub-grid">
-                    <a href="#" class="hub-card nav-link" data-view="lectures-view">
-                        <div>
-                            <div class="icon">🎓</div>
-                            <h3>Browse Lectures</h3>
-                            <p>Access sessions from your institution and our elite mentor network.</p>
-                        </div>
-                        <div class="arrow">→</div>
-                    </a>
                     <a href="#" class="hub-card nav-link" data-view="hub-view">
                         <div>
                             <div class="icon">💡</div>
                             <h3>Innovation Hub</h3>
                             <p>Submit your startup idea or project for mentorship and support.</p>
-                        </div>
-                        <div class="arrow">→</div>
-                    </a>
-                    <a href="#" class="hub-card nav-link" data-view="alumni-view">
-                        <div>
-                            <div class="icon">👥</div>
-                            <h3>Alumni Network</h3>
-                            <p>Connect with accomplished alumni from your college.</p>
                         </div>
                         <div class="arrow">→</div>
                     </a>
@@ -202,16 +156,28 @@
                         </div>
                         <div class="arrow">→</div>
                     </a>
+                    <a href="#" class="hub-card nav-link" data-view="events-view">
+                        <div>
+                            <div class="icon">📅</div>
+                            <h3>Upcoming Events</h3>
+                            <p>Check out the latest events from your institution.</p>
+                        </div>
+                        <div class="arrow">→</div>
+                    </a>
+                     <a href="#" class="hub-card nav-link" data-view="profile-view">
+                        <div>
+                            <div class="icon">👤</div>
+                            <h3>My Profile</h3>
+                            <p>View and manage your account details.</p>
+                        </div>
+                        <div class="arrow">→</div>
+                    </a>
                 </div>
             </section>
             
-            <section id="lectures-view" class="content-view"><div class="card"><h2>Browse Lectures</h2><div id="lecture-grid-container" class="grid"><!-- Lectures will be loaded here --></div></div></section>
-
             <section id="hub-view" class="content-view"><div class="card"><h2>Innovation Hub</h2><p>Have an idea? Let us know how we can help.</p><form id="hub-form"><div class="form-group"><label for="help-type">What kind of help do you need?</label><select id="help-type" class="form-control"><option>Startup Incubation</option><option>Project Mentorship</option><option>Research Guidance</option><option>Other</option></select></div><div class="form-group"><label for="prototype-file">Upload a Prototype or Proposal (Optional)</label><input type="file" id="prototype-file" class="form-control"></div><div class="form-group"><label for="financial-support">Expected Financial Support (in INR)</label><input type="number" id="financial-support" class="form-control" placeholder="e.g., 50000"></div><div class="form-group"><label for="idea-description">Briefly describe your idea</label><textarea id="idea-description" class="form-control" required></textarea></div><button type="submit" class="btn">Submit for Review</button></form></div></section>
             
             <section id="cv-view" class="content-view"><div class="card coming-soon-container"><div class="icon">✨</div><h2>CV Builder Coming Soon!</h2><p>We're working on a tool to help you create a professional, standout CV. Check back later!</p></div></section>
-
-            <section id="alumni-view" class="content-view"><div class="card"><h2>Alumni Network</h2><p>Connect with alumni from your institution.</p><div id="alumni-grid-container" class="grid" style="margin-top: 1.5rem;"></div></div></section>
 
             <section id="events-view" class="content-view"><div class="card"><h2>Upcoming Events</h2><p>Events hosted by your institution.</p><div id="event-list-container" style="margin-top: 1.5rem;"></div></div></section>
 
@@ -220,10 +186,10 @@
     </div>
 
     <nav class="mobile-nav">
-        <a href="#" class="nav-link active" data-view="dashboard-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span>Dashboard</span></a>
-        <a href="#" class="nav-link" data-view="lectures-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span><span>Lectures</span></a>
+        <!-- SIMPLIFIED MOBILE NAVIGATION -->
+        <a href="#" class="nav-link active" data-view="dashboard-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span><span>Dashboard</span></a>
         <a href="#" class="nav-link" data-view="hub-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.09 16.05a2 2 0 0 0-2.18 0L9 18.2a2 2 0 0 0-2.18 0l-1.07.54a2 2 0 0 0-1.18 1.81v1.94a2 2 0 0 0 1.18 1.81l1.07.54a2 2 0 0 0 2.18 0L9 22.82a2 2 0 0 0 2.18 0l1.07-.54a2 2 0 0 0 1.18-1.81v-1.94a2 2 0 0 0-1.18-1.81z"/><path d="m14 6 3-3 3 3"/><path d="M17 3v13.34"/><path d="M4 12a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4Z"/><path d="M13.88 4.12A2 2 0 0 0 12.01 3H6.5a2.5 2.5 0 0 0 0 5H12"/></svg></span><span>Hub</span></a>
-        <a href="#" class="nav-link" data-view="alumni-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Alumni</span></a>
+        <a href="#" class="nav-link" data-view="events-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></span><span>Events</span></a>
         <a href="#" class="nav-link" data-view="profile-view"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>Profile</span></a>
     </nav>
     <script>
@@ -260,7 +226,6 @@
                     document.getElementById('profile-institution').textContent = student.institution;
                     document.getElementById('profile-exam').textContent = student.exam;
                     
-                    fetchAndDisplayAlumni(student.institution);
                     fetchAndDisplayEvents(student.institution);
 
                 } catch (error) {
@@ -270,29 +235,6 @@
                 }
             };
             
-            const fetchAndDisplayAlumni = async (institutionName) => {
-                const container = document.getElementById('alumni-grid-container');
-                try {
-                    const response = await fetch(`${PUBLIC_API_URL}/alumni/${encodeURIComponent(institutionName)}`);
-                    const alumni = await response.json();
-                    if (alumni.length === 0) {
-                        container.innerHTML = '<p>No alumni from your institution have been registered yet.</p>';
-                    } else {
-                        container.innerHTML = alumni.map(alum => `
-                            <div class="alumni-card">
-                                <img src="${alum.picture || `https://placehold.co/600x400/27ae60/ffffff?text=${alum.name.charAt(0)}`}" alt="${alum.name}">
-                                <div class="alumni-card-content">
-                                    <h3>${alum.name}</h3>
-                                    <p>${alum.company}</p>
-                                </div>
-                            </div>
-                        `).join('');
-                    }
-                } catch (error) {
-                    container.innerHTML = '<p>Could not load alumni data.</p>';
-                }
-            };
-
             const fetchAndDisplayEvents = async (institutionName) => {
                 const container = document.getElementById('event-list-container');
                 try {
