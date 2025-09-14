@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Chapter Dashboard | SIPE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* --- Premium Dark Theme --- */
+            --primary-color: #d4af37; /* Gold Accent */
+            --primary-color-dark: #b89b2e;
+            --base-color: #1a2238; /* Deep Navy */
+            --surface-color: #232f4c;
+            --background-color: #131a2f;
+            --text-color: #f0f2f5;
+            --light-text-color: #9da9bb;
+            --border-color: #3e4a6b;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--background-color); color: var(--text-color); }
+        
+        .loading-screen {
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            height: 100vh; font-size: 1.5rem; color: var(--text-color);
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.2);
+            border-top: 5px solid var(--primary-color); border-radius: 50%;
+            animation: spin 1s linear infinite; margin-bottom: 1rem;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .dashboard-content { display: none; } /* Hidden by default */
+        .dashboard-layout { display: flex; }
+        
+        /* Sidebar */
+        .sidebar { 
+            width: 260px; background-color: var(--base-color);
+            min-height: 100vh; display: flex; flex-direction: column; padding: 1.5rem;
+            border-right: 1px solid var(--border-color);
+        }
+        .sidebar-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+        .sidebar-header .logo { font-size: 1.8rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
+        .sidebar-nav ul { list-style: none; }
+        .sidebar-nav li a.nav-link { display: flex; align-items: center; gap: 1rem; padding: 1rem; text-decoration: none; color: var(--light-text-color); border-radius: 10px; transition: all 0.2s; font-weight: 500; }
+        .sidebar-nav li a.nav-link:hover, .sidebar-nav li a.nav-link.active { background-color: var(--primary-color); color: var(--base-color); }
+        .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; }
+        .sidebar-footer button { width: 100%; text-align: center; padding: 0.8rem; border-radius: 10px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; }
+        #logout-btn { background-color: #e74c3c; color: white; }
+        
+        /* Main Content */
+        .main-content { flex-grow: 1; padding: 2.5rem; overflow-y: auto; height: 100vh; }
+        .page-header p { color: var(--light-text-color); font-size: 1.1rem; }
+        .content-view { display: none; }
+        .content-view.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background-color: var(--surface-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--box-shadow); margin-top: 1.5rem; border: 1px solid var(--border-color); }
+        h1, h2 { color: var(--text-color); }
+        h2 { font-size: 1.8rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+        
+        /* Announcement Card */
+        .announcement-card {
+            background: linear-gradient(135deg, var(--primary-color), #b89b2e);
+            color: white; text-align: center;
+        }
+        .announcement-card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .announcement-card h2 { color: white; border: none; }
+        .announcement-card p { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .announcement-card strong { font-size: 1.2rem; }
+
+        /* Hub Cards */
+        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .hub-card {
+            background-color: var(--surface-color);
+            color: var(--text-color); padding: 2rem; border-radius: var(--border-radius); text-decoration: none;
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+             border: 1px solid var(--border-color);
+        }
+        .hub-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: var(--primary-color); }
+        .hub-card .icon { font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary-color); }
+        .hub-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-color); border: none; padding: 0; }
+        .hub-card p { font-size: 0.9rem; color: var(--light-text-color); flex-grow: 1; }
+        .hub-card .arrow { font-size: 1.5rem; align-self: flex-end; margin-top: 1.5rem; transition: transform 0.3s ease; color: var(--primary-color); }
+        .hub-card:hover .arrow { transform: translateX(5px); }
+        
+        /* Mobile Nav */
+        .mobile-nav { display: none; }
+        @media (max-width: 768px) {
+            body { padding-bottom: 80px; }
+            .sidebar { display: none; }
+            .main-content { padding: 1.5rem; }
+            .mobile-nav {
+                display: flex; justify-content: space-around; align-items: center;
+                position: fixed; bottom: 0; left: 0; width: 100%; height: 65px;
+                background-color: var(--surface-color); box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            }
+            .mobile-nav a.nav-link {
+                display: flex; flex-direction: column; align-items: center;
+                text-decoration: none; color: var(--light-text-color); font-weight: 500;
+                font-size: 0.7rem; padding: 0.5rem;
+            }
+            .mobile-nav a.nav-link.active { color: var(--primary-color); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen" class="loading-screen">
+        <div class="spinner"></div>
+        <p>Verifying Your Master Chapter Membership...</p>
+    </div>
+
+    <div id="dashboard-content" class="dashboard-content dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header"><a href="index.html" class="logo">SIPE Master</a></div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="nav-link active" data-view="dashboard-view"><span>🏠</span><span>Dashboard</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="mentors-view"><span>⭐</span><span>Elite Mentors</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="workshops-view"><span>🌐</span><span>Nationwide Workshops</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="funding-view"><span>💰</span><span>Funding Opportunities</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="resources-view"><span>📚</span><span>Resource Library</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="profile-view"><span>👤</span><span>My Profile</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logout-btn">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <h1 id="page-title">Dashboard</h1>
+                    <p id="welcome-message"></p>
+                </div>
+            </header>
+
+            <section id="dashboard-view" class="content-view active">
+                <div class="announcement-card">
+                    <div class="icon">🎉</div>
+                    <h2>You Are Invited!</h2>
+                    <p>Join us for the official inauguration of the SIPE Program.</p>
+                    <p><strong>Date:</strong> 24th September</p>
+                    <p><strong>Time:</strong> 10:00 AM</p>
+                    <p><strong>Venue:</strong> Jashan Hall</p>
+                </div>
+                <div class="hub-grid" style="margin-top: 2rem;">
+                    <a href="#" class="hub-card nav-link" data-view="mentors-view">
+                        <div><div class="icon">⭐</div><h3>Elite Mentor Sessions</h3><p>Access exclusive sessions from our top-tier network of industry leaders.</p></div>
+                        <div class="arrow">→</div>
+                    </a>
+                     <a href="#" class="hub-card nav-link" data-view="workshops-view">
+                        <div><div class="icon">🌐</div><h3>Nationwide Workshops</h3><p>Participate in workshops hosted by partner institutions across the country.</p></div>
+                        <div class="arrow">→</div>
+                    </a>
+                    <a href="#" class="hub-card nav-link" data-view="funding-view">
+                        <div><div class="icon">💰</div><h3>Funding Opportunities</h3><p>Explore grants and seed funding opportunities for your projects.</p></div>
+                        <div class="arrow">→</div>
+                    </a>
+                </div>
+            </section>
+
+            <section id="mentors-view" class="content-view"><div class="card"><h2>Elite Mentor Sessions</h2><p>Exclusive content coming soon.</p></div></section>
+            <section id="workshops-view" class="content-view"><div class="card"><h2>Nationwide Workshops</h2><p>Schedule of upcoming workshops coming soon.</p></div></section>
+            <section id="funding-view" class="content-view"><div class="card"><h2>Funding Opportunities</h2><p>Information on grants and investment opportunities coming soon.</p></div></section>
+            <section id="resources-view" class="content-view"><div class="card"><h2>Resource Library</h2><p>Exclusive articles, templates, and guides coming soon.</p></div></section>
+            <section id="profile-view" class="content-view"><div class="card"><h2>My Profile</h2><!-- Profile details will be loaded here --></div></section>
+        </main>
+    </div>
+
+    <nav class="mobile-nav">
+        <a href="#" class="nav-link active" data-view="dashboard-view"><span>🏠</span><span>Dashboard</span></a>
+        <a href="#" class="nav-link" data-view="mentors-view"><span>⭐</span><span>Mentors</span></a>
+        <a href="#" class="nav-link" data-view="workshops-view"><span>🌐</span><span>Workshops</span></a>
+        <a href="#" class="nav-link" data-view="profile-view"><span>👤</span><span>Profile</span></a>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const API_URL = 'https://sipe-backend.onrender.com/api/students';
+            const token = localStorage.getItem('sipe-student-token');
+
+            if (!token) {
+                window.location.href = 'loginstudent.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/premium-status`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.status === 401) {
+                    localStorage.removeItem('sipe-student-token');
+                    window.location.href = 'loginstudent.html';
+                    return;
+                }
+                if (!response.ok) throw new Error('Verification failed.');
+
+                const data = await response.json();
+
+                if (data.isPremium) {
+                    document.getElementById('loading-screen').style.display = 'none';
+                    document.getElementById('dashboard-content').style.display = 'flex';
+                    // After confirming access, fetch profile data to personalize the page
+                    const profileRes = await fetch(`${API_URL}/profile`, { headers: { 'Authorization': `Bearer ${token}` } });
+                    const student = await profileRes.json();
+                    document.getElementById('welcome-message').textContent = `Welcome, ${student.name.split(' ')[0]}!`;
+                } else {
+                    alert('Access Denied. This dashboard is for Master Chapter members only.');
+                    window.location.href = 'master-chapter.html';
+                }
+
+            } catch (error) {
+                console.error('Verification failed:', error);
+                window.location.href = 'loginstudent.html';
+            }
+            
+            // View Switching Logic
+            const allNavLinks = document.querySelectorAll('.nav-link');
+            const contentViews = document.querySelectorAll('.content-view');
+            const pageTitle = document.getElementById('page-title');
+
+            const switchView = (viewId) => {
+                const targetLink = document.querySelector(`.sidebar-nav .nav-link[data-view="${viewId}"]`);
+                if (!targetLink) return;
+
+                allNavLinks.forEach(nav => nav.classList.remove('active'));
+                document.querySelectorAll(`.nav-link[data-view="${viewId}"]`).forEach(l => l.classList.add('active'));
+
+                pageTitle.textContent = targetLink.querySelector('span:last-child').textContent;
+                
+                contentViews.forEach(view => {
+                    view.classList.toggle('active', view.id === viewId);
+                });
+            };
+
+            allNavLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetViewId = link.getAttribute('data-view');
+                    switchView(targetViewId);
+                });
+            });
+
+            // Logout
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                localStorage.removeItem('sipe-student-token');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>
