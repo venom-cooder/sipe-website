@@ -182,11 +182,9 @@
             const API_URL = 'https://sipe-backend.onrender.com/api/students';
             const token = localStorage.getItem('sipe-student-token');
             const paymentButton = document.getElementById('become-member-btn');
-
-            // IMPORTANT: You must get your Key ID from the Razorpay dashboard and store it on Render.
-            // For now, we will fetch it from the server, but you should ideally expose this one public key.
-            // For this example, we will hardcode it, but REMEMBER TO REPLACE IT.
-            const RAZORPAY_KEY_ID = 'YOUR_PUBLIC_RAZORPAY_KEY_ID'; 
+            
+            // Your public Razorpay Key ID
+            const RAZORPAY_KEY_ID = 'rzp_live_RHYPA4NAmH3Mvg'; 
 
             paymentButton.addEventListener('click', async () => {
                 if (!token) {
@@ -214,7 +212,7 @@
 
                     // Step 3: Configure and open the Razorpay Checkout popup
                     const options = {
-                        key: rzp_live_RHYPA4NAmH3Mvg,
+                        key: RAZORPAY_KEY_ID,
                         amount: order.amount,
                         currency: order.currency,
                         name: "SIPE Master Chapter",

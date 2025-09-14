@@ -211,7 +211,7 @@ app.post('/api/contact', async (req, res) => {
 
 app.get('/api/institutions', async (req, res) => {
     try {
-        const institutions = await Institution.find({}, 'name');
+        const institutions = await Institution.find({}, 'name'); 
         res.status(200).json(institutions);
     } catch (error) { res.status(500).json({ message: 'Failed to fetch institutions.' }); }
 });
@@ -318,7 +318,48 @@ app.get('/api/institutions/student-count', authMiddleware, async (req, res) => {
     } catch (error) { res.status(500).json({ message: 'Server error fetching student count.' }); }
 });
 
-// ... (other institution dashboard endpoints)
+app.get('/api/institutions/session-count', authMiddleware, async (req, res) => {
+    try {
+        const count = await Session.countDocuments({ institutionId: req.institution.id });
+        res.status(200).json({ count });
+    } catch (error) { res.status(500).json({ message: 'Server error' }); }
+});
+
+app.post('/api/institutions/sessions', authMiddleware, async (req, res) => {
+    try {
+        const newSession = await Session.create({ ...req.body, institutionId: req.institution.id });
+        res.status(201).json({ message: 'Session created successfully!', session: newSession });
+    } catch (error) { res.status(500).json({ message: 'Server error' }); }
+});
+
+app.get('/api/institutions/event-count', authMiddleware, async (req, res) => {
+    try {
+        const count = await Event.countDocuments({ institutionId: req.institution.id });
+        res.json({ count });
+    } catch(error) { res.status(500).json({message: 'Server Error'})}
+});
+
+app.post('/api/institutions/events', authMiddleware, async (req, res) => {
+    try {
+        const newEvent = await Event.create({ ...req.body, institutionId: req.institution.id });
+        res.status(201).json({ message: 'Event created successfully!', event: newEvent });
+    } catch (error) { res.status(500).json({ message: 'Server error' }); }
+});
+
+app.get('/api/institutions/alumni-count', authMiddleware, async (req, res) => {
+    try {
+        const count = await Alumni.countDocuments({ institutionId: req.institution.id });
+        res.json({ count });
+    } catch(error) { res.status(500).json({message: 'Server Error'})}
+});
+
+app.post('/api/institutions/alumni', authMiddleware, async (req, res) => {
+    try {
+        const newAlumni = await Alumni.create({ ...req.body, institutionId: req.institution.id });
+        res.status(201).json({ message: 'Alumnus registered successfully!', alumni: newAlumni });
+    } catch (error) { res.status(500).json({ message: 'Server error' }); }
+});
+
 
 // --- Protected Student Dashboard Endpoints ---
 app.get('/api/students/profile', studentAuthMiddleware, async (req, res) => {
@@ -326,7 +367,11 @@ app.get('/api/students/profile', studentAuthMiddleware, async (req, res) => {
     res.json(student);
 });
 
-// ... (other student dashboard endpoints)
+app.post('/api/students/hub-submission', studentAuthMiddleware, async (req, res) => {
+    const { helpType, financialSupport, description } = req.body;
+    const newSubmission = await HubSubmission.create({ helpType, financialSupport, description, studentId: req.student.id });
+    res.status(201).json({ message: 'Your submission was received!' });
+});
 
 
 // --- Razorpay Payment Endpoints (Protected) ---
@@ -336,7 +381,8 @@ app.post('/api/students/create-order', studentAuthMiddleware, async (req, res) =
         const order = await razorpay.orders.create(options);
         res.json(order);
     } catch (error) {
-        res.status(500).send("Server error");
+        console.error("Razorpay order creation error:", error);
+        res.status(500).send("Server error while creating payment order.");
     }
 });
 
