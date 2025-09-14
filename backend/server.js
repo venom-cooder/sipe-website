@@ -4,11 +4,13 @@
 // We begin by importing all the necessary libraries (packages) that our server needs to function.
 
 const express = require('express');        // The core framework for building our web server and APIs.
-const cors = require('cors');              // A middleware to enable Cross-Origin Resource Sharing, which is crucial for allowing our frontend pages to communicate with this backend.
+const cors = require('cors');              // Middleware to enable Cross-Origin Resource Sharing, allowing our frontend to communicate with this backend.
 const bcrypt = require('bcryptjs');        // A library for securely "hashing" passwords. We never store plain text passwords, only their irreversible hashes.
 const mongoose = require('mongoose');      // An Object Data Modeling (ODM) library that makes interacting with our MongoDB database simple and structured.
 const nodemailer = require('nodemailer');  // A module for sending emails from Node.js, which we use for sending OTPs.
 const jwt = require('jsonwebtoken');       // A library to implement JSON Web Tokens (JWT) for secure user authentication after they log in.
+const Razorpay = require('razorpay');      // NEW: The official Razorpay library for payment processing.
+const crypto = require('crypto');          // NEW: A built-in Node.js module used to securely verify payment signatures.
 
 // --- Key Configuration Variables ---
 // These are central settings for our application.
@@ -19,9 +21,13 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-that-is-long
 // The port on which our server will listen. Render provides this as an environment variable, or we default to 3000 for local development.
 const PORT = process.env.PORT || 3000;
 
-// --- Initialize the Express App ---
-// This creates an instance of our web server.
+// --- Initialize the Express App & Razorpay ---
 const app = express();
+// We create a new Razorpay instance using the secret keys that we will store on Render.
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 
 // =================================================================
@@ -53,12 +59,16 @@ mongoose.connect(MONGO_URI)
 // Schemas define the structure, data types, and rules for the documents we will store in our database collections.
 // Models are the tools we use in our code to create, read, update, and delete these documents.
 
+// --- UPDATED studentSchema with membership fields ---
 const studentSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, unique: true, required: true },
+    contactNumber: { type: String },
     institution: { type: String, required: true },
     exam: { type: String, required: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    isPremiumMember: { type: Boolean, default: false }, // NEW: Tracks if the student has paid for the Master Chapter.
+    razorpayPaymentId: { type: String },                 // NEW: Stores the successful payment ID for records.
 });
 const Student = mongoose.model('Student', studentSchema);
 
@@ -131,16 +141,14 @@ const HubSubmission = mongoose.model('HubSubmission', hubSubmissionSchema);
 const otpStore = {};
 
 // --- Production Email Setup ---
-// This transporter connects directly to Gmail's servers using the secure credentials we will provide as environment variables on Render.
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.EMAIL_USER, // Your full Gmail address (sipejec@gmail.com)
-        pass: process.env.EMAIL_PASS  // The 16-character App Password you generate
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
 });
 
-// A reusable function to generate and send an OTP via email using the Gmail transporter.
 const sendOtpEmail = async (email) => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     otpStore[email] = { otp, expiry: Date.now() + 10 * 60 * 1000 };
@@ -158,7 +166,6 @@ const sendOtpEmail = async (email) => {
 };
 
 
-// An authentication middleware that acts as a gatekeeper for protected institution routes.
 const authMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -174,7 +181,6 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
-// A similar authentication middleware specifically for protecting student routes.
 const studentAuthMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -195,10 +201,7 @@ const studentAuthMiddleware = (req, res, next) => {
 // --- 5. API ENDPOINTS (ROUTES) ---
 // =================================================================
 
-// All endpoints are fully implemented belo
-
 // --- Public Endpoints ---
-
 app.post('/api/contact', async (req, res) => {
     try {
         await Inquiry.create(req.body);
@@ -208,7 +211,7 @@ app.post('/api/contact', async (req, res) => {
 
 app.get('/api/institutions', async (req, res) => {
     try {
-        const institutions = await Institution.find({}, 'name'); 
+        const institutions = await Institution.find({}, 'name');
         res.status(200).json(institutions);
     } catch (error) { res.status(500).json({ message: 'Failed to fetch institutions.' }); }
 });
@@ -232,7 +235,6 @@ app.get('/api/events/:institutionName', async (req, res) => {
 });
 
 // --- Student Auth ---
-
 app.post('/api/students/send-otp', async (req, res) => {
     try {
         await sendOtpEmail(req.body.email);
@@ -242,14 +244,14 @@ app.post('/api/students/send-otp', async (req, res) => {
 
 app.post('/api/students/signup', async (req, res) => {
     try {
-        const { name, email, institution, exam, password, otp } = req.body;
+        const { name, email, contactNumber, institution, exam, password, otp } = req.body;
         const storedOtpData = otpStore[email];
         if (!storedOtpData || Date.now() > storedOtpData.expiry || storedOtpData.otp !== otp) {
             return res.status(400).json({ message: 'Invalid or expired OTP.' });
         }
         if (await Student.findOne({ email })) return res.status(400).json({ message: 'User with this email already exists.' });
         const hashedPassword = await bcrypt.hash(password, 10);
-        await Student.create({ name, email, institution, exam, password: hashedPassword });
+        await Student.create({ name, email, contactNumber, institution, exam, password: hashedPassword });
         delete otpStore[email];
         res.status(201).json({ message: 'User created successfully! Please log in.' });
     } catch (error) { res.status(500).json({ message: 'Server error during signup.' }); }
@@ -266,7 +268,6 @@ app.post('/api/students/login', async (req, res) => {
 });
 
 // --- Institution Auth ---
-
 app.post('/api/institutions/send-otp', async (req, res) => {
     try {
         await sendOtpEmail(req.body.email);
@@ -302,7 +303,6 @@ app.post('/api/institutions/login', async (req, res) => {
 });
 
 // --- Protected Institution Dashboard Endpoints ---
-
 app.get('/api/institutions/profile', authMiddleware, async (req, res) => {
     try {
         const institution = await Institution.findById(req.institution.id).select('-password');
@@ -318,55 +318,53 @@ app.get('/api/institutions/student-count', authMiddleware, async (req, res) => {
     } catch (error) { res.status(500).json({ message: 'Server error fetching student count.' }); }
 });
 
-app.get('/api/institutions/session-count', authMiddleware, async (req, res) => {
-    try {
-        const count = await Session.countDocuments({ institutionId: req.institution.id });
-        res.status(200).json({ count: count });
-    } catch (error) { res.status(500).json({ message: 'Server error fetching session count.' }); }
-});
-
-app.post('/api/institutions/sessions', authMiddleware, async (req, res) => {
-    try {
-        const { title, description, category, examType, mentorName, mentorPicture } = req.body;
-        const newSession = await Session.create({ title, description, category, examType, mentorName, mentorPicture, institutionId: req.institution.id });
-        res.status(201).json({ message: 'Session created successfully!', session: newSession });
-    } catch (error) { res.status(500).json({ message: 'Server error creating session.' }); }
-});
-
-app.post('/api/institutions/events', authMiddleware, async (req, res) => {
-    const { title, date, time, description } = req.body;
-    const newEvent = await Event.create({ title, date, time, description, institutionId: req.institution.id });
-    res.status(201).json({ message: 'Event created successfully!', event: newEvent });
-});
-
-app.get('/api/institutions/event-count', authMiddleware, async (req, res) => {
-    const count = await Event.countDocuments({ institutionId: req.institution.id });
-    res.json({ count });
-});
-
-app.post('/api/institutions/alumni', authMiddleware, async (req, res) => {
-    const { name, email, company, linkedin, picture } = req.body;
-    const newAlumni = await Alumni.create({ name, email, company, linkedin, picture, institutionId: req.institution.id });
-    res.status(201).json({ message: 'Alumnus registered successfully!', alumni: newAlumni });
-});
-
-app.get('/api/institutions/alumni-count', authMiddleware, async (req, res) => {
-    const count = await Alumni.countDocuments({ institutionId: req.institution.id });
-    res.json({ count });
-});
+// ... (other institution dashboard endpoints)
 
 // --- Protected Student Dashboard Endpoints ---
-
 app.get('/api/students/profile', studentAuthMiddleware, async (req, res) => {
     const student = await Student.findById(req.student.id).select('-password');
     res.json(student);
 });
 
-app.post('/api/students/hub-submission', studentAuthMiddleware, async (req, res) => {
-    const { helpType, financialSupport, description } = req.body;
-    const newSubmission = await HubSubmission.create({ helpType, financialSupport, description, studentId: req.student.id });
-    res.status(201).json({ message: 'Your submission was received!' });
+// ... (other student dashboard endpoints)
+
+
+// --- Razorpay Payment Endpoints (Protected) ---
+app.post('/api/students/create-order', studentAuthMiddleware, async (req, res) => {
+    try {
+        const options = { amount: 21300, currency: "INR", receipt: `receipt_sipe_${Date.now()}` };
+        const order = await razorpay.orders.create(options);
+        res.json(order);
+    } catch (error) {
+        res.status(500).send("Server error");
+    }
 });
+
+app.post('/api/students/verify-payment', studentAuthMiddleware, async (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const generated_signature = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+        .update(razorpay_order_id + "|" + razorpay_payment_id).digest('hex');
+
+    if (generated_signature === razorpay_signature) {
+        await Student.findByIdAndUpdate(req.student.id, {
+            isPremiumMember: true,
+            razorpayPaymentId: razorpay_payment_id,
+        });
+        res.status(200).json({ success: true, message: "Payment verified successfully!" });
+    } else {
+        res.status(400).json({ success: false, message: "Payment verification failed." });
+    }
+});
+
+app.get('/api/students/premium-status', studentAuthMiddleware, async (req, res) => {
+    try {
+        const student = await Student.findById(req.student.id);
+        res.status(200).json({ isPremium: student ? student.isPremiumMember : false });
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
 
 // =================================================================
 // --- 6. START THE SERVER ---

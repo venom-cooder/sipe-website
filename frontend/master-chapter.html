@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- This script is required by Razorpay for the checkout popup -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -114,11 +116,19 @@
             background-color: var(--premium-color);
             color: var(--surface-color);
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         .btn-premium:hover {
             background-color: var(--premium-dark-color);
             transform: translateY(-3px);
             box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+        }
+        .btn-premium:disabled {
+            background-color: #f7d394;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
     </style>
 </head>
@@ -163,8 +173,105 @@
         <section class="cta-section">
             <h2>Ready to Join?</h2>
             <p>Become a member today to start your journey with the best minds in the country.</p>
-            <a href="https://rzp.io/rzp/C5D4REc" target="_blank" class="btn-premium">Become a Member</a>
+            <button id="become-member-btn" class="btn-premium">Become a Member</button>
         </section>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_URL = 'https://sipe-backend.onrender.com/api/students';
+            const token = localStorage.getItem('sipe-student-token');
+            const paymentButton = document.getElementById('become-member-btn');
+
+            // IMPORTANT: You must get your Key ID from the Razorpay dashboard and store it on Render.
+            // For now, we will fetch it from the server, but you should ideally expose this one public key.
+            // For this example, we will hardcode it, but REMEMBER TO REPLACE IT.
+            const RAZORPAY_KEY_ID = 'YOUR_PUBLIC_RAZORPAY_KEY_ID'; 
+
+            paymentButton.addEventListener('click', async () => {
+                if (!token) {
+                    alert('You must be logged in to purchase a membership.');
+                    window.location.href = 'loginstudent.html';
+                    return;
+                }
+                
+                paymentButton.disabled = true;
+                paymentButton.textContent = 'Processing...';
+
+                try {
+                    // Step 1: Create a payment order on your server
+                    const orderResponse = await fetch(`${API_URL}/create-order`, {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (!orderResponse.ok) throw new Error('Could not create payment order.');
+                    const order = await orderResponse.json();
+
+                    // Step 2: Fetch the user's profile to pre-fill their details
+                    const profileResponse = await fetch(`${API_URL}/profile`, { headers: { 'Authorization': `Bearer ${token}` } });
+                    if (!profileResponse.ok) throw new Error('Could not fetch user profile.');
+                    const student = await profileResponse.json();
+
+                    // Step 3: Configure and open the Razorpay Checkout popup
+                    const options = {
+                        key: RAZORPAY_KEY_ID,
+                        amount: order.amount,
+                        currency: order.currency,
+                        name: "SIPE Master Chapter",
+                        description: "Annual Membership Fee",
+                        order_id: order.id,
+                        handler: async function (response) {
+                            // This function is called after a successful payment
+                            try {
+                                const verificationResponse = await fetch(`${API_URL}/verify-payment`, {
+                                    method: 'POST',
+                                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        razorpay_order_id: response.razorpay_order_id,
+                                        razorpay_payment_id: response.razorpay_payment_id,
+                                        razorpay_signature: response.razorpay_signature,
+                                    }),
+                                });
+
+                                const result = await verificationResponse.json();
+                                if (result.success) {
+                                    alert('Payment successful! Welcome to the Master Chapter.');
+                                    window.location.href = 'master-dashboard.html';
+                                } else {
+                                    alert('Payment verification failed. Please contact support if the amount was deducted.');
+                                }
+                            } catch (err) {
+                                 alert('An error occurred during payment verification. Please contact support.');
+                            }
+                        },
+                        prefill: {
+                            name: student.name,
+                            email: student.email,
+                            contact: student.contactNumber || ''
+                        },
+                        notes: {
+                            student_id: student._id
+                        },
+                        theme: {
+                            color: '#2c3e50'
+                        }
+                    };
+
+                    const rzp = new Razorpay(options);
+                    rzp.on('payment.failed', function (response){
+                        alert("Payment failed: " + response.error.description + ". Please try again.");
+                    });
+                    rzp.open();
+
+                } catch (error) {
+                    console.error('Payment Error:', error);
+                    alert('Could not initiate payment. Please try again or contact support.');
+                } finally {
+                     paymentButton.disabled = false;
+                     paymentButton.textContent = 'Become a Member';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
