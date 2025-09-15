@@ -167,8 +167,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // This is a "dumb" page. The real verification happens on chapter-select.html.
-            // We just do a basic check here to personalize the page.
+            // This is a "normal" page. The verification happens on chapter-select.html.
+            // We just do a basic check here to personalize the page and ensure the user is logged in.
             const token = localStorage.getItem('sipe-student-token');
             if (!token) {
                 window.location.href = 'loginstudent.html';
