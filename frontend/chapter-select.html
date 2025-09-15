@@ -152,6 +152,12 @@
             background-color: var(--premium-color);
             color: white;
         }
+         .btn-access:disabled {
+            background-color: #f9f9f9;
+            color: var(--light-text-color);
+            border-color: #e0e0e0;
+            cursor: not-allowed;
+        }
         @media (max-width: 768px) {
             .chapter-options {
                 grid-template-columns: 1fr;
@@ -171,7 +177,6 @@
                 <h2>Local Chapter</h2>
                 <ul>
                     <li>Events hosted by your institution.</li>
-                    <li>Connect with seniors and alumni.</li>
                     <li>Access your local dashboard.</li>
                     <li>Get help via the Innovation Hub.</li>
                 </ul>
@@ -184,7 +189,6 @@
                     <li>Unlock nationwide workshops.</li>
                     <li>Access our elite mentor network.</li>
                     <li>Premium content from top achievers.</li>
-                    <li>Exclusive networking opportunities.</li>
                 </ul>
                 <!-- NEW BUTTON FOR PAID MEMBERS -->
                 <button id="access-master-dashboard-btn" class="btn btn-access">Access Master Dashboard</button>
@@ -256,3 +260,4 @@
     </script>
 </body>
 </html>
+
