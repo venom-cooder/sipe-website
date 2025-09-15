@@ -137,9 +137,19 @@
         .btn-premium {
             background-color: var(--premium-color);
             color: var(--primary-color);
+            margin-top: 1rem; /* Space between buttons */
         }
          .btn-premium:hover {
             background-color: #e67e22;
+            color: white;
+        }
+        .btn-access {
+            background: none;
+            border: 2px solid var(--premium-color);
+            color: var(--premium-color);
+        }
+        .btn-access:hover {
+            background-color: var(--premium-color);
             color: white;
         }
         @media (max-width: 768px) {
@@ -176,24 +186,72 @@
                     <li>Premium content from top achievers.</li>
                     <li>Exclusive networking opportunities.</li>
                 </ul>
-                <a href="master-chapter.html" class="btn btn-premium">Explore Master Chapter</a>
+                <!-- NEW BUTTON FOR PAID MEMBERS -->
+                <button id="access-master-dashboard-btn" class="btn btn-access">Access Master Dashboard</button>
+                <a href="master-chapter.html" class="btn btn-premium">Explore & Join</a>
             </div>
         </div>
     </div>
     <script>
-        // Optional: Greet the student by name if the token is available
         document.addEventListener('DOMContentLoaded', () => {
+            const API_URL = 'https://sipe-backend.onrender.com/api/students';
+            const token = localStorage.getItem('sipe-student-token');
+            const accessMasterBtn = document.getElementById('access-master-dashboard-btn');
+
+            // Optional: Greet the student by name
             try {
-                const token = localStorage.getItem('sipe-student-token');
                 if (token) {
                     const payload = JSON.parse(atob(token.split('.')[1]));
                     if (payload && payload.name) {
-                        document.getElementById('student-name').textContent = payload.name;
+                        document.getElementById('student-name').textContent = payload.name.split(' ')[0];
                     }
                 }
             } catch (error) {
                 console.error('Could not parse token:', error);
             }
+
+            // --- NEW: Logic for checking premium access ---
+            accessMasterBtn.addEventListener('click', async () => {
+                if (!token) {
+                    alert('Please log in to access the Master Dashboard.');
+                    window.location.href = 'loginstudent.html';
+                    return;
+                }
+                
+                accessMasterBtn.disabled = true;
+                accessMasterBtn.textContent = 'Verifying...';
+
+                try {
+                    const response = await fetch(`${API_URL}/premium-status`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+
+                    if (response.status === 401) {
+                        alert('Your session has expired. Please log in again.');
+                        localStorage.removeItem('sipe-student-token');
+                        window.location.href = 'loginstudent.html';
+                        return;
+                    }
+                     if (!response.ok) throw new Error('Verification failed.');
+
+                    const data = await response.json();
+
+                    if (data.isPremium) {
+                        // User is a paid member, redirect to the dashboard
+                        window.location.href = 'master-dashboard.html';
+                    } else {
+                        // User is not a paid member, redirect to the sales page
+                        alert('You are not a Master Chapter member. Please join first to get access.');
+                        window.location.href = 'master-chapter.html';
+                    }
+                } catch (error) {
+                    console.error('Error checking premium status:', error);
+                    alert('Could not verify your membership status. Please try again.');
+                } finally {
+                    accessMasterBtn.disabled = false;
+                    accessMasterBtn.textContent = 'Access Master Dashboard';
+                }
+            });
         });
     </script>
 </body>
